@@ -1,26 +1,24 @@
+/* eslint-disable */
 <template>
+
   <div id="app">
     <!--<img src="./assets/logo.png">-->
-    <nav class="navbar navbar-default navbar-fixed-top"> 
-      <div class="container">
-        <router-link :to="{ name: 'HelloWorld' }">Home</router-link>
-        <router-link :to="{ name: 'Login' }">Login</router-link>
-        <router-link :to="{ name: 'Clues' }">Clues</router-link>
-        <router-link :to="{ name: 'Steps' }">Steps</router-link>
-        <router-link :to="{ name: 'Help' }">Help</router-link>
-      </div> 
-    </nav>
-    
-
+    <header-component></header-component>
     <router-view/>
     <p>Fin</p>
   </div>
 </template>
 
 <script>
+import HeaderComponent from './components/Header.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    HeaderComponent
+  }
+
 }
+
 </script>
 
 <style>
