@@ -1,39 +1,19 @@
 /* eslint-disable */
 <template>
-<!--
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <router-link :to="{ name: 'HelloWorld' }">Home</router-link>
-    <router-link :to="{ name: 'Login' }">Login</router-link>
-    <router-link :to="{ name: 'Clues' }">Clues</router-link>
-    <router-link :to="{ name: 'Steps' }">Steps</router-link>
-    <router-link :to="{ name: 'Help' }">Help</router-link>
+  <div class="dropdown" v-bind:class="{ open: activator }">
+   <button class="hamburger btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded=true  @click="makeBurger">
+   &#9776;
+   <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" v-bind:style="{ display: isDisplay }" >
+     <li @click="makeBurger"><router-link :to="{ name: 'HelloWorld' }" >Home</router-link></li>
+     <li role="separator" class="divider"></li>
+     <li @click="makeBurger"><router-link :to="{ name: 'Login' }" title="Lien 2">Login</router-link></li>
+     <li role="separator" class="divider"></li>
+     <li @click="makeBurger"><router-link :to="{ name: 'Steps' }" title="Lien 3">Steps</router-link></li>
+     <li role="separator" class="divider"></li>
+  </ul>
   </div>
-</nav>
--->
-<!--<button class="hamburger">&#9776;</button>-->
-<nav class="navbar">
-       <div class="container">
-       <div class="navbar-brand is-large">
-         <button class="hamburger navbar-item">&#9776;</button>
-         <button @click="makeBurger" class="button navbar-burger" data-target="navMenu" v-bind:class="{active:false}">
-             <span></span>
-             <span></span>
-             <span></span>
-       </button>
-       </div>
-       <div class="navbar-menu" id="navMenu" v-bind:class="{ active: activator }">
-         <div class="navbar-end">
-           <a @click="makeBurger" class="navbar-item">
-            <router-link :to="{ name: 'HelloWorld' }">Home</router-link>
-          </a>
-          <a @click="makeBurger" class="navbar-item">
-           <router-link :to="{ name: 'Login' }">Login</router-link>
-         </a>
-       </div>
-     </div>
-     </div>
-   </nav>
 </template>
 <script>
 export default {
@@ -41,12 +21,18 @@ export default {
   data () {
     return {
       msg: '',
-      activator: false
+      activator: true,
+      isDisplay: 'none'
     }
   },
   methods: {
     makeBurger () {
       this.activator = !this.activator
+      if (this.isDisplay === '') {
+        this.isDisplay = 'none'
+      } else {
+        this.isDisplay = ''
+      }
       return this.activator
     }
   }
@@ -54,4 +40,21 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.dropdown-menu .divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+.dropdown-menu{
+  font-size: 2rem;
+  min-width: 50rem;
+}
+.btn {
+  font-size: 3rem;
+}
+.dropdown-toggle::after{
+  content: none;
+}
+
 </style>
