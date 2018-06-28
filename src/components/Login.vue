@@ -5,7 +5,7 @@
         <input type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1">
       </div>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Mot de passe" aria-describedby="basic-addon1">
+        <input type="password" class="form-control" placeholder="Mot de passe" aria-describedby="basic-addon1">
       </div>
       <div class="input-group">
         <button class="form-control" aria-describedby="basic-addon1" value="GO !" type="submit">
@@ -35,11 +35,14 @@ export default {
   background-image: url(../assets/login.png);
   min-height: 100vh;
   background-color: 0 0 255 0.5;
-  padding-top: 60vh;
+  padding-top: 65vh;
 }
 .input-group{
   background-color: white;
   opacity:0.8;
   text-align: center;
+}
+.dropdown[data-v-61dd7a3d] {
+  display: none !important;
 }
 </style>

@@ -1,17 +1,16 @@
 /* eslint-disable */
-<template>
-  <div class="dropdown" v-bind:class="{ open: activator }">
+<template >
+  <div class="dropdown" v-bind:class="{ open: activator }" id="bar-nav" v-show="showNavBar">
    <button class="hamburger btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded=true  @click="makeBurger">
    &#9776;
    <span class="caret"></span>
    </button>
    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" v-bind:style="{ display: isDisplay }" >
-     <li @click="makeBurger"><router-link :to="{ name: 'HelloWorld' }" >Home</router-link></li>
+     <li @click="makeBurger"><router-link :to="{ name: 'Login' }">Login</router-link></li>
      <li role="separator" class="divider"></li>
-     <li @click="makeBurger"><router-link :to="{ name: 'Login' }" title="Lien 2">Login</router-link></li>
+     <li @click="makeBurger"><router-link :to="{ name: 'Steps' }">Steps</router-link></li>
      <li role="separator" class="divider"></li>
-     <li @click="makeBurger"><router-link :to="{ name: 'Steps' }" title="Lien 3">Steps</router-link></li>
-     <li role="separator" class="divider"></li>
+     <li @click="makeBurger"><router-link :to="{ name: 'Clues' }">Clues</router-link></li>
   </ul>
   </div>
 </template>
@@ -22,7 +21,15 @@ export default {
     return {
       msg: '',
       activator: true,
-      isDisplay: 'none'
+      isDisplay: 'none',
+      showNavBar: true
+    }
+  },
+  mounted: function () {
+    if (this.$route.name === 'Login') {
+      this.showNavBar = false
+    } else {
+      this.showNavBar = true
     }
   },
   methods: {
@@ -46,10 +53,13 @@ export default {
   overflow: hidden;
   background-color: #e5e5e5;
 }
+.dropdown-menu {
+  font-size: 1.5em;
+  min-width: 100vh;
+}
 .dropdown {
   font-size: 2rem;
   /*min-width: 50rem;*/
-  background-color: #c79c7563;
   /*opacity: 0.5;*/
 }
 .btn {

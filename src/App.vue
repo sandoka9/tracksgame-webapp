@@ -5,7 +5,6 @@
     <!--<img src="./assets/logo.png">-->
     <header-component></header-component>
     <router-view/>
-    <p>Fin</p>
   </div>
 </template>
 
