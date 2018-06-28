@@ -1,9 +1,20 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }} hey !</h1>
-    <h2>Essential Links</h2>
-    <ul>
-    </ul>
+  <div class="login-container">
+    <form>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Mot de passe" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group">
+        <button class="form-control" aria-describedby="basic-addon1" value="GO !" type="submit">
+        <router-link :to="{ name: 'Steps' }">
+      GO !
+        </router-link>
+            </button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -20,18 +31,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+.login-container{
+  background-image: url(../assets/login.png);
+  min-height: 100vh;
+  background-color: 0 0 255 0.5;
+  padding-top: 60vh;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.input-group{
+  background-color: white;
+  opacity:0.8;
+  text-align: center;
 }
 </style>

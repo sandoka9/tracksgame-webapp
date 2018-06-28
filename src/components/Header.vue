@@ -46,9 +46,11 @@ export default {
   overflow: hidden;
   background-color: #e5e5e5;
 }
-.dropdown-menu{
+.dropdown {
   font-size: 2rem;
-  min-width: 50rem;
+  /*min-width: 50rem;*/
+  background-color: #c79c7563;
+  /*opacity: 0.5;*/
 }
 .btn {
   font-size: 3rem;
