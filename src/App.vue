@@ -15,9 +15,7 @@ export default {
   components: {
     HeaderComponent
   }
-
 }
-
 </script>
 
 <style>

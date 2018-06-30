@@ -11,7 +11,10 @@
       "info": "Si tu es d'accord active la geoloc de ton smartphone et c'est parti !",
       "classe": "fa fa-arrow-right",
       "winMsg": "",
-      "indice": ""
+      "indice": "",
+      "lat":"",
+      "long":"",
+      "puzzleImage":
     },
     {
       "type": "map-in",
@@ -21,7 +24,10 @@
       "info": "Direction l'aile Sully, 2ème étage, salle 36",
       "classe": "fa fa-map-o",
       "winMsg": "",
-      "indice": ""
+      "indice": "",
+      "lat":"",
+      "long":"",
+      "puzzleImage":
     },
     {
       "type": "map",
@@ -31,7 +37,10 @@
       "info": "",
       "classe": "fa fa-arrow-right",
       "winMsg": "",
-      "indice": ""
+      "indice": "",
+      "lat":"",
+      "long":"",
+      "puzzleImage":
     },
     {
       "type": "qcm",
@@ -41,7 +50,10 @@
       "info": "De qui s'agit-il ?",
       "classe": "fa fa-arrow-right",
       "winMsg": "Et oui, il s'agit de Watteau, ses contemporains Boucher et Fragonnard sont plus intéressés par les scènes de divinité comme Diane sortant du bain pour Boucher ou des scènes familiales comme le lecteur pour Fragonnard. Voici ton 1er indice: ",
-      "indice": "Antoine Watteau"
+      "indice": "Antoine Watteau",
+      "lat":"",
+      "long":"",
+      "puzzleImage":
     },
     {
       "type": "puzzle",
@@ -51,7 +63,11 @@
       "info": "",
       "classe": "fa fa-arrow-right",
       "winMsg": "Voici ton nouvel indice: ",
-      "indice": "L'indifférent"
+      "indice": "L'indifférent",
+      "classe": "fa fa-arrow-right",
+      "lat":"",
+      "long":"",
+      "puzzleImage":["louvre-1.png;louvre-2.png;louvre-3.png;louvre-4.png;louvre-5.png;louvre-6.png;louvre-7.png;louvre-8.png;louvre-9.png;"]
     },
     {
       "type": "audio",
@@ -61,7 +77,10 @@
       "info": "",
       "classe": "fa fa-arrow-right",
       "winMsg": "Voici ton nouvel indice: ",
-      "indice": "Serge Bogoussiavsky"
+      "indice": "Serge Bogoussiavsky",
+      "lat":"",
+      "long":"",
+      "puzzleImage":
     },
     {
       "type": "enigme",
@@ -71,7 +90,10 @@
       "info": "Le __ ___ ____. _____ _____________ alias Bog ________ _____________ _'_______ _______",
       "classe": "fa fa-arrow-right",
       "winMsg": "",
-      "indice": ""
+      "indice": "",
+      "lat":"",
+      "long":"",
+      "puzzleImage":
     },
     {
       "type": "text",
@@ -80,6 +102,24 @@
       "stepDescription": "Es-tu en mesure de percer le mystère ? Sers toi des indeices pour compléter le message ci-dessous",
       "info": "Le 19 juin 1939. Serge Bogoussiavsky alias Bog dérobait L'indifférents d'Antoine Watteau. Il avoua 2 mois plus tard en téléphonant au directeur du Louvre l'avoir emprunté pour le restaurer",
       "classe": "fa fa-arrow-right",
+      "winMsg": "",
+      "indice": "",
+      "lat":"",
+      "long":"",
+      "puzzleImage":
+    },
+    {
+      "type": "qrcode",
+      "title": "Etape 6",
+      "shortDescription": "#QR Code",
+      "stepDescription": "Hum... Besoin d'indice supplémentaire? Tu as de la chance, le voleur tenait à se faire connaître. Il a laissé des indices un peu partout. Va dans la salle 35, regarde bien, un QR code a été dissimulé.",
+      "info": "",
+      "classe": "fa fa-arrow-right",
+      "winMsg": "",
+      "indice": "",
+      "lat":"",
+      "long":"",
+      "puzzleImage":
     }
   ]
 }
