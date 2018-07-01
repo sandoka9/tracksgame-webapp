@@ -52,6 +52,18 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+a {
+  color: #727272;
+}
+button, html [type="button"], [type="reset"], [type="submit"] {
+    background-color: white;
+}
+.btn {
+  font-size: 3rem;
+}
+.divider {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
 .dropdown-menu .divider {
   height: 1px;
   margin: 9px 0;
@@ -80,12 +92,6 @@ export default {
   font-size: 2rem;
   /*min-width: 50rem;*/
   /*opacity: 0.5;*/
-}
-.divider {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-}
-.btn {
-  font-size: 3rem;
 }
 .dropdown-toggle::after{
   content: none;

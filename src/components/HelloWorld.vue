@@ -1,113 +1,81 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }} hey !</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
-  </div>
+    <div id="abs1" class="absolute">
+    <!--  <img src="/static/img/louvre/login.png" /> -->
+    <div id="rel1" class="relative">
+      <b>DIV #2</b><br />position: relative;
+      <form>
+          <input type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1">
+          <input type="password" class="form-control" placeholder="Mot de passe" aria-describedby="basic-addon1">
+          <button class="btn-submit form-control" aria-describedby="basic-addon1" value="GO !" type="submit">
+          <router-link :to="{ name: 'Steps' }">
+        GO !
+          </router-link>
+              </button>
+      </form>
+    </div>
+</div>
 </template>
 
+/* eslint-disable */
 <script>
 export default {
-  name: 'HelloWorld',
+  el: '#app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      text: ''
     }
+  },
+  methods: {
   }
 }
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
+<style>
+b {
+  font-family: sans-serif;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+div {
+  padding: 10px;
+  border: 1px dashed;
+  text-align: center;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+input {
+  width: 100%;
 }
-a {
-  color: #42b983;
+.static {
+  position: static;
+  height: 80px;
+  background-color: #ffc;
+  border-color: #996;
+}
+
+.absolute {
+  position: absolute;
+  width: 150px;
+  height: 350px;
+  background-color: #fdd;
+  border-color: #900;
+  opacity: 0.7;
+}
+
+.relative {
+  position: relative;
+  height: 80px;
+  background-color: #cfc;
+  border-color: #696;
+  opacity: 0.7;
+}
+
+#abs1 {
+  top: 10px;
+  left: 10px;
+}
+
+#rel1 {
+  top: 30px;
+  margin: 0px 50px 0px 50px;
 }
 </style>
