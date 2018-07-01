@@ -4,6 +4,7 @@
       <h1>{{stepIndex}}</h1>
       <h2>{{title[stepIndex]}}</h2>
       <div class="description-bloc">
+        <TracksMap v-if="stepIndex == 2"></TracksMap>
         <div class="short-description">{{shortDescription[stepIndex]}}</div>
         <div class="description">{{description[stepIndex]}}</div>
         <div class="info" v-if="stepIndex !== 7">
@@ -81,6 +82,7 @@
 
 <script>
 import draggable from 'vuedraggable'
+import TracksMap from './TracksMap.vue'
 export default {
   name: 'Steps',
   data () {
@@ -291,7 +293,10 @@ export default {
       }
     }
   },
-  components: { draggable }
+  components: {
+    draggable,
+    TracksMap
+  }
 }
 </script>
 
