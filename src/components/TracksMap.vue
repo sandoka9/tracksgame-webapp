@@ -59,8 +59,8 @@ export default {
 
 <style>
  #gmap {
-   width: 100%;
-   height: 750px;
+   width: 90%;
+   height: 600px;
    background-color: grey;
  }
 </style>

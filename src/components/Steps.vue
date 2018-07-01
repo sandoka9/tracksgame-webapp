@@ -337,7 +337,7 @@ h2 {
 }
 
 button.btn.btn-light {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-top: 10vh;
     margin-left: 14vh;
     margin-right: 10vh;
@@ -350,7 +350,7 @@ button.btn.btn-light {
 }
 
 .description-bloc {
-  font-size: 2rem;
+  font-size: 1.5rem;
   background-color: #CEFF33;
   min-height: 70vh;
   padding-top: 5vh;
@@ -492,7 +492,7 @@ input.input-solution {
 .response {
   margin-right: 5vh;
   max-width: 35vh;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .suite-text {
