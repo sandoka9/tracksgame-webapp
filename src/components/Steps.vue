@@ -60,10 +60,11 @@
         </div>
         <div v-if="stepIndex == 5">
           <label>
-            <button class="audio" @click.prevent="playSound('http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3')">
+            <button class="audio" @click.prevent="playSound('img/louvre/recording-20180701-171430.mp3')">
+              <!-- http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3 -->
               <i class="fa fa-play-circle-o"></i>
             </button>
-            Play Elevator Ding
+            Play
           </label>
           <div>
             <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="audioResponse" />
@@ -102,15 +103,15 @@ export default {
       isDragging: false,
       delayedDragging: false,
       puzzles2: [
-        {image: '/static/img/louvre/Louvre-1.png', order: '1'},
-        {image: '/static/img/louvre/Louvre-5.png', order: '5'},
-        {image: '/static/img/louvre/Louvre-3.png', order: '3'},
-        {image: '/static/img/louvre/Louvre-9.png', order: '9'},
-        {image: '/static/img/louvre/Louvre-4.png', order: '4'},
-        {image: '/static/img/louvre/Louvre-7.png', order: '7'},
-        {image: '/static/img/louvre/Louvre-2.png', order: '2'},
-        {image: '/static/img/louvre/Louvre-6.png', order: '6'},
-        {image: '/static/img/louvre/Louvre-8.png', order: '8'}
+        {image: 'img/louvre/Louvre-1.png', order: '1'},
+        {image: 'img/louvre/Louvre-5.png', order: '5'},
+        {image: 'img/louvre/Louvre-3.png', order: '3'},
+        {image: 'img/louvre/Louvre-9.png', order: '9'},
+        {image: 'img/louvre/Louvre-4.png', order: '4'},
+        {image: 'img/louvre/Louvre-7.png', order: '7'},
+        {image: 'img/louvre/Louvre-2.png', order: '2'},
+        {image: 'img/louvre/Louvre-6.png', order: '6'},
+        {image: 'img/louvre/Louvre-8.png', order: '8'}
       ],
       puzzles: [
       ],

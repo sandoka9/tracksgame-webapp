@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <img src="/static/img/louvre/login.png" />
+    <img src="img/louvre/login.png" />
     <form>
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1">
