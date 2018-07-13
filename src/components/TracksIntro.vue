@@ -1,0 +1,41 @@
+<template>
+  <div>
+    <h3>  {{content.title}} </h3>
+    <div class="description-bloc">
+      <div class="short-description">{{content.shortDescription}}</div>
+      <div class="description">{{content.stepDescription}}</div>
+      <div class="info">{{content.info}}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: 'TracksIntro',
+  props: ['content'],
+  data () {
+    return {
+      msg: 'Bienvenue sur la map'
+    }
+  },
+  /* eslint-disable */
+  mounted () {
+  },
+  /* eslint-enable */
+  methods: {
+  }
+}
+</script>
+
+<style>
+
+.radiobtn {
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+</style>

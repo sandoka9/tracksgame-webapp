@@ -1,98 +1,66 @@
 /* eslint-disable */
 <template>
   <div id="steps">
-      <h2>{{title[stepIndex]}}</h2>
-      <div class="description-bloc">
-        <TracksMap v-if="stepIndex == 2"></TracksMap>
-        <div class="short-description">{{shortDescription[stepIndex]}}</div>
-        <div class="description">{{description[stepIndex]}}</div>
-        <div class="info" v-if="stepIndex !== 7">
-          {{info[stepIndex]}}
-        </div> <!-- v-if="stepIndex == 0 || stepIndex == 1"-->
-        <div class="info" v-else>
-        Le
-        <input type="text" class="input-solution" name="jour" value="" /> juin
-        <input type="text" class="input-solution" name="annee" value="" />.
-        <input type="text" class="input-solution" name="voleur" v-model="res[5]" placeholder="" />
-        alias Bog dérobait
-        <input type="text" class="input-solution" name="voleur" v-model="res[4]" placeholder="" />
-        <input type="text" class="input-solution" name="voleur" v-model="res[3]" placeholder="" />
-        <button type="button" class="btn btn-light" v-on:click="stepIndex = stepIndex + 1">Resultat</button>
-      </div>
-        <div class="puzzle" v-if="stepIndex == 4">
-          <div  class="col-md-3">
-            <draggable class="list-group-up" element="ul" v-model="puzzles2" :options="dragOptions" :move="onMove">
-              <transition-group name="no" tag="ul">
-                <li class="randomImg" v-for="element in puzzles2" :key="element.order" >
-                  <img :src="element.image" />
-                </li>
-              </transition-group>
-            </draggable>
-          </div>
-          <div  class="col-md-3">
-            <draggable class="list-group" element="ul" v-model="puzzles" :options="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
-              <transition-group type="transition" :name="'flip-list'">
-                <li class="randomImg" v-for="item in puzzles" :key="item.order">
-                  <img :src="item.image" />
-                </li>
-              </transition-group>
-            </draggable>
-          </div>
-        </div>
-        <div class="error-msg" v-if="error == true" v-on:click="close">
-          {{errorMsg}}
-          <div class="indice">Close</div>
-        </div>
-        <div class="win-msg" v-if="win == true"  v-on:click="close">
-          {{winMsg[stepIndex]}}
-          <div class="indice">{{indice[stepIndex]}}</div>
-        </div>
-        <div class="qcm" v-if="stepIndex == 3">
-          <ul id="v-for-object" class="list-unstyled">
-            <li v-for="item in painters" :key="item.name" >
-              <label v-bind:for="item.surname">
-                <input class="radiobtn" type="radio" v-bind:name="item.surname" v-bind:value="item.surname" v-model="checkedNames"/>
-                {{ item.name }} {{ item.surname }}
-                <span ></span>
-              </label>
-            </li>
-          </ul>
-        </div>
-        <div v-if="stepIndex == 5">
-          <label>
-            <button class="audio" @click.prevent="playSound('img/louvre/recording-20180701-171430.mp3')">
-              <!-- http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3 -->
-              <i class="fa fa-play-circle-o"></i>
-            </button>
-            Play
-          </label>
-          <div>
-            <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="audioResponse" />
-          </div>
-        </div>
-        <div v-if="stepIndex == 6 || stepIndex == 7 ">
-          <button type="button" class="btn btn-light" v-if="stepIndex == 6" v-on:click="afficherIndice">Afficher les indices</button>
-        </div>
-        <div :class=classe[stepIndex] v-on:click="suite">
-          <span class="suite-text" v-if="stepIndex == 1">Visualiser la carte</span>
-        </div>
-        <div v-if="stepIndex > 2" v-on:click="stepIndex--, error=false">
-          <i class="fa fa-arrow-left"></i>
-        </div>
-      </div>
+    <TracksIntro  v-model="lovingVue" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
+    <!-- <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro> -->
+    <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
+    <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
+    <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
+    <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
+    <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
+    <TracksEnigme v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
+    <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
+    <div class="error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
+      {{questions[stepIndex].errorMsg[errorNb]}}
+      <div class="indice">Close</div>
     </div>
+    <div class="error-msg" v-else-if="error == true" v-on:click="close">
+      {{questions[stepIndex].errorMsg[0]}}
+      <div class="indice">Close</div>
+    </div>
+    <div class="win-msg" v-if="win == true"  v-on:click="close">
+      {{questions[stepIndex].winMsg}}
+      <div class="indice">{{questions[stepIndex].indice}}</div>
+    </div>
+    <div v-on:click="next">
+      <span class="suite-text" v-if="questions[stepIndex].type == 'map-in'">Visualiser la carte</span>
+      <i :class="questions[stepIndex].classe"></i>
+    </div>
+    <div v-on:click="previous" v-if="stepIndex > 2">
+      <i :class="left"></i>
+    </div>
+  </div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
+import TracksIntro from './TracksIntro.vue'
+import TracksMapIn from './TracksMapIn.vue'
 import TracksMap from './TracksMap.vue'
+import TracksQcm from './TracksQcm.vue'
+import TracksPuzzle from './TracksPuzzle.vue'
+import TracksAudio from './TracksAudio.vue'
+import TracksEnigme from './TracksEnigme.vue'
+import TracksFinal from './TracksFinal.vue'
+import baseCheckbox from './baseCheckbox.vue'
+import $ from 'jquery'
+var apiURL = 'img/louvre/content.json'
 
 export default {
   name: 'Steps',
   data () {
     return {
-      audioResponse: '',
+      lovingVue: '',
+      checkedNames: '',
+      titleBold: [],
+      title: '',
+      description2: '',
+      color: '',
       stepIndex: 0,
+      questions: [],
+      audioResponse: '',
+      items: [],
+      left: 'fa fa-arrow-left',
       error: false,
       errorMsg: '',
       errorNb: 0,
@@ -102,101 +70,19 @@ export default {
       editable: true,
       isDragging: false,
       delayedDragging: false,
-      puzzles2: [
-        {image: 'img/louvre/Louvre-1.png', order: '1'},
-        {image: 'img/louvre/Louvre-5.png', order: '5'},
-        {image: 'img/louvre/Louvre-3.png', order: '3'},
-        {image: 'img/louvre/Louvre-9.png', order: '9'},
-        {image: 'img/louvre/Louvre-4.png', order: '4'},
-        {image: 'img/louvre/Louvre-7.png', order: '7'},
-        {image: 'img/louvre/Louvre-2.png', order: '2'},
-        {image: 'img/louvre/Louvre-6.png', order: '6'},
-        {image: 'img/louvre/Louvre-8.png', order: '8'}
-      ],
-      puzzles: [
-      ],
-      winMsg: [
-        '',
-        '',
-        '',
-        'Et oui, il s\'agit de Watteau, ses contemporains Boucher et Fragonnard sont plus intéressés par les scènes de divinité comme Diane sortant du bain pour Boucher ou des scènes familiales comme le lecteur pour Fragonnard. Voici ton 1er indice: ',
-        'Voici ton nouvel indice: ',
-        'Bravo, tu es fin prêt pour dénouer l\'énigme. Ton indice est: '
-      ],
-      indice: [
-        '',
-        '',
-        '',
-        'Antoine Watteau',
-        'L\'indifférent',
-        'Serge Bogoussiavsky'
-      ],
-      title: [
-        'Bienvenue',
-        'Etape 1',
-        'Carte',
-        'Etape 2',
-        'Etape 3',
-        'Etape 4',
-        'Etape 5',
-        'Etape 6',
-        'Fin'
-      ],
-      shortDescription: [
-        'Es-tu prêt à découvrir une des plus  grandes affaire de vol du musée du Louvre ?',
-        '',
-        '',
-        '#Question à choix multiples',
-        '#Puzzle',
-        '#Action',
-        '#Le dénouement',
-        '#Le dénouement'
-      ],
-      description: [
-        'Il te faudra faire preuve d\'ingéniosité et bien observer les lieux pour résoudre les énigmes et découvrir le fin mot de l\'histoire.',
-        'Rendez-vous à l\'aile Sully, c\'est par là que notre voleur est entré le 19 juin 1939 afin d\'accomplir son crime.',
-        '',
-        'Nous sommes en plein coeur du style rococo, au milieu des années romantiques et des scènes idéalistes du 17e siecle. L\'artiste est passionné par les fêtes galantes, les costumes des dames et le théatre italien, en particulier la Commedia dell arte.',
-        'Tu sais, le musée du Louvre n\'a pas toujours été ainsi. Essaie de replacer les pièces du puzzle dans le bon ordre :',
-        'Dirige toi dans la salle suivante et écoute bien le message',
-        'Es-tu en mesure de percer le mystère ? Sers toi des indeices pour compléter le message ci-dessous',
-        'Es-tu en mesure de percer le mystère ? Sers toi des indeices pour compléter le message ci-dessous',
-        'Le 19 juin 1939. Serge Bogoussiavsky alias Bog dérobait L\'indifférent d\'Antoine Watteau.'
-      ],
-      info: [
-        'Si tu es d\'accord active la geoloc de ton smartphone et c\'est parti !',
-        'Direction l\'aile Sully, 2ème étage, salle 36',
-        '',
-        'De qui s\'agit-il ?',
-        '',
-        '',
-        'Le __ juin ____. _____ _____________ alias Bog dérobait ____________ d\'_______ _______.',
-        '',
-        'Deux mois plus tard, le voleur restitue l’Indifférent. Serge, en guise d’explications à son geste, argue avoir voulu enlever le goudron et restaurer les couleurs. Il confie même au magazine Time, le 21 août 1939 : « J’ai toujours aimé Watteau. Je ne pouvais pas supporter de le voir au Louvre dans un tel état. » Il fut condamné à 5 ans de prison.'
-      ],
-      classe: [
-        'fa fa-arrow-right',
-        'fa fa-map-o',
-        'fa fa-arrow-right',
-        'fa fa-arrow-right',
-        'fa fa-arrow-right',
-        'fa fa-arrow-right',
-        'fa fa-arrow-right',
-        '',
-        ''
-      ],
       stepAllow: [
         true
-      ],
-      painters: [
-        {name: 'Antoine', surname: 'Watteau'},
-        {name: 'François', surname: 'Boucher'},
-        {name: 'Jean-Honoré', surname: 'Fragonnard'}
-      ],
-      checkedNames: []
+      ]
     }
   },
+  created: function () {
+    this.fetchData()
+  },
   methods: {
+    previous: function () {
+      this.stepIndex--
+      this.error = false
+    },
     afficherIndice () {
       var index = 0
       this.stepIndex++
@@ -207,16 +93,7 @@ export default {
           this.res[index] = this.indice[index]
         }
       }
-      console.log(this.res)
-      console.log(this.indices)
-      console.log(this.indice)
       return this.res
-    },
-    playSound (sound) {
-      if (sound) {
-        var audio = new Audio(sound)
-        audio.play()
-      }
     },
     close: function () {
       if (this.error === true) {
@@ -228,23 +105,39 @@ export default {
         this.win = false
       }
     },
-    suite: function () {
-      if (this.stepIndex === 3) {
-        if (this.checkedNames !== 'Watteau' && this.errorNb === 2) {
+    fetchData: function () {
+      /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
+      $.getJSON(apiURL, (data) => {
+        this.title = data.title
+        this.description = data.description
+        this.color = data.color
+        this.questions = data.questions
+        console.log(this.title2, this.description2, this.color2)
+      })
+    },
+    playSound (sound) {
+      if (sound) {
+        var audio = new Audio(sound)
+        audio.play()
+      }
+    },
+    next: function () {
+      if (this.questions[this.stepIndex].type === 'qcm') {
+        if (this.checkedNames !== this.questions[this.stepIndex].qcmResponse && this.errorNb === 2) {
           /* Step 5 */
           this.error = true
           this.errorNb = 0
-          this.errorMsg = 'Perdu. Passe à l\'étape suivante ! Le jeu continu, il y a encore plein d\'indices à découvrir '
-        } else if (this.checkedNames !== 'Watteau' && this.errorNb === 1) {
-          this.errorMsg = 'Non, ce n\'est pas ' + this.checkedNames + '. Attention, C\'est ta dernière chance !'
+          /* this.errorMsg = 'Perdu. Passe à l\'étape suivante ! Le jeu continu, il y a encore plein d\'indices à découvrir ' */
+        } else if (this.checkedNames !== this.questions[this.stepIndex].qcmResponse && this.errorNb === 1) {
+          /* this.errorMsg = 'Non, ce n\'est pas ' + this.checkedNames + '. Attention, C\'est ta dernière chance !' */
           this.stepIndex--
           this.error = true
           this.errorNb++
-        } else if (this.checkedNames !== 'Watteau') {
+        } else if (this.checkedNames !== this.questions[this.stepIndex].qcmResponse) {
           this.stepIndex--
           this.error = true
           this.errorNb++
-          this.errorMsg = 'Non, ce n\'est pas ' + this.checkedNames + '. Retente ta chance !'
+          /* this.errorMsg = 'Non, ce n\'est pas ' + this.checkedNames + '. Retente ta chance !' */
           /* Step 4+1 */
         } else {
           this.win = true
@@ -252,11 +145,11 @@ export default {
           this.error = false
         }
       }
-      if (this.stepIndex === 4) {
+      if (this.questions[this.stepIndex].type === 'puzzle') {
         for (var i = 1; i < 9; i++) {
-          if (this.puzzles2[i].order < this.puzzles2[i - 1].order) {
+          if (this.questions[this.stepIndex].puzzleImage[i].order < this.questions[this.stepIndex].puzzleImage[i - 1].order) {
             this.error = true
-            this.errorMsg = 'Non, essaie encore une fois'
+            /* this.errorMsg = 'Non, essaie encore une fois' */
             this.errorNb++
             this.stepIndex--
             break
@@ -271,7 +164,7 @@ export default {
           this.stepIndex++
         }
       }
-      if (this.stepIndex === 5 && (this.audioResponse === 'Pierrot' || this.audioResponse === 'pierrot')) {
+      if (this.questions[this.stepIndex].type === 'audio' && (this.audioResponse.toLowerCase().trim() === this.questions[this.stepIndex].audioResponse)) {
         this.win = true
         this.stepIndex--
         this.error = false
@@ -279,51 +172,26 @@ export default {
         this.stepIndex--
         this.error = true
         this.errorNb++
-        this.errorMsg = 'Petit indice supplémentaire, j\'adore les clairs de lune...'
+      /* this.errorMsg = 'Petit indice supplémentaire, j\'adore les clairs de lune...' */
       } else if (this.stepIndex === 5) {
         this.error = true
         this.errorNb++
-        this.errorMsg = 'Non toujours pas.'
+        /* this.errorMsg = 'Non toujours pas.' */
       }
       this.stepIndex = this.stepIndex + 1
-    },
-    orderList () {
-      this.puzzles = this.puzzles.sort((one, two) => { return one.order - two.order })
-    },
-    onMove ({relatedContext, draggedContext}) {
-      const relatedElement = relatedContext.element
-      const draggedElement = draggedContext.element
-      return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-    }
-  },
-  computed: {
-    dragOptions () {
-      return {
-        animation: 0,
-        group: 'description',
-        disabled: !this.editable,
-        ghostClass: 'ghost'
-      }
-    },
-    watch: {
-      isDragging (newValue) {
-        if (newValue) {
-          this.delayedDragging = true
-          return
-        }
-        this.$nextTick(() => {
-          this.delayedDragging = false
-        })
-      }
     }
   },
   components: {
     draggable,
-    TracksMap
-  },
-  mounted: function () {
-    console.log(this.indices)
-    console.log(this.indice)
+    TracksIntro,
+    TracksMapIn,
+    TracksMap,
+    TracksQcm,
+    TracksPuzzle,
+    TracksAudio,
+    TracksEnigme,
+    TracksFinal,
+    baseCheckbox
   }
 }
 </script>
@@ -350,8 +218,8 @@ button.btn.btn-light {
 }
 
 .description-bloc {
-  font-size: 1.5rem;
-  background-color: #CEFF33;
+  font-size:0.5rem; /*  1.5rem; */
+  background-color: #FFE4C4; /* #CEFF33; */
   min-height: 70vh;
   padding-top: 5vh;
   padding-left: 1vh;
@@ -378,7 +246,7 @@ button.btn.btn-light {
 }
 
 .fa-arrow-right, .fa-map-o {
-  font-size: 3rem;
+  /* font-size: 3rem; */
   float: right;
   margin-top: 7vh;
   padding-right:1vh;
@@ -465,16 +333,7 @@ input.input-solution {
 }
 
 .short-description {
-  font-weight: bold;
-}
-
-.radiobtn {
-    top: 0;
-    left: 0;
-    width: 40px;
-    height: 40px;
-    background-color: #eee;
-    border-radius: 50%;
+  /* font-weight: bold; */
 }
 
 .randomImg {

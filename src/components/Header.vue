@@ -59,7 +59,7 @@ button, html [type="button"], [type="reset"], [type="submit"] {
     background-color: white;
 }
 .btn {
-  font-size: 3rem;
+  font-size: 0.1rem; /* 3rem; */
 }
 .divider {
   border: 1px solid rgba(0, 0, 0, 0.15);
