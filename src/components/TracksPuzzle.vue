@@ -38,7 +38,10 @@ export default {
   data () {
     return {
       msg: 'Bienvenue sur la map',
-      puzzles: []
+      puzzles: [],
+      editable: true,
+      isDragging: false,
+      delayedDragging: false
     }
   },
   /* eslint-disable */

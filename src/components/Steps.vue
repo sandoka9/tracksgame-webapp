@@ -1,14 +1,15 @@
 /* eslint-disable */
 <template>
   <div id="steps">
-    <TracksIntro  v-model="lovingVue" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
+    {{questions[stepIndex].type}}
+    <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
     <!-- <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro> -->
     <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
     <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
     <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
-    <TracksEnigme v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
+    <TracksEnigme v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
     <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
     <div class="error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
       {{questions[stepIndex].errorMsg[errorNb]}}
@@ -20,7 +21,7 @@
     </div>
     <div class="win-msg" v-if="win == true"  v-on:click="close">
       {{questions[stepIndex].winMsg}}
-      <div class="indice">{{questions[stepIndex].indice}}</div>
+      <div class="indice">{{clues[0]}}</div>
     </div>
     <div v-on:click="next">
       <span class="suite-text" v-if="questions[stepIndex].type == 'map-in'">Visualiser la carte</span>
@@ -29,6 +30,7 @@
     <div v-on:click="previous" v-if="stepIndex > 2">
       <i :class="left"></i>
     </div>
+    {{cluesFound}}
   </div>
 </template>
 
@@ -50,7 +52,6 @@ export default {
   name: 'Steps',
   data () {
     return {
-      lovingVue: '',
       checkedNames: '',
       titleBold: [],
       title: '',
@@ -60,12 +61,12 @@ export default {
       questions: [],
       audioResponse: '',
       items: [],
+      cluesFound: {},
       left: 'fa fa-arrow-left',
       error: false,
       errorMsg: '',
       errorNb: 0,
       win: false,
-      indices: [],
       res: [],
       editable: true,
       isDragging: false,
@@ -83,24 +84,14 @@ export default {
       this.stepIndex--
       this.error = false
     },
-    afficherIndice () {
-      var index = 0
-      this.stepIndex++
-      var lg = this.indices.length
-      for (var i = 0; i < lg; i++) {
-        if (this.indices[i] !== '') {
-          index = Number(this.indices[i])
-          this.res[index] = this.indice[index]
-        }
-      }
-      return this.res
-    },
     close: function () {
+      var cluesKey = this.questions[this.stepIndex].indice
       if (this.error === true) {
         this.error = false
-        this.indices.push('')
       } else {
-        this.indices.push(this.stepIndex)
+        console.log(' cluesKey ' + cluesKey)
+        this.cluesFound = { cluesKey: this.clues[0] } /* string() */
+        this.clues.splice(0, 1)
         this.stepIndex++
         this.win = false
       }
@@ -112,6 +103,7 @@ export default {
         this.description = data.description
         this.color = data.color
         this.questions = data.questions
+        this.clues = data.clues
         console.log(this.title2, this.description2, this.color2)
       })
     },
@@ -233,7 +225,7 @@ button.btn.btn-light {
   padding-top: 15vh;
   padding-left: 5vh;
   margin-right: 1vh;
-  background-color: #ff6600;
+  /* background-color: #ff6600; */
   -webkit-box-shadow: 0px 8px 4px 0px #a5a4a4;
   -moz-box-shadow: 6px 12px 4px 0px #a5a4a4;
   filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#a5a4a4', Positive='true');
@@ -370,7 +362,7 @@ input.input-solution {
 }
 */
 .win-msg{
-  background-color: #206040;
+  /* background-color: #206040; */
   color: white;
   padding-right: 5vh;
   padding-top: 5vh;

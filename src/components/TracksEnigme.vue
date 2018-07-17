@@ -4,19 +4,18 @@
     <div class="description-bloc">
       <div class="short-description">{{content.shortDescription}}</div>
       <div class="description">{{content.stepDescription}}</div>
-      <div class="info" v-if="stepIndex == 7">
-      Le
-      <input type="text" class="input-solution" name="jour" value="" /> juin
-      <input type="text" class="input-solution" name="annee" value="" />.
-      <input type="text" class="input-solution" name="voleur" v-model="res[5]" placeholder="" />
-      alias Bog dérobait
-      <input type="text" class="input-solution" name="voleur" v-model="res[4]" placeholder="" />
-      <input type="text" class="input-solution" name="voleur" v-model="res[3]" placeholder="" />
-      <button type="button" class="btn btn-light" v-on:click="stepIndex = stepIndex + 1">Resultat</button>
-    </div>
-    <div class="info" v-else>{{content.info}}</div>
+      <div class="info"  v-for="item in content.info" :key="item.indice" >
+        {{item.text}}
+        cluesFound["1"] {{cluesFound["1"]}}
+        key {{key}}
+        <!-- {{cluesFound[item.indice]}} -->
+        <!-- <input type="text" class="input-solution" name="item.indice" v-model="item.indice" /> -->
+        <!-- <input type="text" class="input-solution" name="item.indice" v-if="typeof(cluesFound.key) !== 'undefined'"  v-model="cluesFound.key"  />
+        <input type="text" class="input-solution" name="item.indice" v-else  /> -->
+      </div>
+      <button type="button" class="btn btn-light" v-on:click="showclues = true">Resultat</button>
     <div> <!--  v-if="stepIndex == 6 || stepIndex == 7 " -->
-      <button type="button" class="btn btn-light" v-if="stepIndex == 6" v-on:click="afficherIndice">Afficher les indices</button>
+      <button type="button" class="btn btn-light" v-if="showclues == false" v-on:click="showclues = true">Afficher les indices</button>
     </div>
     </div>
   </div>
@@ -26,10 +25,14 @@
 
 export default {
   name: 'TracksIntro',
-  props: ['content'],
+  props: {
+    content: Object,
+    cluesFound: Object
+  },
   data () {
     return {
-      msg: 'Bienvenue sur la map'
+      msg: 'Bienvenue sur la map',
+      showclues: false
     }
   },
   /* eslint-disable */
@@ -37,6 +40,19 @@ export default {
   },
   /* eslint-enable */
   methods: {
+    afficherIndice () {
+      console.log(this.clues)
+      var index = 0
+      this.stepIndex++
+      var lg = this.clues.length
+      for (var i = 0; i < lg; i++) {
+        if (this.clues[i] !== '') {
+          index = Number(this.clues[i])
+          this.res[index] = this.indice[index]
+        }
+      }
+      return this.res
+    }
   }
 }
 </script>
