@@ -1,14 +1,13 @@
 /* eslint-disable */
 <template>
   <div id="steps">
-    {{questions[stepIndex].type}}
     <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
-    <!-- <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro> -->
     <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
     <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
     <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
-    <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
+    <TracksAudio v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
+    <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksAudio>
     <TracksEnigme v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
     <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
     <div class="error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
@@ -30,8 +29,8 @@
     <div v-on:click="previous" v-if="stepIndex > 2">
       <i :class="left"></i>
     </div>
-    {{cluesFound}}
   </div>
+
 </template>
 
 <script>
@@ -90,8 +89,8 @@ export default {
         this.error = false
       } else {
         console.log(' cluesKey ' + cluesKey)
-        this.cluesFound = { cluesKey: this.clues[0] } /* string() */
-        this.clues.splice(0, 1)
+        this.cluesFound[cluesKey] = this.clues[cluesKey] /* string() */
+        delete this.clues[cluesKey]
         this.stepIndex++
         this.win = false
       }
@@ -156,19 +155,30 @@ export default {
           this.stepIndex++
         }
       }
-      if (this.questions[this.stepIndex].type === 'audio' && (this.audioResponse.toLowerCase().trim() === this.questions[this.stepIndex].audioResponse)) {
-        this.win = true
-        this.stepIndex--
-        this.error = false
-      } else if (this.stepIndex === 5 && this.errorNb < 3) {
-        this.stepIndex--
-        this.error = true
-        this.errorNb++
-      /* this.errorMsg = 'Petit indice supplémentaire, j\'adore les clairs de lune...' */
-      } else if (this.stepIndex === 5) {
-        this.error = true
-        this.errorNb++
-        /* this.errorMsg = 'Non toujours pas.' */
+      if (this.questions[this.stepIndex].type === 'audio') {
+        if (this.audioResponse.toLowerCase().trim() === this.questions[this.stepIndex].audioResponse) {
+          this.win = true
+          this.stepIndex--
+          this.error = false
+        } else if (this.stepIndex === 5 && this.errorNb < 3) {
+          this.stepIndex--
+          this.error = true
+          this.errorNb++
+        /* this.errorMsg = 'Petit indice supplémentaire, j\'adore les clairs de lune...' */
+        } else if (this.stepIndex === 5) {
+          this.error = true
+          this.errorNb++
+          /* this.errorMsg = 'Non toujours pas.' */
+        }
+      }
+      if (this.questions[this.stepIndex].type === 'enigme') {
+        if (this.btn0.toLowerCase().trim() === this.questions[this.stepIndex].response) {
+          this.win = true
+          this.error = false
+        } else {
+          this.error = true
+          this.errorNb++
+        }
       }
       this.stepIndex = this.stepIndex + 1
     }

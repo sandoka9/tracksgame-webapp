@@ -6,16 +6,15 @@
       <div class="description">{{content.stepDescription}}</div>
       <div class="info"  v-for="item in content.info" :key="item.indice" >
         {{item.text}}
-        cluesFound["1"] {{cluesFound["1"]}}
-        key {{key}}
         <!-- {{cluesFound[item.indice]}} -->
-        <!-- <input type="text" class="input-solution" name="item.indice" v-model="item.indice" /> -->
+        <input type="text" class="input-solution" name="btn-item.indice" v-model="cluesFound[item.indice]" />
         <!-- <input type="text" class="input-solution" name="item.indice" v-if="typeof(cluesFound.key) !== 'undefined'"  v-model="cluesFound.key"  />
         <input type="text" class="input-solution" name="item.indice" v-else  /> -->
       </div>
-      <button type="button" class="btn btn-light" v-on:click="showclues = true">Resultat</button>
+      <button type="button" class="btn btn-light" v-on:click="next">OK</button>
     <div> <!--  v-if="stepIndex == 6 || stepIndex == 7 " -->
-      <button type="button" class="btn btn-light" v-if="showclues == false" v-on:click="showclues = true">Afficher les indices</button>
+    <button type="button" class="btn btn-light" v-if="showclues == false" v-on:click="showclues = true">Afficher les indices</button>
+    <button type="button" class="btn btn-light" v-if="showclues == true && nbError > 0" v-on:click="stepIndex++">Découvrir de nouveaux indices</button>
     </div>
     </div>
   </div>

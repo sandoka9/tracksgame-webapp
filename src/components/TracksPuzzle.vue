@@ -76,6 +76,9 @@ export default {
         this.$nextTick(() => {
           this.delayedDragging = false
         })
+      },
+      get () {
+        return ''
       }
     }
   },

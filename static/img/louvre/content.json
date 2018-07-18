@@ -2,11 +2,11 @@
   "title": "Vol au Louvre",
   "description": "",
   "color": "#CEFF33",
-  "clues": [
-    "Antoine Watteau",
-    "L'indifférent",
-    "Serge Bogoussiavsky"    
-  ],  
+  "clues":{
+    "1": "Antoine Watteau", 
+    "2": "L'indifférent",
+    "3": "Serge Bogoussiavsky"
+  },  
   "cluesFound": {},
   "questions": [
     {
@@ -48,7 +48,7 @@
       "errorMsg": "",
       "indice": "",
       "lat":"",
-      "long":"",
+      "lng":"",
       "puzzleImage":""
     },
     {
@@ -123,7 +123,8 @@
         {"text": "Le" , "indice":"3"},
         {"text": "juin" , "indice":"2"},
         {"text": "alias Bog dérobait " , "indice":"1"},
-        {"text": "d'" , "indice":"0"}
+        {"text": "d'" , "indice":"4"},
+        {"text": "Qui suis-je ?", "indice": 0}
       ],
       "classe": "fa fa-arrow-right",
       "winMsg": "",
@@ -131,15 +132,16 @@
       "indice": "",
       "lat":"",
       "long":"",
-      "puzzleImage":""
+      "puzzleImage":"",
+      "response": "Res"
     },
     {
       "type": "final",
       "title": "Etape 5",
       "shortDescription": "#Le dénouement",
-      "stepDescription": "Es-tu en mesure de percer le mystère ? Sers toi des indeices pour compléter le message ci-dessous",
-      "info": "Le 19 juin 1939. Serge Bogoussiavsky alias Bog dérobait L'indifférents d'Antoine Watteau. Il avoua 2 mois plus tard en téléphonant au directeur du Louvre l'avoir emprunté pour le restaurer",
-      "classe": "fa fa-arrow-right",
+      "stepDescription": "The End",
+      "info": "",
+      "classe": "",
       "winMsg": "",
       "errorMsg": "",
       "indice": "",
@@ -151,7 +153,7 @@
       "type": "qrcode",
       "title": "Etape 6",
       "shortDescription": "#QR Code",
-      "stepDescription": "Hum... Besoin d'indice supplémentaire? Tu as de la chance, le voleur tenait à se faire connaître. Il a laissé des indices un peu partout. Va dans la salle 35, regarde bien, un QR code a été dissimulé.",
+      "stepDescription": "Description QR Code",
       "info": "",
       "classe": "fa fa-arrow-right",
       "winMsg": "",
@@ -159,7 +161,8 @@
       "indice": "",
       "lat":"",
       "long":"",
-      "puzzleImage":""
+      "puzzleImage":"",
+      "qrCode": "Texte QR Code"
     }
   ]
 }

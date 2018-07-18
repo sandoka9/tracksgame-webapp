@@ -13,7 +13,7 @@
           Play
         </label>
         <div>
-          <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="audioResponse"/>
+          <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="audioResponse" v-on:change="$emit('change', $event.target.value)"/>
         </div>
     </div>
   </div>
@@ -39,6 +39,9 @@ export default {
         audio.play()
       }
     }
+  },
+  model: {
+    event: 'change'
   }
 }
 </script>

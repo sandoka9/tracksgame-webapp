@@ -5,13 +5,14 @@
 <script>
 export default {
   name: 'tracksmap',
+  props: ['content'],
   data () {
     return {
       msg: 'Bienvenue sur la map',
       gmap: null,
       latitude: 0,
       longitude: 0,
-      center: {lat: 48.861088, lng: 2.337513},
+      center: {lat: 48.861088, lng: 2.337513}, // this.content.lat, this.content.lng
       markers: [{position: {lat: 48.861088, lng: 2.337513}}],
       mapLoaded: false
     }
