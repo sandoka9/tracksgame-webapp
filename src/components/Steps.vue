@@ -6,10 +6,13 @@
     <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
     <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
-    <TracksAudio v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
-    <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksAudio>
-    <TracksEnigme v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
+    <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
+    <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
+    <TracksEnigme v-on:moreIndex="moreIndex" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
     <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
+    {{questions[stepIndex].response}}
+    {{questions[stepIndex].type}}
+    {{stepIndex}}
     <div class="error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
       {{questions[stepIndex].errorMsg[errorNb]}}
       <div class="indice">Close</div>
@@ -41,6 +44,7 @@ import TracksMap from './TracksMap.vue'
 import TracksQcm from './TracksQcm.vue'
 import TracksPuzzle from './TracksPuzzle.vue'
 import TracksAudio from './TracksAudio.vue'
+import TracksQrcode from './TracksQrcode.vue'
 import TracksEnigme from './TracksEnigme.vue'
 import TracksFinal from './TracksFinal.vue'
 import baseCheckbox from './baseCheckbox.vue'
@@ -65,6 +69,11 @@ export default {
       error: false,
       errorMsg: '',
       errorNb: 0,
+      errorInfo: {
+        'nb': this.errorNb,
+        'stepIndex': this.stepIndex,
+        'stepEnigme': 0
+      },
       win: false,
       res: [],
       editable: true,
@@ -79,8 +88,16 @@ export default {
     this.fetchData()
   },
   methods: {
+    moreIndex () {
+      this.errorInfo['stepEnigme'] = this.stepIndex
+      this.stepIndex = this.stepIndex + 2
+    },
     previous: function () {
-      this.stepIndex--
+      if (this.errorInfo['stepEnigme'] !== 0 && this.stepIndex > this.errorInfo['stepEnigme'] + 1) {
+        this.stepIndex = this.stepIndex - 2
+      } else {
+        this.stepIndex--
+      }
       this.error = false
     },
     close: function () {
@@ -91,7 +108,11 @@ export default {
         console.log(' cluesKey ' + cluesKey)
         this.cluesFound[cluesKey] = this.clues[cluesKey] /* string() */
         delete this.clues[cluesKey]
-        this.stepIndex++
+        if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
+          this.stepIndex = this.errorInfo['stepEnigme']
+        } else {
+          this.stepIndex++
+        }
         this.win = false
       }
     },
@@ -156,7 +177,7 @@ export default {
         }
       }
       if (this.questions[this.stepIndex].type === 'audio') {
-        if (this.audioResponse.toLowerCase().trim() === this.questions[this.stepIndex].audioResponse) {
+        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].audioResponse) {
           this.win = true
           this.stepIndex--
           this.error = false
@@ -171,8 +192,18 @@ export default {
           /* this.errorMsg = 'Non toujours pas.' */
         }
       }
+      if (this.questions[this.stepIndex].type === 'qrcode') {
+        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].qrResponse) {
+          this.win = true
+          this.error = false
+        } else {
+          this.error = true
+          this.errorNb++
+        }
+      }
       if (this.questions[this.stepIndex].type === 'enigme') {
-        if (this.btn0.toLowerCase().trim() === this.questions[this.stepIndex].response) {
+        this.errorInfo['stepEnigme'] = this.stepIndex
+        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].enigmeResponse) {
           this.win = true
           this.error = false
         } else {
@@ -191,6 +222,7 @@ export default {
     TracksQcm,
     TracksPuzzle,
     TracksAudio,
+    TracksQrcode,
     TracksEnigme,
     TracksFinal,
     baseCheckbox
