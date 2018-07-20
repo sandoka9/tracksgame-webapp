@@ -13,7 +13,7 @@
           Play
         </label>
         <div>
-          <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="audioResponse" v-on:change="$emit('change', $event.target.value)"/>
+          <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
         </div>
     </div>
   </div>
@@ -22,7 +22,9 @@
 <script>
 export default {
   name: 'TracksQcm',
-  props: ['content'],
+  props: {
+    content: {}
+  },
   data () {
     return {
       msg: 'Bienvenue sur la map'
