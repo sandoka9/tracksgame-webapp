@@ -5,18 +5,19 @@
       <div class="short-description">{{content.shortDescription}}</div>
       <div class="description">{{content.stepDescription}}</div>
       <div class="info">{{content.info}}</div>
-      <template><vue-qr-reader v-on:code-scanned="codeArrived"></template>
+      <qrcode-reader @decode="onDecode"></qrcode-reader>
       <div>
         <input class="response form-control" type="text" name="response" v-bind:placeholder="content.info" v-model="response"/>
       </div>
     </div>
+      Hello
   </div>
 </template>
 
 <script>
-import 'vue-qr-reader';
+import VueQrcodeReader from 'vue-qrcode-reader'
 /* https://pulilab.github.io/vue-qr-reader/#/quickstart */
-
+/* http://api.qrserver.com/v1/create-qr-code/?data=test!&size=100x100 */
 export default {
   name: 'TracksQcm',
   props: {
