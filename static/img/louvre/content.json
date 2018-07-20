@@ -112,7 +112,8 @@
         "Non toujours pas."
       ],
       "indice": 2,
-      "audioResponse": "pierrot"
+      "audioResponse": "pierrot",
+      "response": ""
     },
     {
       "type": "enigme",
@@ -123,17 +124,17 @@
         {"text": "Le" , "indice":"3"},
         {"text": "juin" , "indice":"2"},
         {"text": "alias Bog dérobait " , "indice":"1"},
-        {"text": "d'" , "indice":"4"},
-        {"text": "Qui suis-je ?", "indice": 0}
+        {"text": "d'" , "indice":"4"}
       ],
-      "classe": "fa fa-arrow-right",
-      "winMsg": "",
+      "classe": "fa fa-check",
+      "winMsg": "Félicitation ! Tu as résolue l'énigme",
       "errorMsg": "",
       "indice": "",
       "lat":"",
       "long":"",
       "puzzleImage":"",
-      "response": "Res"
+      "enigmeResponse": "res",
+      "response": ""
     },
     {
       "type": "final",
@@ -162,7 +163,9 @@
       "lat":"",
       "long":"",
       "puzzleImage":"",
-      "qrCode": "Texte QR Code"
+      "qrCode": "Texte QR Code",
+      "qrResponse": "res",
+      "response": ""
     }
   ]
 }
