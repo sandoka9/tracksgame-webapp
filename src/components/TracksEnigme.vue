@@ -11,10 +11,11 @@
         <!-- <input type="text" class="input-solution" name="item.indice" v-if="typeof(cluesFound.key) !== 'undefined'"  v-model="cluesFound.key"  />
         <input type="text" class="input-solution" name="item.indice" v-else  /> -->
       </div>
-      <button type="button" class="btn btn-light" v-on:click="next">OK</button>
+      <div>
+        <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
+      </div>
     <div> <!--  v-if="stepIndex == 6 || stepIndex == 7 " -->
-    <button type="button" class="btn btn-light" v-if="showclues == false" v-on:click="showclues = true">Afficher les indices</button>
-    <button type="button" class="btn btn-light" v-if="showclues == true && nbError > 0" v-on:click="stepIndex++">Découvrir de nouveaux indices</button>
+    <button type="button" class="btn btn-light" v-on:click="$emit('moreIndex')">Découvrir de nouveaux indices</button>
     </div>
     </div>
   </div>
@@ -39,19 +40,9 @@ export default {
   },
   /* eslint-enable */
   methods: {
-    afficherIndice () {
-      console.log(this.clues)
-      var index = 0
-      this.stepIndex++
-      var lg = this.clues.length
-      for (var i = 0; i < lg; i++) {
-        if (this.clues[i] !== '') {
-          index = Number(this.clues[i])
-          this.res[index] = this.indice[index]
-        }
-      }
-      return this.res
-    }
+  },
+  model: {
+    event: 'change'
   }
 }
 </script>
