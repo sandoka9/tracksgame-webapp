@@ -3,10 +3,10 @@
   "description": "",
   "color": "#CEFF33",
   "clues":{
-    "1": "Antoine Watteau", 
+    "1": "Antoine Watteau",
     "2": "L'indifférent",
     "3": "Serge Bogoussiavsky"
-  },  
+  },
   "cluesFound": {},
   "questions": [
     {
@@ -70,7 +70,7 @@
         "Perdu. Passe à l'étape suivante ! Le jeu continu, il y a encore plein d'indices à découvrir."
       ],
       "indice": 1,
-      "qcmResponse": "Watteau" 
+      "qcmResponse": "Watteau"
     },
     {
       "type": "puzzle",
@@ -155,7 +155,7 @@
       "title": "Etape 6",
       "shortDescription": "#QR Code",
       "stepDescription": "Description QR Code",
-      "info": "",
+      "info": "Qui suis-je",
       "classe": "fa fa-arrow-right",
       "winMsg": "",
       "errorMsg": "",
