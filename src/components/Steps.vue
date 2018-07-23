@@ -7,6 +7,7 @@
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
     <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
+    <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
     <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksEnigme v-on:moreIndex="moreIndex" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
     <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
@@ -44,6 +45,7 @@ import TracksMap from './TracksMap.vue'
 import TracksQcm from './TracksQcm.vue'
 import TracksPuzzle from './TracksPuzzle.vue'
 import TracksAudio from './TracksAudio.vue'
+import TracksVideo from './TracksVideo.vue'
 import TracksQrcode from './TracksQrcode.vue'
 import TracksEnigme from './TracksEnigme.vue'
 import TracksFinal from './TracksFinal.vue'
@@ -222,6 +224,7 @@ export default {
     TracksQcm,
     TracksPuzzle,
     TracksAudio,
+    TracksVideo,
     TracksQrcode,
     TracksEnigme,
     TracksFinal,
