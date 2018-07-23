@@ -1,16 +1,17 @@
 /* eslint-disable */
 <template>
   <div id="steps">
-    <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
-    <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
-    <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
-    <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
-    <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
-    <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
-    <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksEnigme v-on:moreIndex="moreIndex" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
+    <TracksEnigmeMap v-on:moreIndex="next" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigmeMap'"></TracksEnigmeMap>
     <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
+    <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
+    <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
+    <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
+    <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
+    <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
+    <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
+    <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
     {{questions[stepIndex].response}}
     {{questions[stepIndex].type}}
     {{stepIndex}}
@@ -38,18 +39,20 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-import TracksIntro from './TracksIntro.vue'
-import TracksMapIn from './TracksMapIn.vue'
-import TracksMap from './TracksMap.vue'
-import TracksQcm from './TracksQcm.vue'
-import TracksPuzzle from './TracksPuzzle.vue'
-import TracksAudio from './TracksAudio.vue'
-import TracksVideo from './TracksVideo.vue'
-import TracksQrcode from './TracksQrcode.vue'
-import TracksEnigme from './TracksEnigme.vue'
-import TracksFinal from './TracksFinal.vue'
 import baseCheckbox from './baseCheckbox.vue'
+import draggable from 'vuedraggable'
+import TracksAudio from './TracksAudio.vue'
+import TracksEnigme from './TracksEnigme.vue'
+import TracksEnigmeMap from './TracksEnigmeMap.vue'
+import TracksFinal from './TracksFinal.vue'
+import TracksIntro from './TracksIntro.vue'
+import TracksMap from './TracksMap.vue'
+import TracksMapIn from './TracksMapIn.vue'
+import TracksPuzzle from './TracksPuzzle.vue'
+import TracksQcm from './TracksQcm.vue'
+import TracksQrcode from './TracksQrcode.vue'
+import TracksVideo from './TracksVideo.vue'
+
 import $ from 'jquery'
 var apiURL = 'img/louvre/content.json'
 
@@ -57,33 +60,22 @@ export default {
   name: 'Steps',
   data () {
     return {
-      checkedNames: '',
-      titleBold: [],
-      title: '',
-      description2: '',
-      color: '',
-      stepIndex: 0,
-      questions: [],
       audioResponse: '',
-      items: [],
+      checkedNames: '',
       cluesFound: {},
-      left: 'fa fa-arrow-left',
+      color: '',
       error: false,
-      errorMsg: '',
-      errorNb: 0,
       errorInfo: {
         'nb': this.errorNb,
         'stepIndex': this.stepIndex,
         'stepEnigme': 0
       },
+      errorMsg: '',
+      errorNb: 0,
+      questions: [],
+      stepIndex: 0,
+      title: '',
       win: false,
-      res: [],
-      editable: true,
-      isDragging: false,
-      delayedDragging: false,
-      stepAllow: [
-        true
-      ]
     }
   },
   created: function () {
@@ -126,7 +118,6 @@ export default {
         this.color = data.color
         this.questions = data.questions
         this.clues = data.clues
-        console.log(this.title2, this.description2, this.color2)
       })
     },
     playSound (sound) {
@@ -213,6 +204,9 @@ export default {
           this.errorNb++
         }
       }
+      if (this.questions[this.stepIndex].type === 'next') {
+        this.errorInfo['stepEnigme'] = this.stepIndex
+      }
       this.stepIndex = this.stepIndex + 1
     }
   },
@@ -227,6 +221,7 @@ export default {
     TracksVideo,
     TracksQrcode,
     TracksEnigme,
+    TracksEnigmeMap,
     TracksFinal,
     baseCheckbox
   }
