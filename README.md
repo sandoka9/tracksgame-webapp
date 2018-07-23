@@ -1,6 +1,6 @@
 # tracksgame-app
 
-
+#Video
 https://stackoverflow.com/questions/40974962/html-video-not-playing-with-vue-js-2
 new Vue({
   el: "#app",
@@ -17,30 +17,30 @@ https://codepen.io/LostKobrakai/pen/KVXQBg
 Générateur de video :
 http://www.supportduweb.com/generateur-balise-video-html5-code-mp4-webm-ogg-lecteur-video-firefox-chrome-internet-explorer-autoplay.html
 
-audio
+#Audio
 
-Drag and drop
+#Drag and drop
 
-Nav bar
+#Nav bar
 
-Archi des fichiers d'un projet vue
+#Project Vuejs files content
 
-Communication parents enfants
+#Parents Child Communication
 
-Communication enfants parents
+#Children parents Communication
 
-Geolocalisation
+#Geolocalisation
 
-Compasants externe
+#External components
 
-Implémenter un compasant vuejs dans un projet autre
+#Implement VueJs Component in an other framework project
 
-CSS Nav Bar Burger menu
+#CSS Nav Bar Burger menu
 https://www.louistiti.fr/tutoriel-html-javascript-css-menu-responsive-icone-hamburger/47
 
-CSS Font family
+#CSS Font family
 
-CSS responsive
+#CSS responsive
 
-CSS image 
+#CSS image 
 
