@@ -13,7 +13,7 @@
       </div>
       <div class="enigmeMap">
             <ul>
-              <li class="randomImg" v-for="element in cluesFound" :key="item.indice" >
+              <li class="randomImg" v-for="element in cluesFound" :key="element.indice" >
                 <img :src="element.image" />
               </li>
             </ul>

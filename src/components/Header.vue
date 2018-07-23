@@ -30,32 +30,31 @@ export default {
       activator: true,
       isDisplay: 'none',
       showNavBar: true,
-      content = document.querySelector('#hamburger-content')
-      sidebarBody = document.querySelector('#hamburger-sidebar-body')
-      button = document.querySelector('#hamburger-button');
-      overlay = document.querySelector('#hamburger-overlay');
-      activatedClass = 'hamburger-activated';
-
+      content: document.querySelector('#hamburger-content'),
+      sidebarBody: document.querySelector('#hamburger-sidebar-body'),
+      button: document.querySelector('#hamburger-button'),
+      overlay: document.querySelector('#hamburger-overlay'),
+      activatedClass: 'hamburger-activated'
     }
   },
   mounted: function () {
-    sidebarBody.innerHTML = content.innerHTML
+    this.sidebarBody.innerHTML = this.content.innerHTML
   },
   methods: {
-    activeClass : function (e) {
+    activeClass: function (e) {
       e.preventDefault()
-      this.parentNode.classList.add(activatedClass)
+      this.parentNode.classList.add(this.activatedClass)
     },
-    removeClass : function (e) {
-      if (this.parentNode.classList.contains(activatedClass))
-      {
-        if (e.repeat === false && e.which === 27)
-          this.parentNode.classList.remove(activatedClass)
+    removeClass: function (e) {
+      if (this.parentNode.classList.contains(this.activatedClass)) {
+        if (e.repeat === false && e.which === 27) {
+          this.parentNode.classList.remove(this.activatedClass)
+        }
       }
     },
-    removeOverlayClass : function (e) {
+    removeOverlayClass: function (e) {
       e.preventDefault()
-      this.parentNode.classList.remove(activatedClass)
+      this.parentNode.classList.remove(this.activatedClass)
     }
   }
 }
