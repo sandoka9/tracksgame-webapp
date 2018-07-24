@@ -157,7 +157,7 @@
       "stepDescription": "Description QR Code",
       "info": "Qui suis-je",
       "classe": "fa fa-arrow-right",
-      "winMsg": "",
+      "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "",
       "lat":"",

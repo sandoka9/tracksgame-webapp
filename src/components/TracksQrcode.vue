@@ -5,12 +5,12 @@
       <div class="short-description">{{content.shortDescription}}</div>
       <div class="description">{{content.stepDescription}}</div>
       <div class="info">{{content.info}}</div>
-      <QrcodeReader @decode="onDecode" @init="onInit">
+      <!-- <QrcodeReader @decode="onDecode" @init="onInit">
         <div class="decoded-content">{{ contentCode }}</div>
         <LoadingIndicator v-show="loading" />
-      </QrcodeReader>
+      </QrcodeReader> -->
       <div>
-        <input class="response form-control" type="text" name="response" v-bind:placeholder="content.info" v-model="response"/>
+        <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
       </div>
     </div>
       Hello
@@ -18,11 +18,10 @@
 </template>
 
 <script>
-import 'vue-qrcode-reader/dist/vue-qrcode-reader.css'
-import { QrcodeReader } from 'vue-qrcode-reader'
+/* import 'vue-qrcode-reader/dist/vue-qrcode-reader.css'
+/* import { QrcodeReader } from 'vue-qrcode-reader' */
 /* import InitHandler from '@/mixins/InitHandler' */
-/* https://pulilab.github.io/vue-qr-reader/#/quickstart */
-/* http://api.qrserver.com/v1/create-qr-code/?data=test!&size=100x100 */
+
 export default {
   name: 'TracksQcm',
   props: {
@@ -72,11 +71,11 @@ export default {
       }
     }
   },
-  components: {
-    QrcodeReader
-  },
   model: {
     event: 'change'
+  },
+  components: {
+    /* QrcodeReader */
   }
 }
 </script>

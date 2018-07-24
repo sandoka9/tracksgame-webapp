@@ -47,9 +47,10 @@ export default {
 .radiobtn {
     top: 0;
     left: 0;
-    width: 40px;
-    height: 40px;
+    width: 5px;
+    height: 5px;
     background-color: #eee;
     border-radius: 50%;
+    size: 1rem;
 }
 </style>

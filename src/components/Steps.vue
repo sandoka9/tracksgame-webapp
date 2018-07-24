@@ -12,9 +12,22 @@
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
     <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
+    <br/>
+    Questions: {{questions[stepIndex]}}
+    <br/>
     {{questions[stepIndex].response}}
+    <br/>
+    {{questions[stepIndex].qrResponse}}
+    <br/>
     {{questions[stepIndex].type}}
+    <br/>
     {{stepIndex}}
+    <br/>
+    Clues: {{clues}}
+    <br/>
+    Error: {{error}}
+    <br/>
+    Clues['0']: {{clues[1]}}
     <div class="error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
       {{questions[stepIndex].errorMsg[errorNb]}}
       <div class="indice">Close</div>
@@ -23,16 +36,16 @@
       {{questions[stepIndex].errorMsg[0]}}
       <div class="indice">Close</div>
     </div>
-    <div class="win-msg" v-if="win == true"  v-on:click="close">
+    <div class="win-msg" v-if="win == true" v-on:click="close" >
       {{questions[stepIndex].winMsg}}
-      <div class="indice">{{clues[0]}}</div>
+      <div class="indice">{{clues[cluesKey]}}</div>
     </div>
-    <div v-on:click="next">
+    <div v-on:click="nextStep">
       <span class="suite-text" v-if="questions[stepIndex].type == 'map-in'">Visualiser la carte</span>
       <i :class="questions[stepIndex].classe"></i>
     </div>
-    <div v-on:click="previous" v-if="stepIndex > 2">
-      <i :class="left"></i>
+    <div v-on:click="previous" v-if="stepIndex > 0">
+      <i class="fa fa-arrow-left"></i>
     </div>
   </div>
 
@@ -63,6 +76,7 @@ export default {
       audioResponse: '',
       checkedNames: '',
       cluesFound: {},
+      cluesKey: 0,
       color: '',
       error: false,
       errorInfo: {
@@ -75,7 +89,7 @@ export default {
       questions: [],
       stepIndex: 0,
       title: '',
-      win: false,
+      win: false
     }
   },
   created: function () {
@@ -94,14 +108,25 @@ export default {
       }
       this.error = false
     },
+    getClues: function () {
+      if (typeof (this.questions[this.stepIndex].indice) !== 'undefined') {
+        return this.questions[this.stepIndex].indice
+      } else {
+        console.log(Object.keys(this.clues))
+        console.log(Object.keys(this.clues)[0])
+        return (Object.keys(this.clues)[0] ? Object.keys(this.clues)[0] : null)
+      }
+    },
     close: function () {
-      var cluesKey = this.questions[this.stepIndex].indice
-      if (this.error === true) {
+      if (this.error === true && this.errorNb < 3) {
+        this.error = false
+      } else if (this.error === true) {
+        this.stepIndex++
         this.error = false
       } else {
-        console.log(' cluesKey ' + cluesKey)
-        this.cluesFound[cluesKey] = this.clues[cluesKey] /* string() */
-        delete this.clues[cluesKey]
+        console.log(' cluesKey ' + this.cluesKey)
+        this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
+        delete this.clues[this.cluesKey]
         if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
           this.stepIndex = this.errorInfo['stepEnigme']
         } else {
@@ -126,64 +151,53 @@ export default {
         audio.play()
       }
     },
-    next: function () {
+    nextStep: function () {
+      this.cluesKey = this.getClues()
+      if (this.questions[this.stepIndex].type === 'map') {
+        this.stepIndex++
+        return
+      }
+      if (this.questions[this.stepIndex].type === 'map-in') {
+        this.stepIndex++
+        return
+      }
+      if (this.questions[this.stepIndex].type === 'intro') {
+        this.stepIndex++
+        return
+      }
       if (this.questions[this.stepIndex].type === 'qcm') {
-        if (this.checkedNames !== this.questions[this.stepIndex].qcmResponse && this.errorNb === 2) {
-          /* Step 5 */
-          this.error = true
-          this.errorNb = 0
-          /* this.errorMsg = 'Perdu. Passe à l\'étape suivante ! Le jeu continu, il y a encore plein d\'indices à découvrir ' */
-        } else if (this.checkedNames !== this.questions[this.stepIndex].qcmResponse && this.errorNb === 1) {
-          /* this.errorMsg = 'Non, ce n\'est pas ' + this.checkedNames + '. Attention, C\'est ta dernière chance !' */
-          this.stepIndex--
-          this.error = true
-          this.errorNb++
-        } else if (this.checkedNames !== this.questions[this.stepIndex].qcmResponse) {
-          this.stepIndex--
-          this.error = true
-          this.errorNb++
-          /* this.errorMsg = 'Non, ce n\'est pas ' + this.checkedNames + '. Retente ta chance !' */
-          /* Step 4+1 */
-        } else {
+        if (this.checkedNames === this.questions[this.stepIndex].qcmResponse) {
           this.win = true
-          this.stepIndex--
           this.error = false
+        } else {
+          this.error = true
+          this.errorNb++
         }
+        return
       }
       if (this.questions[this.stepIndex].type === 'puzzle') {
         for (var i = 1; i < 9; i++) {
+          console.log('i : ' + this.questions[this.stepIndex].puzzleImage[i].order)
+          console.log('i-1 : ' + this.questions[this.stepIndex].puzzleImage[i - 1].order)
           if (this.questions[this.stepIndex].puzzleImage[i].order < this.questions[this.stepIndex].puzzleImage[i - 1].order) {
             this.error = true
-            /* this.errorMsg = 'Non, essaie encore une fois' */
             this.errorNb++
-            this.stepIndex--
-            break
+            return
           }
         }
-        if (this.error === false) {
-          this.win = true
-          this.stepIndex--
-        } else if (this.errorNb > 2) {
-          this.error = false
-          this.errorNb = 0
-          this.stepIndex++
-        }
+        this.win = true
+        this.error = false
+        return
       }
       if (this.questions[this.stepIndex].type === 'audio') {
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].audioResponse) {
           this.win = true
-          this.stepIndex--
           this.error = false
-        } else if (this.stepIndex === 5 && this.errorNb < 3) {
-          this.stepIndex--
+        } else {
           this.error = true
           this.errorNb++
-        /* this.errorMsg = 'Petit indice supplémentaire, j\'adore les clairs de lune...' */
-        } else if (this.stepIndex === 5) {
-          this.error = true
-          this.errorNb++
-          /* this.errorMsg = 'Non toujours pas.' */
         }
+        return
       }
       if (this.questions[this.stepIndex].type === 'qrcode') {
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].qrResponse) {
@@ -193,8 +207,10 @@ export default {
           this.error = true
           this.errorNb++
         }
+        return
       }
       if (this.questions[this.stepIndex].type === 'enigme') {
+        console.log('enigme')
         this.errorInfo['stepEnigme'] = this.stepIndex
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].enigmeResponse) {
           this.win = true
@@ -203,11 +219,11 @@ export default {
           this.error = true
           this.errorNb++
         }
+        return
       }
       if (this.questions[this.stepIndex].type === 'next') {
         this.errorInfo['stepEnigme'] = this.stepIndex
       }
-      this.stepIndex = this.stepIndex + 1
     }
   },
   components: {
@@ -229,11 +245,11 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h2 {
+<style>
+h3 {
     font-family: fantasy;
     margin-top: 1vh;
-    font-size: 4rem;
+    font-size: 1rem;
 }
 
 button.btn.btn-light {
@@ -251,8 +267,8 @@ button.btn.btn-light {
 
 .description-bloc {
   font-size:0.5rem; /*  1.5rem; */
-  background-color: #FFE4C4; /* #CEFF33; */
-  min-height: 70vh;
+  /* background-color: #FFE4C4; /* #CEFF33; */
+  /* min-height: 70vh; */
   padding-top: 5vh;
   padding-left: 1vh;
 }
@@ -285,7 +301,7 @@ button.btn.btn-light {
 }
 
 .fa-arrow-left {
-  font-size: 3rem;
+  font-size: 1rem;
   float: left;
   margin-top: 7vh;
   padding-right:1vh;

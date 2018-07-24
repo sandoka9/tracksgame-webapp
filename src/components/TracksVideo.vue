@@ -6,30 +6,22 @@
       <div class="description">{{content.stepDescription}}</div>
       <div class="info">{{content.info}}</div>
       <div class="fullscreen">
-      	<video v-el:video controls
-      				 :poster="current.thumb"
-      				 @ended.prevent="switchToNext"
-      				 @mousemove="showThumbs">
-          <source v-for='(type, src) in current.video'
-      						:src="src" :type="type">
-      		HTML5 Video seems to be not supported in your browser.
-      	</video>
+        <video v-el:video controls :poster="current.thumb" @ended.prevent="switchToNext" @mousemove="showThumbs">
+          <source v-for='(type, src) in current.video' :src="src" :type="type" v-bind:key="src" >
+                  HTML5 Video seems to be not supported in your browser.
+        </video>
       </div>
-      <ul class="popover"
-      		v-show="showThumbnails">
-      	<li v-for='video in videos'
-      			v-show='$index !== currentIndex'>
-      		<a :href="firstSource(video.video)"
-      			 @click.prevent="setCurrent($index)">
-      			<img :src="video.thumb" alt="" />
-      		</a>
-      	</li>
+      <ul class="popover" v-show="showThumbnails">
+          <li v-for='video in videos' v-bind:key="video.video" v-show='$index !== currentIndex'>
+            <a :href="firstSource(video.video)"
+          @click.prevent="setCurrent($index)">
+             <img :src="video.thumb" alt="" />
+          </a>
+        </li>
       </ul>
       <div v-show='loader'>
-      	<div class="loader">
-      		<div class="loader__inner"
-      				 :class="{'loader__inner--active': loader}">
-          </div>
+        <div class="loader">
+          <div class="loader__inner" :class="{'loader__inner--active': loader}"></div>
         </div>
       </div>
       <div>
@@ -115,7 +107,6 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
-
 .fullscreen{
   width: 100%;
   height: 100%;
