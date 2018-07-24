@@ -2,7 +2,7 @@
 <template>
   <div id="steps">
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
-    <TracksEnigme v-on:moreIndex="moreIndex" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
+    <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
     <TracksEnigmeMap v-on:moreIndex="next" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigmeMap'"></TracksEnigmeMap>
     <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
     <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
@@ -36,9 +36,12 @@
       {{questions[stepIndex].errorMsg[0]}}
       <div class="indice">Close</div>
     </div>
-    <div class="win-msg" v-if="win == true" v-on:click="close" >
+    <div class="win-msg" v-if="win == true && cluesKey > 0" v-on:click="close" >
       {{questions[stepIndex].winMsg}}
       <div class="indice">{{clues[cluesKey]}}</div>
+    </div>
+    <div class="win-msg" v-else-if="win == true" v-on:click="close" >
+      Vous avez récupéré tous les indices. Maintenant à vous de jouer !
     </div>
     <div v-on:click="nextStep">
       <span class="suite-text" v-if="questions[stepIndex].type == 'map-in'">Visualiser la carte</span>
@@ -88,6 +91,7 @@ export default {
       errorNb: 0,
       questions: [],
       stepIndex: 0,
+      stepIndexBonus: 0,
       title: '',
       win: false
     }
@@ -98,7 +102,11 @@ export default {
   methods: {
     moreIndex () {
       this.errorInfo['stepEnigme'] = this.stepIndex
-      this.stepIndex = this.stepIndex + 2
+      if (this.stepIndexBonus > 0) {
+        this.stepIndex = this.stepIndexBonus + 1
+      } else {
+        this.stepIndex = this.stepIndex + 2
+      }
     },
     previous: function () {
       if (this.errorInfo['stepEnigme'] !== 0 && this.stepIndex > this.errorInfo['stepEnigme'] + 1) {
@@ -109,11 +117,12 @@ export default {
       this.error = false
     },
     getClues: function () {
-      if (typeof (this.questions[this.stepIndex].indice) !== 'undefined') {
+      if (this.questions[this.stepIndex].indice !== '') {
+        console.log('defined' + this.questions[this.stepIndex].indice)
         return this.questions[this.stepIndex].indice
       } else {
-        console.log(Object.keys(this.clues))
-        console.log(Object.keys(this.clues)[0])
+        console.log('Object' + Object.keys(this.clues))
+        console.log('Clues First' + Object.keys(this.clues)[0])
         return (Object.keys(this.clues)[0] ? Object.keys(this.clues)[0] : null)
       }
     },
@@ -128,6 +137,7 @@ export default {
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
         delete this.clues[this.cluesKey]
         if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
+          this.stepIndexBonus = this.stepIndex
           this.stepIndex = this.errorInfo['stepEnigme']
         } else {
           this.stepIndex++
@@ -200,6 +210,8 @@ export default {
         return
       }
       if (this.questions[this.stepIndex].type === 'qrcode') {
+        console.log('qrcode')
+        console.log(this.cluesKey)
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].qrResponse) {
           this.win = true
           this.error = false

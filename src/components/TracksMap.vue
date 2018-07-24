@@ -31,7 +31,7 @@ export default {
       this.geolocate(this.markCurrentPosition)
     }
     script.async = true
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAmtwKb3FBRt0GnIWs8tJOzQhGTyUMyDPc'
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDo7xfcRgmf05fOijcTn51TJt31j8e7VjM'
     document.head.appendChild(script)
   },
   /* eslint-enable */

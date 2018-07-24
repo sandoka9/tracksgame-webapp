@@ -166,6 +166,23 @@
       "qrCode": "Texte QR Code",
       "qrResponse": "res",
       "response": ""
+    },
+    {
+      "type": "video",
+      "title": "Etape 7",
+      "shortDescription": "#Video Short Desc",
+      "stepDescription": "Description Video",
+      "info": "Qui suis-je",
+      "classe": "fa fa-arrow-right",
+      "winMsg": "Voici ton nouvel indice",
+      "errorMsg": "",
+      "indice": "",
+      "lat":"",
+      "long":"",
+      "puzzleImage":"",
+      "qrCode": "",
+      "qrResponse": "res",
+      "response": ""
     }
   ]
 }

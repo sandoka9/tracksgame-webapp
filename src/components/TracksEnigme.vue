@@ -15,7 +15,7 @@
         <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
       </div>
     <div> <!--  v-if="stepIndex == 6 || stepIndex == 7 " -->
-    <button type="button" class="btn btn-light" v-on:click="$emit('moreIndex')" v-if="cluesKey !== null">Découvrir de nouveaux indices</button>
+    <button type="button" class="btn btn-light" v-on:click="$emit('moreIndex')" v-if="cluesKey > 1">{{cluesKey}} + Découvrir de nouveaux indices</button>
     </div>
     </div>
   </div>
@@ -27,7 +27,8 @@ export default {
   name: 'TracksIntro',
   props: {
     content: Object,
-    cluesFound: Object
+    cluesFound: Object,
+    cluesKey: String
   },
   data () {
     return {
