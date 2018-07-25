@@ -3,7 +3,7 @@
   <div id="steps">
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
     <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
-    <TracksEnigmeMap v-on:moreIndex="next" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigmeMap'"></TracksEnigmeMap>
+    <TracksEnigmeMap  v-on:moreIndex="moreIndex"  v-on:nextStep="nextStep" v-bind:cluesKey="cluesKey" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigmeMap'"></TracksEnigmeMap>
     <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
     <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
     <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
@@ -38,7 +38,8 @@
     </div>
     <div class="win-msg" v-if="win == true && cluesKey > 0" v-on:click="close" >
       {{questions[stepIndex].winMsg}}
-      <div class="indice">{{clues[cluesKey]}}</div>
+      <div class="indice" v-if="enigmaType == 'map'">{{clues[cluesKey]}}</div>
+      <div class="indice" v-else><img :src="clues[cluesKey]" /> </div>
     </div>
     <div class="win-msg" v-else-if="win == true" v-on:click="close" >
       Vous avez récupéré tous les indices. Maintenant à vous de jouer !
@@ -79,8 +80,9 @@ export default {
       audioResponse: '',
       checkedNames: '',
       cluesFound: {},
-      cluesKey: 0,
+      cluesKey: '0',
       color: '',
+      enigmaType: '',
       error: false,
       errorInfo: {
         'nb': this.errorNb,
@@ -133,7 +135,6 @@ export default {
         this.stepIndex++
         this.error = false
       } else {
-        console.log(' cluesKey ' + this.cluesKey)
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
         delete this.clues[this.cluesKey]
         if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
@@ -153,6 +154,7 @@ export default {
         this.color = data.color
         this.questions = data.questions
         this.clues = data.clues
+        this.enigmaType = data.enigmaType
       })
     },
     playSound (sound) {
@@ -221,12 +223,34 @@ export default {
         }
         return
       }
+      if (this.questions[this.stepIndex].type === 'video') {
+        console.log('video')
+        console.log(this.cluesKey)
+        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].response) {
+          this.win = true
+          this.error = false
+        } else {
+          this.error = true
+          this.errorNb++
+        }
+        return
+      }
       if (this.questions[this.stepIndex].type === 'enigme') {
         console.log('enigme')
         this.errorInfo['stepEnigme'] = this.stepIndex
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].enigmeResponse) {
-          this.win = true
-          this.error = false
+          this.stepIndex++
+        } else {
+          this.error = true
+          this.errorNb++
+        }
+        return
+      }
+      if (this.questions[this.stepIndex].type === 'enigmeMap') {
+        console.log('enigmeMap')
+        this.errorInfo['stepEnigme'] = this.stepIndex
+        if (this.questions[this.stepIndex].response === true) {
+          this.stepIndex++
         } else {
           this.error = true
           this.errorNb++

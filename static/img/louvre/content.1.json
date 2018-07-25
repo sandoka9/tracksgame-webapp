@@ -3,13 +3,12 @@
   "description": "",
   "color": "#CEFF33",
   "clues":{
-    "1": "img/louvre/Louvre-1.png",
-    "2": "img/louvre/Louvre-2.png",
-    "3": "img/louvre/Louvre-3.png",
-    "4": "img/louvre/Louvre-4.png"
+    "1": "Antoine Watteau",
+    "2": "L'indifférent",
+    "3": "Serge Bogoussiavsky"
   },
   "cluesFound": {},
-  "enigmaType": "map",
+  "enigmaType": "response",
   "questions": [
     {
       "type": "intro",
@@ -118,25 +117,25 @@
       "response": ""
     },
     {
-      "type": "enigmeMap",
+      "type": "enigme",
       "title": "Etape 5",
       "shortDescription": "#Le dénouement",
       "stepDescription": "Es-tu en mesure de percer le mystère ? Sers toi des indices pour compléter le message ci-dessous",
       "info": [
-        {"text": "" , "indice":"1"},
-        {"text": "" , "indice":"2"},
-        {"text": "" , "indice":"3"},
-        {"text": "" , "indice":"4"}
+        {"text": "Le" , "indice":"3"},
+        {"text": "juin" , "indice":"2"},
+        {"text": "alias Bog dérobait " , "indice":"1"},
+        {"text": "d'" , "indice":"4"}
       ],
       "classe": "fa fa-check",
       "winMsg": "Félicitation ! Tu as résolue l'énigme",
       "errorMsg": "",
       "indice": "",
-      "lat":"48.8472576",
-      "long":"2.3052288",
+      "lat":"",
+      "long":"",
       "puzzleImage":"",
-      "enigmeResponse": "true",
-      "response": "false"
+      "enigmeResponse": "res",
+      "response": ""
     },
     {
       "type": "final",

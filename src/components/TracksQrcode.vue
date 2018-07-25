@@ -5,10 +5,10 @@
       <div class="short-description">{{content.shortDescription}}</div>
       <div class="description">{{content.stepDescription}}</div>
       <div class="info">{{content.info}}</div>
-      <!-- <QrcodeReader @decode="onDecode" @init="onInit">
+      <QrcodeReader @decode="onDecode" @init="onInit">
         <div class="decoded-content">{{ contentCode }}</div>
         <LoadingIndicator v-show="loading" />
-      </QrcodeReader> -->
+      </QrcodeReader>
       <div>
         <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
       </div>
@@ -18,8 +18,8 @@
 </template>
 
 <script>
-/* import 'vue-qrcode-reader/dist/vue-qrcode-reader.css'
-/* import { QrcodeReader } from 'vue-qrcode-reader' */
+import 'vue-qrcode-reader/dist/vue-qrcode-reader.css'
+import { QrcodeReader } from 'vue-qrcode-reader'
 /* import InitHandler from '@/mixins/InitHandler' */
 
 export default {
@@ -75,7 +75,7 @@ export default {
     event: 'change'
   },
   components: {
-    /* QrcodeReader */
+    QrcodeReader
   }
 }
 </script>

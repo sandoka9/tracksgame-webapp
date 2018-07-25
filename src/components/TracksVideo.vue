@@ -5,25 +5,23 @@
       <div class="short-description">{{content.shortDescription}}</div>
       <div class="description">{{content.stepDescription}}</div>
       <div class="info">{{content.info}}</div>
-      <div class="fullscreen">
-        <video v-el:video controls :poster="current.thumb" @ended.prevent="switchToNext" @mousemove="showThumbs">
-          <source v-for='(type, src) in current.video' :src="src" :type="type" v-bind:key="src" >
-                  HTML5 Video seems to be not supported in your browser.
-        </video>
-      </div>
-      <ul class="popover" v-show="showThumbnails">
-          <li v-for='video in videos' v-bind:key="video.video" v-show='$index !== currentIndex'>
-            <a :href="firstSource(video.video)"
-          @click.prevent="setCurrent($index)">
-             <img :src="video.thumb" alt="" />
-          </a>
-        </li>
-      </ul>
-      <div v-show='loader'>
-        <div class="loader">
-          <div class="loader__inner" :class="{'loader__inner--active': loader}"></div>
-        </div>
-      </div>
+      <videoPlayer class="video-player-box"
+               ref="videoPlayer"
+               :options="playerOptions"
+               :playsinline="true"
+               customEventName="customstatechangedeventname"
+               @play="onPlayerPlay($event)"
+               @pause="onPlayerPause($event)"
+               @ended="onPlayerEnded($event)"
+               @waiting="onPlayerWaiting($event)"
+               @playing="onPlayerPlaying($event)"
+               @loadeddata="onPlayerLoadeddata($event)"
+               @timeupdate="onPlayerTimeupdate($event)"
+               @canplay="onPlayerCanplay($event)"
+               @canplaythrough="onPlayerCanplaythrough($event)"
+               @statechanged="playerStateChanged($event)"
+               @ready="playerReadied">
+      </videoPlayer>
       <div>
         <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
       </div>
@@ -31,7 +29,15 @@
   </div>
 </template>
 
+<link rel="stylesheet" href="path/to/video.js/dist/video-js.css"/>
+<script type="text/javascript" src="path/to/video.min.js"></script>
+<script type="text/javascript" src="path/to/vue.min.js"></script>
+<script type="text/javascript" src="path/to/dist/vue-video-player.js"></script>
+
 <script>
+import 'video.js/dist/video-js.css'
+import { videoPlayer } from 'vue-video-player'
+
 export default {
   name: 'TracksQcm',
   props: {
@@ -40,61 +46,76 @@ export default {
   data () {
     return {
       msg: 'Bienvenue sur la map',
-      videos: [
-        {
-          thumb: 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.png',
-          video: {
-            'video/mp4': 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.mp4',
-            'video/webm': 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm',
-            'video/ogg': 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm'
-          }
-        }
-      ],
-      currentIndex: 0,
-      timeout: null,
-      showThumbnails: false,
-      forceShow: false,
-      loader: false
+      playerOptions: {
+        // videojs options
+        muted: true,
+        language: 'en',
+        playbackRates: [0.7, 1.0, 1.5, 2.0],
+        sources: [{
+          type: 'video/mp4',
+          src: 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm'
+        }],
+        poster: 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.png'
+      }
+      /*  thumb: 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.png',
+        video: {
+          'video/mp4': 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.mp4',
+          'video/webm': 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm',
+          'video/ogg': 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm'
+      */
     }
   },
+  mounted () {
+    console.log('this is current player instance object', this.player)
+  },
+  components: {
+    videoPlayer
+  },
   computed: {
-    current: function () {
-      return this.videos[this.currentIndex]
+    player () {
+      return this.$refs.videoPlayer.player
     }
   },
   methods: {
-    firstSource: function (obj) {
-      return obj['video/mp4']
+    // listen event
+    onPlayerPlay (player) {
+      // console.log('player play!', player)
     },
-    setCurrent: function (index) {
-      this.currentIndex = index
+    onPlayerPause (player) {
+      // console.log('player pause!', player)
     },
-    switchToNext: function () {
-      this.currentIndex++
-      if (this.currentIndex === this.videos.length) {
-        this.currentIndex = 0
-      }
+    // ...player event
+    // or listen state event
+    playerStateChanged (playerCurrentState) {
+      // console.log('player current update state', playerCurrentState)
     },
-    showThumbs: function () {
-      this.showThumbnails = true
-      this.hideThumbs()
+    // player is ready
+    playerReadied (player) {
+      console.log('the player is readied', player)
+      // you can use it to do something...
+      // player.[methods]
     },
-    hideThumbs: function () { /* debounce( */
-      this.showThumbnails = false
-    } /* , 1000) */
-  },
-  watch: {
-    current: function (newVal, oldVal) {
-      this.$els.video.load()
-      this.loader = true
-      setTimeout(function () {
-        this.$els.video.play()
-        this.loader = false
-      }.bind(this), 1000)
+    onPlayerEnded (player) {
+    },
+    onPlayerWaiting (player) {
+    },
+    onPlayerPlaying (player) {
+    },
+    onPlayerLoadeddata (player) {
+    },
+    onPlayerTimeupdate (player) {
+    },
+    onPlayerCanplay (player) {
+    },
+    onPlayerCanplaythrough (player) {
+    },
+    playerStateChanged (player) {
     }
   },
-  ready: function () {
-    this.$els.video.play()
+  watch: {
+  },
+  model: {
+    event: 'change'
   }
 }
 </script>
@@ -107,6 +128,12 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+button {
+  margin-top: 6em;
+  margin-left: 10em;
+}
+
 .fullscreen{
   width: 100%;
   height: 100%;

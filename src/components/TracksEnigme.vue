@@ -12,7 +12,7 @@
         <input type="text" class="input-solution" name="item.indice" v-else  /> -->
       </div>
       <div>
-        <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
+        <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="content.response" v-on:change="$emit('nextStep', $event.target.value)"/>
       </div>
     <div> <!--  v-if="stepIndex == 6 || stepIndex == 7 " -->
     <button type="button" class="btn btn-light" v-on:click="$emit('moreIndex')" v-if="cluesKey > 1">{{cluesKey}} + Découvrir de nouveaux indices</button>

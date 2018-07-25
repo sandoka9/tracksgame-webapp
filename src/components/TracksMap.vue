@@ -52,13 +52,14 @@ export default {
         title: 'You'})
       mymarker.setMap(this.gmap)
       console.log('marker created')
+      console.log('pos', this.latitude, this.longitude)
     }
     /* eslint-enable */
   }
 }
 </script>
 
-<style>
+<style scoped>
  #gmap {
    width: 90%;
    height: 600px;
