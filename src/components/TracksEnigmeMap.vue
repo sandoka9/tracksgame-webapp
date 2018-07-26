@@ -70,9 +70,9 @@ export default {
         position: {lat: this.latitude, lng: this.longitude},
         title: 'You'})
       mymarker.setMap(this.gmap)
-      console.log(this.latitude, this.x+1, this.longitude,this.y+1)
-      console.log(this.latitude > this.x - 1, this.latitude < this.x + 1, this.longitude > this.y - 1, this.longitude < this.y + 1)
-      if (this.latitude > this.x - 0.5 && this.latitude < this.x + 0.5 && this.longitude > this.y - 0.5 && this.longitude < this.y + 0.5){
+      console.log(this.latitude, this.x+0.001, this.longitude,this.y+0.001)
+      console.log(this.latitude > this.x - 0.001, this.latitude < this.x + 0.001, this.longitude > this.y - 0.001, this.longitude < this.y + 0.001)
+      if (this.latitude > this.x - 0.001 && this.latitude < this.x + 0.001 && this.longitude > this.y - 0.001 && this.longitude < this.y + 0.001){
         console.log('WIN')
         this.content.response = true
         this.$emit('nextStep')

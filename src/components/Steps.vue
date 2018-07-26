@@ -31,6 +31,7 @@
     <div class="win-msg" v-else-if="win == true" v-on:click="close" >
       Vous avez récupéré tous les indices. Maintenant à vous de jouer !
     </div>
+    là
     <div v-on:click="nextStep">
       <span class="suite-text" v-if="questions[stepIndex].type == 'map-in'">Visualiser la carte</span>
       <i :class="questions[stepIndex].classe"></i>
@@ -79,6 +80,8 @@ export default {
       errorMsg: '',
       errorNb: 0,
       questions: [],
+      questionType1: ['map', 'map-in', 'intro'],
+      questionType2: ['audio', 'qrcode', 'video', 'enigme'],
       stepIndex: 0,
       stepIndexBonus: 0,
       stepIndexMax: 0,
@@ -91,40 +94,23 @@ export default {
     this.fetchData()
   },
   methods: {
-    moreIndex () {
-      this.errorInfo['stepEnigme'] = this.stepIndex
-      if (this.stepIndexBonus > 0) {
-        this.stepIndex = this.stepIndexBonus + 1
-      } else {
-        this.stepIndex = this.stepIndex + 2
-      }
-    },
-    previous: function () {
-      if (this.errorInfo['stepEnigme'] !== 0 && this.stepIndex > this.errorInfo['stepEnigme'] + 1) {
-        this.stepIndex = this.stepIndex - 2
-      } else {
-        this.stepIndex--
-      }
-      this.error = false
-    },
-    getClues: function () {
-      if (this.questions[this.stepIndex].indice !== '') {
-        return this.questions[this.stepIndex].indice
-      } else {
-        return (Object.keys(this.clues)[0] ? Object.keys(this.clues)[0] : '')
-      }
-    },
     close: function () {
-      console.log('this.stepIndexMax : ', this.stepIndexMax)
-      console.log('this.stepIndexEnd : ', this.stepIndexEnd)
+      console.log(this.stepIndexEnd)
+      console.log(this.stepIndexMax)
+      if (this.stepIndexBonus === this.stepIndexMax) {
+        this.stepIndexEnd = true
+      }
       if (this.error === true && this.errorNb < 3) {
+        console.log('yes close 1')
         this.error = false
       } else if (this.error === true) {
-        this.stepIndex++
+        console.log('yes close 2')
         this.error = false
+        this.errorNb = 0
+        this.stepIndex++
       } else {
+        console.log('yes close 3')
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
-        console.log('delete', this.clues[this.cluesKey])
         delete this.clues[this.cluesKey]
         if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
           this.stepIndexBonus = this.stepIndex
@@ -133,9 +119,6 @@ export default {
           this.stepIndex++
         }
         this.win = false
-      }
-      if (this.stepIndexBonus === this.stepIndexMax) {
-        this.stepIndexEnd = true
       }
     },
     fetchData: function () {
@@ -150,29 +133,37 @@ export default {
         this.stepIndexMax = this.questions.length - 1
       })
     },
-    playSound (sound) {
-      if (sound) {
-        var audio = new Audio(sound)
-        audio.play()
+    getClues: function () {
+      console.log('getClues')
+      if (this.questions[this.stepIndex].indice !== '') {
+        console.log('getClues indice')
+        return this.questions[this.stepIndex].indice
+      } else {
+        return (Object.keys(this.clues)[0] ? Object.keys(this.clues)[0] : '')
+      }
+    },
+    moreIndex () {
+      this.errorInfo['stepEnigme'] = this.stepIndex
+      if (this.stepIndexBonus > 0) {
+        this.stepIndex = this.stepIndexBonus + 1
+      } else {
+        this.stepIndex = this.stepIndex + 2
       }
     },
     nextStep: function () {
-      var cluesKeyTemp = this.getClues()
+      let cluesKeyTemp = this.getClues()
       this.cluesKey = String(cluesKeyTemp)
-      if (this.questions[this.stepIndex].type === 'map') {
+      if (this.questionType1.indexOf(this.questions[this.stepIndex].type) > -1) {
+        console.log('plop')
         this.stepIndex++
         return
       }
-      if (this.questions[this.stepIndex].type === 'map-in') {
-        this.stepIndex++
-        return
-      }
-      if (this.questions[this.stepIndex].type === 'intro') {
-        this.stepIndex++
-        return
-      }
+      console.log(this.questions[this.stepIndex].type)
       if (this.questions[this.stepIndex].type === 'qcm') {
-        if (this.checkedNames === this.questions[this.stepIndex].qcmResponse) {
+        console.log('yes QCM')
+        console.log(this.checkedNames)
+        if (this.checkedNames === this.questions[this.stepIndex].QResponse) {
+          console.log('WIN')
           this.win = true
           this.error = false
         } else {
@@ -193,50 +184,22 @@ export default {
         this.error = false
         return
       }
-      if (this.questions[this.stepIndex].type === 'audio') {
-        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].audioResponse) {
-          this.win = true
-          this.error = false
-        } else {
-          this.error = true
-          this.errorNb++
-        }
-        return
-      }
-      if (this.questions[this.stepIndex].type === 'qrcode') {
-        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].qrResponse) {
-          this.win = true
-          this.error = false
-        } else {
-          this.error = true
-          this.errorNb++
-        }
-        return
-      }
-      if (this.questions[this.stepIndex].type === 'video') {
-        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].response) {
-          this.win = true
-          this.error = false
-        } else {
-          this.error = true
-          this.errorNb++
-        }
-        return
-      }
-      if (this.questions[this.stepIndex].type === 'enigme') {
-        this.errorInfo['stepEnigme'] = this.stepIndex
-        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].enigmeResponse) {
-          this.stepIndex++
-        } else {
-          this.error = true
-          this.errorNb++
-        }
-        return
-      }
       if (this.questions[this.stepIndex].type === 'enigmeMap') {
-        this.errorInfo['stepEnigme'] = this.stepIndex
-        if (this.questions[this.stepIndex].response === true) {
-          this.stepIndex++
+        if (this.questions[this.stepIndex].response === this.questions[this.stepIndex].QResponse) {
+          this.win = true
+          this.error = false
+        } else {
+          this.error = true
+          this.errorNb++
+        }
+        return
+      }
+      if (this.questionType2.indexOf(this.questions[this.stepIndex].type) > -1) {
+        console.log('yes 1')
+        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].QResponse) {
+          console.log('yes 1')
+          this.win = true
+          this.error = false
         } else {
           this.error = true
           this.errorNb++
@@ -246,22 +209,30 @@ export default {
       if (this.questions[this.stepIndex].type === 'next') {
         this.errorInfo['stepEnigme'] = this.stepIndex
       }
+    },
+    previous: function () {
+      if (this.errorInfo['stepEnigme'] !== 0 && this.stepIndex > this.errorInfo['stepEnigme'] + 1) {
+        this.stepIndex = this.stepIndex - 2
+      } else {
+        this.stepIndex--
+      }
+      this.error = false
     }
   },
   components: {
     draggable,
-    TracksIntro,
-    TracksMapIn,
-    TracksMap,
-    TracksQcm,
-    TracksPuzzle,
+    baseCheckbox,
     TracksAudio,
-    TracksVideo,
-    TracksQrcode,
     TracksEnigme,
     TracksEnigmeMap,
     TracksFinal,
-    baseCheckbox
+    TracksIntro,
+    TracksMapIn,
+    TracksMap,
+    TracksPuzzle,
+    TracksQcm,
+    TracksQrcode,
+    TracksVideo
   }
 }
 </script>
@@ -275,7 +246,7 @@ h3 {
 }
 
 button.btn.btn-light {
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin-top: 10vh;
     margin-left: 14vh;
     margin-right: 10vh;
@@ -288,7 +259,7 @@ button.btn.btn-light {
 }
 
 .description-bloc {
-  font-size:0.5rem; /*  1.5rem; */
+  font-size:1rem; /*  1.5rem; */
   /* background-color: #FFE4C4; /* #CEFF33; */
   /* min-height: 70vh; */
   padding-top: 5vh;
@@ -330,7 +301,7 @@ button.btn.btn-light {
 }
 
 .fa.fa-play-circle-o {
-    font-size: 6rem;
+    font-size: 1rem;
 }
 
 .flip-list-move {
@@ -369,7 +340,7 @@ button.btn.btn-light {
 
 input.input-solution {
     border: none;
-    font-size: x-large;
+    font-size: 1rem;
     background: #e9fcab;
 }
 
@@ -428,11 +399,11 @@ input.input-solution {
 .response {
   margin-right: 5vh;
   max-width: 35vh;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .suite-text {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
   padding-left: 3vh;
   padding-right: 7vh;

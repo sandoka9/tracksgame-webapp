@@ -53,16 +53,10 @@ export default {
         playbackRates: [0.7, 1.0, 1.5, 2.0],
         sources: [{
           type: 'video/mp4',
-          src: 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm'
+          src: this.content.src
         }],
-        poster: 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.png'
+        poster: this.content.poster
       }
-      /*  thumb: 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.png',
-        video: {
-          'video/mp4': 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.mp4',
-          'video/webm': 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm',
-          'video/ogg': 'http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm'
-      */
     }
   },
   mounted () {

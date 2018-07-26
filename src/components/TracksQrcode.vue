@@ -7,7 +7,7 @@
       <div class="info">{{content.info}}</div>
       <QrcodeReader @decode="onDecode" @init="onInit">
         <div class="decoded-content">{{ contentCode }}</div>
-        <LoadingIndicator v-show="loading" />
+        <!--<LoadingIndicator v-show="loading" />-->
       </QrcodeReader>
       <div>
         <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>

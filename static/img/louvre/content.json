@@ -17,13 +17,7 @@
       "shortDescription":"Es-tu prêt à découvrir une des plus  grandes affaire de vol du musée du Louvre ?",
       "stepDescription": "Il te faudra faire preuve d'ingéniosité et bien observer les lieux pour résoudre les énigmes et découvrir le fin mot de l'histoire.",
       "info": "Si tu es d'accord active la geoloc de ton smartphone et c'est parti !",
-      "classe": "fa fa-arrow-right",
-      "winMsg": "",
-      "errorMsg": "",
-      "indice": "",
-      "lat":"",
-      "long":"",
-      "puzzleImage":""
+      "classe": "fa fa-arrow-right"
     },
     {
       "type": "map-in",
@@ -31,13 +25,7 @@
       "shortDescription": "",
       "stepDescription": "Rendez-vous à l'aile Sully, c'est par là que notre voleur est entré le 19 juin 1939 afin d'accomplir son crime.",
       "info": "Direction l'aile Sully, 2ème étage, salle 36",
-      "classe": "fa fa-map-o",
-      "winMsg": "",
-      "errorMsg": "",
-      "indice": "",
-      "lat":"",
-      "long":"",
-      "puzzleImage":""
+      "classe": "fa fa-map-o"
     },
     {
       "type": "map",
@@ -49,8 +37,8 @@
       "winMsg": "",
       "errorMsg": "",
       "indice": "",
-      "lat":"",
-      "lng":"",
+      "lat": 0,
+      "lng": 0,
       "puzzleImage":""
     },
     {
@@ -71,8 +59,8 @@
         "Non, ce n'est pas {{checkedNames}}. Attention, C'est ta dernière chance !",
         "Perdu. Passe à l'étape suivante ! Le jeu continu, il y a encore plein d'indices à découvrir."
       ],
-      "indice": 1,
-      "qcmResponse": "Watteau"
+      "indice": "1",
+      "QResponse": "Watteau"
     },
     {
       "type": "puzzle",
@@ -114,7 +102,7 @@
         "Non toujours pas."
       ],
       "indice": 2,
-      "audioResponse": "pierrot",
+      "QResponse": "pierrot",
       "response": ""
     },
     {
@@ -135,7 +123,7 @@
       "lat":48.8472576,
       "long":2.3052288,
       "puzzleImage":"",
-      "enigmeResponse": "true",
+      "QResponse": "true",
       "response": "false"
     },
     {
@@ -166,7 +154,7 @@
       "long":"",
       "puzzleImage":"",
       "qrCode": "Texte QR Code",
-      "qrResponse": "res",
+      "QResponse": "res",
       "response": ""
     },
     {
@@ -179,10 +167,9 @@
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "",
-      "lat":"",
-      "long":"",
-      "puzzleImage":"",
-      "qrCode": "",
+      "src":"http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm",
+      "poster":"http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.png",
+      "QResponse": "res",
       "response": ""
     }
   ]
