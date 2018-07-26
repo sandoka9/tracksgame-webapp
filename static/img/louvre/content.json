@@ -132,8 +132,8 @@
       "winMsg": "Félicitation ! Tu as résolue l'énigme",
       "errorMsg": "",
       "indice": "",
-      "lat":"48.8472576",
-      "long":"2.3052288",
+      "lat":48.8472576,
+      "long":2.3052288,
       "puzzleImage":"",
       "enigmeResponse": "true",
       "response": "false"

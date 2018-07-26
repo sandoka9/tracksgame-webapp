@@ -3,7 +3,10 @@
   <div id="steps">
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
     <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
-    <TracksEnigmeMap  v-on:moreIndex="moreIndex"  v-on:nextStep="nextStep" v-bind:cluesKey="cluesKey" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigmeMap'"></TracksEnigmeMap>
+    <TracksEnigmeMap v-on:moreIndex="moreIndex" v-on:nextStep="nextStep"
+                    v-bind:stepIndexEnd="stepIndexEnd" v-bind:cluesKey="cluesKey" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
+                    v-if="questions[stepIndex].type == 'enigmeMap'">
+    </TracksEnigmeMap>
     <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
     <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
     <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
@@ -12,22 +15,6 @@
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
     <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
-    <br/>
-    Questions: {{questions[stepIndex]}}
-    <br/>
-    {{questions[stepIndex].response}}
-    <br/>
-    {{questions[stepIndex].qrResponse}}
-    <br/>
-    {{questions[stepIndex].type}}
-    <br/>
-    {{stepIndex}}
-    <br/>
-    Clues: {{clues}}
-    <br/>
-    Error: {{error}}
-    <br/>
-    Clues['0']: {{clues[1]}}
     <div class="error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
       {{questions[stepIndex].errorMsg[errorNb]}}
       <div class="indice">Close</div>
@@ -38,8 +25,8 @@
     </div>
     <div class="win-msg" v-if="win == true && cluesKey > 0" v-on:click="close" >
       {{questions[stepIndex].winMsg}}
-      <div class="indice" v-if="enigmaType == 'map'">{{clues[cluesKey]}}</div>
-      <div class="indice" v-else><img :src="clues[cluesKey]" /> </div>
+      <div class="indice" v-if="enigmaType == 'response'">{{clues[cluesKey]}}</div>
+      <div class="indiceMap" v-if="enigmaType == 'map'"><img :src="clues[cluesKey]" /></div>
     </div>
     <div class="win-msg" v-else-if="win == true" v-on:click="close" >
       Vous avez récupéré tous les indices. Maintenant à vous de jouer !
@@ -94,6 +81,8 @@ export default {
       questions: [],
       stepIndex: 0,
       stepIndexBonus: 0,
+      stepIndexMax: 0,
+      stepIndexEnd: false,
       title: '',
       win: false
     }
@@ -120,15 +109,14 @@ export default {
     },
     getClues: function () {
       if (this.questions[this.stepIndex].indice !== '') {
-        console.log('defined' + this.questions[this.stepIndex].indice)
         return this.questions[this.stepIndex].indice
       } else {
-        console.log('Object' + Object.keys(this.clues))
-        console.log('Clues First' + Object.keys(this.clues)[0])
-        return (Object.keys(this.clues)[0] ? Object.keys(this.clues)[0] : null)
+        return (Object.keys(this.clues)[0] ? Object.keys(this.clues)[0] : '')
       }
     },
     close: function () {
+      console.log('this.stepIndexMax : ', this.stepIndexMax)
+      console.log('this.stepIndexEnd : ', this.stepIndexEnd)
       if (this.error === true && this.errorNb < 3) {
         this.error = false
       } else if (this.error === true) {
@@ -136,6 +124,7 @@ export default {
         this.error = false
       } else {
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
+        console.log('delete', this.clues[this.cluesKey])
         delete this.clues[this.cluesKey]
         if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
           this.stepIndexBonus = this.stepIndex
@@ -144,6 +133,9 @@ export default {
           this.stepIndex++
         }
         this.win = false
+      }
+      if (this.stepIndexBonus === this.stepIndexMax) {
+        this.stepIndexEnd = true
       }
     },
     fetchData: function () {
@@ -155,6 +147,7 @@ export default {
         this.questions = data.questions
         this.clues = data.clues
         this.enigmaType = data.enigmaType
+        this.stepIndexMax = this.questions.length - 1
       })
     },
     playSound (sound) {
@@ -164,7 +157,8 @@ export default {
       }
     },
     nextStep: function () {
-      this.cluesKey = this.getClues()
+      var cluesKeyTemp = this.getClues()
+      this.cluesKey = String(cluesKeyTemp)
       if (this.questions[this.stepIndex].type === 'map') {
         this.stepIndex++
         return
@@ -189,8 +183,6 @@ export default {
       }
       if (this.questions[this.stepIndex].type === 'puzzle') {
         for (var i = 1; i < 9; i++) {
-          console.log('i : ' + this.questions[this.stepIndex].puzzleImage[i].order)
-          console.log('i-1 : ' + this.questions[this.stepIndex].puzzleImage[i - 1].order)
           if (this.questions[this.stepIndex].puzzleImage[i].order < this.questions[this.stepIndex].puzzleImage[i - 1].order) {
             this.error = true
             this.errorNb++
@@ -212,8 +204,6 @@ export default {
         return
       }
       if (this.questions[this.stepIndex].type === 'qrcode') {
-        console.log('qrcode')
-        console.log(this.cluesKey)
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].qrResponse) {
           this.win = true
           this.error = false
@@ -224,8 +214,6 @@ export default {
         return
       }
       if (this.questions[this.stepIndex].type === 'video') {
-        console.log('video')
-        console.log(this.cluesKey)
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].response) {
           this.win = true
           this.error = false
@@ -236,7 +224,6 @@ export default {
         return
       }
       if (this.questions[this.stepIndex].type === 'enigme') {
-        console.log('enigme')
         this.errorInfo['stepEnigme'] = this.stepIndex
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].enigmeResponse) {
           this.stepIndex++
@@ -247,7 +234,6 @@ export default {
         return
       }
       if (this.questions[this.stepIndex].type === 'enigmeMap') {
-        console.log('enigmeMap')
         this.errorInfo['stepEnigme'] = this.stepIndex
         if (this.questions[this.stepIndex].response === true) {
           this.stepIndex++
@@ -372,6 +358,13 @@ button.btn.btn-light {
   color: red;
   text-align: center;
   margin-right: 5vh;
+}
+
+.indiceMap img {
+  width: 15vh;
+  height: 10vh;
+  margin-top: 0.2vh;
+  margin-left: 10vh;
 }
 
 input.input-solution {
