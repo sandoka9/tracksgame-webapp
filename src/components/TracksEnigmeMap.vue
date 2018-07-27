@@ -1,16 +1,15 @@
 <template>
-  <div>
-    <h3>  {{content.title}} </h3>
-    <div class="description-bloc">
-      <div class="short-description">{{content.shortDescription}}</div>
-      <div class="description">{{content.stepDescription}}</div>
-      <div class="col-md-2 enigmeMap" v-for="item in content.info" :key="item.indice" >
+  <div class="content">
+    <div class="content-title">  {{content.title}} </div>
+    <div class="content-subtitle">{{content.shortDescription}}</div>
+    <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-game col-md-2 enigmeMap" v-for="item in content.info" :key="item.indice" >
             <img :src="cluesFound[item.indice]" />
-      </div>
     </div>
-    <div> <!--  v-if="stepIndex == 6 || stepIndex == 7 " -->
+    <div  class="content-response"> <!--  v-if="stepIndex == 6 || stepIndex == 7 " -->
       <button type="button" class="btn btn-light" v-on:click="$emit('moreIndex')" v-if="cluesKey !== '' && stepIndexEnd == false">{{cluesKey}} + Découvrir de nouveaux indices</button>
     </div>
+    {{stepIndexEnd}}
     <div id="gmap"></div>
   </div>
 </template>
@@ -72,7 +71,7 @@ export default {
       mymarker.setMap(this.gmap)
       console.log(this.latitude, this.x+0.001, this.longitude,this.y+0.001)
       console.log(this.latitude > this.x - 0.001, this.latitude < this.x + 0.001, this.longitude > this.y - 0.001, this.longitude < this.y + 0.001)
-      if (this.latitude > this.x - 0.001 && this.latitude < this.x + 0.001 && this.longitude > this.y - 0.001 && this.longitude < this.y + 0.001){
+      if (this.latitude > this.x - 0.1 && this.latitude < this.x + 0.001 && this.longitude > this.y - 0.1 && this.longitude < this.y + 0.001){
         console.log('WIN')
         this.content.response = true
         this.$emit('nextStep')

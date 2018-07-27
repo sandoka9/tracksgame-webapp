@@ -15,29 +15,32 @@
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
     <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
-    <div class="error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
-      {{questions[stepIndex].errorMsg[errorNb]}}
-      <div class="indice">Close</div>
+    <div class="result"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
+      <div class="result-nok error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
+        {{questions[stepIndex].errorMsg[errorNb]}}
+        <div class="indice">Close</div>
+      </div>
+      <div class="result-nok error-msg" v-else-if="error == true" v-on:click="close">
+        {{questions[stepIndex].errorMsg[0]}}
+        <div class="indice">Close</div>
+      </div>
+      <div class="result-ok win-msg" v-if="win == true && cluesKey > 0" v-on:click="close" >
+        {{questions[stepIndex].winMsg}}
+        <div class="result-ok-clues" v-if="enigmaType == 'response'">{{clues[cluesKey]}}</div>
+        <div class="result-ok-cluesMap" v-if="enigmaType == 'map'"><img :src="clues[cluesKey]" /></div>
+      </div>
+      <div class="result-ok win-msg" v-else-if="win == true" v-on:click="close" >
+        Vous avez récupéré tous les indices. Maintenant à vous de jouer !
+      </div>
     </div>
-    <div class="error-msg" v-else-if="error == true" v-on:click="close">
-      {{questions[stepIndex].errorMsg[0]}}
-      <div class="indice">Close</div>
-    </div>
-    <div class="win-msg" v-if="win == true && cluesKey > 0" v-on:click="close" >
-      {{questions[stepIndex].winMsg}}
-      <div class="indice" v-if="enigmaType == 'response'">{{clues[cluesKey]}}</div>
-      <div class="indiceMap" v-if="enigmaType == 'map'"><img :src="clues[cluesKey]" /></div>
-    </div>
-    <div class="win-msg" v-else-if="win == true" v-on:click="close" >
-      Vous avez récupéré tous les indices. Maintenant à vous de jouer !
-    </div>
-    là
-    <div v-on:click="nextStep">
-      <span class="suite-text" v-if="questions[stepIndex].type == 'map-in'">Visualiser la carte</span>
-      <i :class="questions[stepIndex].classe"></i>
-    </div>
-    <div v-on:click="previous" v-if="stepIndex > 0">
-      <i class="fa fa-arrow-left"></i>
+    <div class="arrow">
+      <div v-on:click="nextStep">
+        <span class="arrow-right suite-text" v-if="questions[stepIndex].type == 'map-in'">Visualiser la carte</span>
+        <i :class="questions[stepIndex].classe"></i>
+      </div>
+      <div class="arrow-left" v-on:click="previous" v-if="stepIndex > 0">
+        <i class="fa fa-arrow-left"></i>
+      </div>
     </div>
   </div>
 
@@ -186,11 +189,7 @@ export default {
       }
       if (this.questions[this.stepIndex].type === 'enigmeMap') {
         if (this.questions[this.stepIndex].response === this.questions[this.stepIndex].QResponse) {
-          this.win = true
-          this.error = false
-        } else {
-          this.error = true
-          this.errorNb++
+          this.stepIndex++
         }
         return
       }
@@ -239,23 +238,102 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-h3 {
-    font-family: fantasy;
-    margin-top: 1vh;
-    font-size: 1rem;
+@font-face {
+   font-family: myFirstFont;
+   src: url(sansation_light.woff);
 }
 
-button.btn.btn-light {
-    font-size: 1rem;
-    margin-top: 10vh;
-    margin-left: 14vh;
-    margin-right: 10vh;
-    width: 25vh;
+@font-face {
+   font-family: myFirstFont;
+   src: url(sansation_bold.woff);
+   font-weight: bold;
 }
 
-.audio {
-  margin-top: 10vh;
-  margin-left: 20vh;
+* {
+   font-family: myFirstFont;
+}
+.step{
+  font-size:1rem;
+  background-color: white;
+  padding-top: 5vh;
+  padding-left: 1vh;
+  padding-right:5vh;
+}
+
+.content{
+}
+
+.content-title{
+}
+
+.content-subtitle{
+}
+
+.content-description{
+}
+
+.content-respons{
+}
+
+.result{
+  min-height: 25%;
+  min-width: 25%;
+  color: white;
+  font-weight: bold;
+  padding-top: 15vh;
+  padding-left: 5vh;
+  margin-right: 1vh;
+  background-color:white;
+  -webkit-box-shadow: 0px 8px 4px 0px #D4DADF;
+  -moz-box-shadow: 6px 12px 4px 0px #D4DADF;
+  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#D4DADF', Positive='true');
+  zoom:1;
+  box-shadow: 6px 12px 4px 0px #D4DADF;
+  top: 250px;
+  left: 20px;
+  position: absolute;
+  opacity: 0.9;
+}
+.result-nok{
+}
+.result-ok{
+  color: white;
+  padding-right: 5vh;
+  padding-top: 5vh;
+}
+.result-ok-clues{
+  margin-top: 5vh;
+  background-color: #ccc7c7;
+  color: red;
+  text-align: center;
+  margin-right: 5vh;
+}
+.result-ok-cluesMap__img{
+  width: 15vh;
+  height: 10vh;
+  margin-top: 0.2vh;
+  margin-left: 10vh;
+}
+.arrow{
+}
+.arrow-right{
+  float: right;
+  margin-top: 7vh;
+  padding-right:1vh;
+  font-size: 1rem;
+  font-weight: bold;
+  padding-left: 3vh;
+}
+.arrow-right--active{
+}
+.arrow-left{
+  font-size: 1rem;
+  float: left;
+  margin-top: 7vh;
+  padding-right:1vh;
+}
+
+.arrow-left--active{
 }
 
 .description-bloc {
@@ -264,164 +342,6 @@ button.btn.btn-light {
   /* min-height: 70vh; */
   padding-top: 5vh;
   padding-left: 1vh;
-}
-
-.error-msg, .win-msg {
-  min-height: 45vh;
-  min-width: 53vh;
-  color: white;
-  font-weight: bold;
-  padding-top: 15vh;
-  padding-left: 5vh;
-  margin-right: 1vh;
-  /* background-color: #ff6600; */
-  -webkit-box-shadow: 0px 8px 4px 0px #a5a4a4;
-  -moz-box-shadow: 6px 12px 4px 0px #a5a4a4;
-  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#a5a4a4', Positive='true');
-  zoom:1;
-  box-shadow: 6px 12px 4px 0px #a5a4a4;
-  top: 250px;
-  left: 20px;
-  position: absolute;
-  opacity: 0.9;
-}
-
-.fa-arrow-right, .fa-map-o {
-  /* font-size: 3rem; */
-  float: right;
-  margin-top: 7vh;
-  padding-right:1vh;
-}
-
-.fa-arrow-left {
-  font-size: 1rem;
-  float: left;
-  margin-top: 7vh;
-  padding-right:1vh;
-}
-
-.fa.fa-play-circle-o {
-    font-size: 1rem;
-}
-
-.flip-list-move {
-  transition: transform 0.5s;
-}
-
-.form-control-sm {
-  max-height: 0.5vh;
-  max-width: 5vh;
-}
-
-.form-control {
-  max-width: 50vh;
-  margin-top: 10vh;
-  margin-left: 8vh;
-}
-
-.info {
-  margin-top:5vh;
-}
-
-.indice {
-  margin-top: 5vh;
-  background-color: #ccc7c7;
-  color: red;
-  text-align: center;
-  margin-right: 5vh;
-}
-
-.indiceMap img {
-  width: 15vh;
-  height: 10vh;
-  margin-top: 0.2vh;
-  margin-left: 10vh;
-}
-
-input.input-solution {
-    border: none;
-    font-size: 1rem;
-    background: #e9fcab;
-}
-
-.ghost {
-  opacity: .5;
-  background: #C8EBFB;
-}
-/*
-.list-group {
-  min-height: 20px;
-}
-*/
-.list-group-up .col-md-3{
-  background-color: #CEFF33;
-    margin-left: 3vh;
-}
-
-.list-group-item {
-  cursor: move;
-  list-style: none;
-}
-
-.list-group-item i{
-  cursor: pointer;
-}
-
-.list-unstyled {
-  padding-left: 12vh;
-  padding-top: 1vh;
-}
-
-.no-move {
-  transition: transform 0s;
-}
-
-.short-description .description {
-  margin-top: 30vh;
-}
-
-.short-description {
-  /* font-weight: bold; */
-}
-
-.randomImg {
-  margin: 0.25vh;
-  list-style: none;
-  display: inline;
-}
-
-.randomImg img{
-  width: 15vh;
-  height: 10vh;
-  margin-top: 0.2vh;
-}
-
-.response {
-  margin-right: 5vh;
-  max-width: 35vh;
-  font-size: 1rem;
-}
-
-.suite-text {
-  font-size: 1rem;
-  font-weight: bold;
-  padding-left: 3vh;
-  padding-right: 7vh;
-}
-
-/*
-.table {
-  min-height: 35vh;
-  color: #6d6c6c;
-  text-align: center;
-  border: 1px solid black;
-}
-*/
-.win-msg{
-  /* background-color: #206040; */
-  color: white;
-  padding-right: 5vh;
-  padding-top: 5vh;
 }
 
 </style>

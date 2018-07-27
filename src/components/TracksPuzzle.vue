@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <h3>  {{content.title}} </h3>
-    <div class="description-bloc">
-      <div class="short-description">{{content.shortDescription}}</div>
-      <div class="description">{{content.stepDescription}}</div>
-      <div class="info">{{content.info}}</div>
-      <div class="puzzle">
+  <div class="content">
+    <div class="content-title">  {{content.title}} </div>
+    <div class="content-subtitle">{{content.shortDescription}}</div>
+    <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-game">
+      {{content.info}}
+      <div class="content-game-puzzle">
         <div  class="col-md-3">
           <draggable class="list-group-up" element="ul" v-model="content.puzzleImage" :options="dragOptions" :move="onMove">
             <transition-group name="no" tag="ul">
@@ -102,6 +102,20 @@ export default {
 .list-group-up .col-md-3{
   background-color: #CEFF33;
     margin-left: 3vh;
+}
+
+.list-group-item {
+  cursor: move;
+  list-style: none;
+}
+
+.list-group-item i{
+  cursor: pointer;
+}
+
+.list-unstyled {
+  padding-left: 12vh;
+  padding-top: 1vh;
 }
 
 .no-move {

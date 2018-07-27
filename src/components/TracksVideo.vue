@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <h3>  {{content.title}} </h3>
-    <div class="description-bloc">
-      <div class="short-description">{{content.shortDescription}}</div>
-      <div class="description">{{content.stepDescription}}</div>
-      <div class="info">{{content.info}}</div>
+  <div class="content">
+    <div class="content-title">  {{content.title}} </div>
+    <div class="content-subtitle">{{content.shortDescription}}</div>
+    <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-game">
+      {{content.info}}
       <videoPlayer class="video-player-box"
                ref="videoPlayer"
                :options="playerOptions"
@@ -22,7 +22,7 @@
                @statechanged="playerStateChanged($event)"
                @ready="playerReadied">
       </videoPlayer>
-      <div>
+      <div class="content-response">
         <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
       </div>
     </div>
@@ -182,6 +182,12 @@ button {
       transition: width 1s;
     }
   }
+}
+
+.response {
+  margin-right: 5vh;
+  max-width: 35vh;
+  font-size: 1rem;
 }
 
 </style>

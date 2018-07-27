@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <h3>  {{content.title}} </h3>
-    <div class="description-bloc">
-      <div class="short-description">{{content.shortDescription}}</div>
-      <div class="description">{{content.stepDescription}}</div>
-      <div class="info">{{content.info}}</div>
+  <div class="content">
+    <div class="content-title">  {{content.title}} </div>
+    <div class="content-subtitle">{{content.shortDescription}}</div>
+    <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-game">
+      {{content.info}}
       <ul id="v-for-object" class="list-unstyled">
         <li v-for="item in content.qcm" :key="item.name" >
           <label v-bind:for="item.surname">

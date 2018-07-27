@@ -1,6 +1,8 @@
 <template>
-  <div>
-      <div class="short-description">{{content.shortDescription}}</div>
+  <div class="content">
+    <div class="content-title">  {{content.title}} </div>
+    <div class="content-subtitle">{{content.shortDescription}}</div>
+    <div class="content-description">{{content.stepDescription}}</div>
   </div>
 </template>
 
