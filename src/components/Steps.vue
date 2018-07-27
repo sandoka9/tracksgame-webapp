@@ -238,20 +238,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-@font-face {
-   font-family: myFirstFont;
-   src: url(sansation_light.woff);
-}
 
-@font-face {
-   font-family: myFirstFont;
-   src: url(sansation_bold.woff);
-   font-weight: bold;
-}
-
-* {
-   font-family: myFirstFont;
-}
 .step{
   font-size:1rem;
   background-color: white;
