@@ -18,11 +18,11 @@
     <div class="result"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
       <div class="result-nok error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
         {{questions[stepIndex].errorMsg[errorNb]}}
-        <div class="indice">Close</div>
+        <div class="result-nok-clues">Close</div>
       </div>
       <div class="result-nok error-msg" v-else-if="error == true" v-on:click="close">
         {{questions[stepIndex].errorMsg[0]}}
-        <div class="indice">Close</div>
+        <div class="result-nok-clues">Close</div>
       </div>
       <div class="result-ok win-msg" v-if="win == true && cluesKey > 0" v-on:click="close" >
         {{questions[stepIndex].winMsg}}
@@ -34,13 +34,10 @@
       </div>
     </div>
     <div class="arrow">
-      <div v-on:click="nextStep">
-        <span class="arrow-right suite-text" v-if="questions[stepIndex].type == 'map-in'">Visualiser la carte</span>
-        <i :class="questions[stepIndex].classe"></i>
-      </div>
-      <div class="arrow-left" v-on:click="previous" v-if="stepIndex > 0">
-        <i class="fa fa-arrow-left"></i>
-      </div>
+        <span class="arrow-right" v-if="questions[stepIndex].type == 'map-in'" v-on:click="nextStep">Visualiser la carte</span>
+        <i :class="questions[stepIndex].classe" v-on:click="nextStep"></i>
+
+        <i class="fa fa-arrow-circle-left" v-on:click="previous" v-if="stepIndex > 0"></i>
     </div>
   </div>
 
@@ -238,50 +235,86 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+@font-face {
+   font-family: myFirstFont;
+   src: url(../assets/fonts/sansation/Sansation-Regular.ttf);
+}
 
+@font-face {
+   font-family: myFirstFont;
+   src: url(../assets/fonts/sansation/Sansation-Bold.ttf);
+   font-weight: bold;
+}
+
+@font-face {
+   font-family: myFirstFont;
+   src: url(../assets/fonts/sansation/Sansation-Light.ttf);
+   font-weight: normal;
+}
+
+* {
+   font-family: myFirstFont;
+}
 .step{
-  font-size:1rem;
+  font-size:2vw;
   background-color: white;
-  padding-top: 5vh;
-  padding-left: 1vh;
-  padding-right:5vh;
 }
 
 .content{
+  padding: 5%
 }
 
 .content-title{
+  font-weight: bold;
+  font-size: 6vw;
+  width: 100%;
+  float: left;
 }
 
 .content-subtitle{
+  font-size: 10vw;
+  width: 100%;
+  float: left;
 }
 
 .content-description{
+  width: 100%;
+  float: left;
 }
 
-.content-respons{
+.content-response{
+  width: 100%;
+  float: left;
 }
 
 .result{
   min-height: 25%;
-  min-width: 25%;
-  color: white;
-  font-weight: bold;
-  padding-top: 15vh;
-  padding-left: 5vh;
-  margin-right: 1vh;
+  width: 100%;
+  float: left;
+  padding: 5%;
   background-color:white;
-  -webkit-box-shadow: 0px 8px 4px 0px #D4DADF;
+  -webkit-box-shadow: 0px 8px 4px 0px #D4DADF; /* light gre y*/
   -moz-box-shadow: 6px 12px 4px 0px #D4DADF;
   filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#D4DADF', Positive='true');
   zoom:1;
-  box-shadow: 6px 12px 4px 0px #D4DADF;
+  box-shadow: 6px 8px 4px 0px #D4DADF;
   top: 250px;
   left: 20px;
   position: absolute;
   opacity: 0.9;
+  border: 1px solid #D4DADF;
 }
 .result-nok{
+  text-align:justify;
+}
+.result-nok-clues{
+  margin-top:10%;
+  text-align: center;
+  text-decoration: underline;
+  font-weight: bold;
+}
+.result-nok-clues:hover{
+  color: red;
 }
 .result-ok{
   color: white;
@@ -302,30 +335,48 @@ export default {
   margin-left: 10vh;
 }
 .arrow{
-}
-.arrow-right{
-  float: right;
-  margin-top: 7vh;
-  padding-right:1vh;
-  font-size: 1rem;
-  font-weight: bold;
-  padding-left: 3vh;
-}
-.arrow-right--active{
-}
-.arrow-left{
-  font-size: 1rem;
   float: left;
-  margin-top: 7vh;
-  padding-right:1vh;
+  width: 100%;
+  top: 50%;
+  position: absolute;
+  padding-right: 10%;
+  padding-left: 10%;
 }
 
-.arrow-left--active{
+.fa-arrow-circle-right{
+  float:right;
+  font-size: 4vw;
+}
+.fa-arrow-circle-right:hover{
+  color:#2899a8; /* light blue */
+}
+.fa-map-o{
+  float:right;
+  padding-right: 3vh;
+  font-size: 4vw;
+}
+.fa-map-o:hover{
+  color:#2899a8; /* light blue */
+}
+.arrow-right {
+  float: right;
+  font-size: 3vw;
+  padding-right: 3vh;
+}
+.arrow-right:hover {
+  color:#2899a8; /* light blue */
+}
+.fa-arrow-circle-left{
+  float:left;
+  font-size: 4vw;
+}
+.fa-arrow-ciecle-left:hover {
+  color:#2899a8; /* light blue */
 }
 
 .description-bloc {
-  font-size:1rem; /*  1.5rem; */
-  /* background-color: #FFE4C4; /* #CEFF33; */
+  font-size:1vw; /*  1.5rem; */
+  /* background-desc: #FFE4C4; /* #CEFF33; */
   /* min-height: 70vh; */
   padding-top: 5vh;
   padding-left: 1vh;

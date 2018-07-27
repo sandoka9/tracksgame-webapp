@@ -17,7 +17,7 @@
       "shortDescription":"Es-tu prêt à découvrir une des plus  grandes affaire de vol du musée du Louvre ?",
       "stepDescription": "Il te faudra faire preuve d'ingéniosité et bien observer les lieux pour résoudre les énigmes et découvrir le fin mot de l'histoire.",
       "info": "Si tu es d'accord active la geoloc de ton smartphone et c'est parti !",
-      "classe": "fa fa-arrow-right"
+      "classe": "fa fa-arrow-circle-right"
     },
     {
       "type": "map-in",
@@ -33,7 +33,7 @@
       "shortDescription": "",
       "stepDescription": "",
       "info": "",
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "",
       "errorMsg": "",
       "indice": "",
@@ -52,7 +52,7 @@
         {"name": "François", "surname": "Boucher"},
         {"name": "Jean-Honoré", "surname": "Fragonnard"}
       ],
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "Et oui, il s'agit de Watteau, ses contemporains Boucher et Fragonnard sont plus intéressés par les scènes de divinité comme Diane sortant du bain pour Boucher ou des scènes familiales comme le lecteur pour Fragonnard. Voici ton 1er indice: ",
       "errorMsg": [
         "Non, ce n'est pas {{checkedNames}}. Retente ta chance !",

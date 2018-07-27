@@ -61,8 +61,9 @@ export default {
 
 <style scoped>
  #gmap {
-   width: 80%;
-   height: 400px;
-   background-color: grey;
+   width: 90%;
+    height: 80vh;
+    background-color: grey;
+    margin-left: 5%;
  }
 </style>
