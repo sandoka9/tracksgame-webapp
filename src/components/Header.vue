@@ -9,7 +9,7 @@
    <ul class="dropdown-menu-sur" ref="liste" aria-labelledby="dropdownMenu1" ><!--v-bind:style="{ display: isDisplay }"-->
      <li @click="makeBurger"><router-link :to="{ name: 'Login' }">Login</router-link></li>
      <li role="separator" class="divider"></li>
-     <li @click="makeBurger"><router-link :to="{ name: 'Steps' }">Steps</router-link></li>
+     <li @click="makeBurger"><router-link :to="{ name: 'Steps', params: {gameId: 123} }">Steps</router-link></li>
      <li role="separator" class="divider"></li>
      <li @click="makeBurger"><router-link :to="{ name: 'Clues' }">Clues</router-link></li>
   </ul>

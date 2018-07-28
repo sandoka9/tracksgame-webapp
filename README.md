@@ -41,8 +41,23 @@ http://www.supportduweb.com/generateur-balise-video-html5-code-mp4-webm-ogg-lect
 https://www.louistiti.fr/tutoriel-html-javascript-css-menu-responsive-icone-hamburger/47
 
 #CSS Font family
+https://www.ffonts.net/Sansation-Light.font.download
 
 #CSS responsive
+https://www.w3schools.com/css/css_rwd_intro.asp
 
-#CSS image 
+#CSS BEM
+http://putaindecode.io/fr/articles/css/bem/
 
+#CSS image
+
+#routes
+https://router.vuejs.org/guide/essentials/passing-props.html
+https://forum.vuejs.org/t/passing-props-through-router-link-solved/16868/5
+https://router.vuejs.org/api/#to
+
+#Constantes
+https://laracasts.com/discuss/channels/vue/how-to-declare-global-variable-using-vue-cli-template
+
+#Ajax
+https://vuejsdevelopers.com/2017/08/28/vue-js-ajax-recipes/

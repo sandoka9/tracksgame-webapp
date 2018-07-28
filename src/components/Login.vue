@@ -8,10 +8,10 @@
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
       </div>
-      <div class="input-group">
+      <div class="input-group" id="123">
         <button class="form-control" aria-describedby="basic-addon1" value="GO !" type="submit">
-          <router-link :to="{ name: 'Steps' }">
-            GO !
+          <router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }">
+           GO !
           </router-link>
         </button>
       </div>
@@ -24,7 +24,8 @@ export default {
   name: 'Login',
   data () {
     return {
-      msg: 'Bienvenu sur la page Login'
+      msg: 'Bienvenu sur la page Login',
+      gameId123: 123
     }
   }
 }

@@ -58,11 +58,14 @@ import TracksQcm from './TracksQcm.vue'
 import TracksQrcode from './TracksQrcode.vue'
 import TracksVideo from './TracksVideo.vue'
 
+import * as CONFIG from './config.js'
+
 import $ from 'jquery'
-var apiURL = 'img/louvre/content.json'
+var jsonPath = ''
 
 export default {
   name: 'Steps',
+  props: ['gameId'],
   data () {
     return {
       audioResponse: '',
@@ -123,7 +126,10 @@ export default {
     },
     fetchData: function () {
       /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
-      $.getJSON(apiURL, (data) => {
+      jsonPath = CONFIG.API_URL + '/' + this.gameId + '/public/tgame.json'
+      console.log(jsonPath)
+      jsonPath = 'img/louvre/content.json/'
+      $.getJSON(jsonPath, (data) => {
         this.title = data.title
         this.description = data.description
         this.color = data.color
@@ -215,6 +221,12 @@ export default {
       this.error = false
     }
   },
+  /* mounted () {
+    this.$nextTick(() => {
+      console.log(CONFIG.API_URL)
+    })
+  },
+  */
   components: {
     draggable,
     baseCheckbox,
@@ -256,12 +268,13 @@ export default {
    font-family: myFirstFont;
 }
 .step{
-  font-size:2vw;
   background-color: white;
+  font-size: 4vw;
 }
 
 .content{
-  padding: 5%
+  padding: 5%;
+  padding-top: 0;
 }
 
 .content-title{
@@ -272,7 +285,7 @@ export default {
 }
 
 .content-subtitle{
-  font-size: 10vw;
+  font-size: 8vw;
   width: 100%;
   float: left;
 }
@@ -337,7 +350,7 @@ export default {
 .arrow{
   float: left;
   width: 100%;
-  top: 50%;
+  top: 80%;
   position: absolute;
   padding-right: 10%;
   padding-left: 10%;

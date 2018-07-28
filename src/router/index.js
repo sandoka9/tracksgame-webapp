@@ -16,8 +16,9 @@ export default new Router({
       component: Login
     },
     {
-      path: '/steps',
+      path: '/steps/:gameId',
       name: 'Steps',
+      props: true,
       component: Steps
     },
     {
