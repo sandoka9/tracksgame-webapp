@@ -102,8 +102,6 @@ export default {
     onPlayerCanplay (player) {
     },
     onPlayerCanplaythrough (player) {
-    },
-    playerStateChanged (player) {
     }
   },
   watch: {

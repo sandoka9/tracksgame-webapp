@@ -91,23 +91,17 @@ export default {
   background-color: grey;
 }
 
-.radiobtn {
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  background-color: #eee;
-  border-radius: 50%;
-}
-
-.enigmeMap {
-  width : 46vh;
+.content-game{
   list-style: none;
   display: inline;
 }
 
-.enigmeMap img{
-  width: 15vh;
-  height: 10vh;
+.content-game img{
+  width:15vh;
 }
+
+.content-response{
+
+}
+
 </style>

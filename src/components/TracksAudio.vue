@@ -3,14 +3,14 @@
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-info">{{content.info}}</div>
     <div class="content-game">
-      {{content.info}}
-      <label>
-        <button class="content-game-audio" @click.prevent="playSound('img/louvre/recording-20180701-171430.mp3')">
+      <label >
+        <button class="content-game-audio" @click.prevent="playSound(content.src)">
           <!-- http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3 -->
-          <i class="fa fa-play-circle-o"></i>
+          <i class="fa fa-play"></i>
         </button>
-        Play
+        <span>Play</span>
       </label>
     </div>
     <div class="content-response">
@@ -55,13 +55,46 @@ export default {
   margin-left: 20vh;
 }
 
-.fa.fa-play-circle-o {
-    font-size: 3rem;
+.content-game{
+  width: 55%;
+  margin-left:10%;
+  margin-top:10%;
+}
+
+.content-game span{
+  vertical-align: super;
+}
+
+.content-game button{
+  color: white;
+  background-color: white;
+  border: 0px
+}
+
+.content-game button:active{
+  color: white;
+  background-color: white;
+  border: 0px
+}
+
+.content-game button:focus{
+  display:none;
+}
+
+.content-game-audio i{
+  color: #FBB50C;
+  font-size: 20vw;
+}
+.content-game-audio i:active{
+  color: grey;
+}
+.content-game-audio i:focus{
+  color: grey;
 }
 
 .form-control-sm {
   max-height: 0.5vh;
-  max-width: 5vh;
+  max-width: 100%;
 }
 
 .form-control {
