@@ -2,9 +2,12 @@
 <template>
   <div id="steps">
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
-    <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
+    <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:stepIndexEnd="stepIndexEnd"
+                  v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
+                  v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
     <TracksEnigmeMap v-on:moreIndex="moreIndex" v-on:nextStep="nextStep"
-                    v-bind:stepIndexEnd="stepIndexEnd" v-bind:cluesKey="cluesKey" v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
+                    v-bind:stepIndexEnd="stepIndexEnd" v-bind:cluesKey="cluesKey"
+                    v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
                     v-if="questions[stepIndex].type == 'enigmeMap'">
     </TracksEnigmeMap>
     <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
@@ -16,15 +19,14 @@
     <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
     <div class="result"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
+      <i class="fa fa-times" v-on:click="close"></i>
       <div class="result-nok error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
         {{questions[stepIndex].errorMsg[errorNb]}}
-        <div class="result-nok-clues">Close</div>
       </div>
-      <div class="result-nok error-msg" v-else-if="error == true" v-on:click="close">
+      <div class="result-nok error-msg" v-else-if="error == true" >
         {{questions[stepIndex].errorMsg[0]}}
-        <div class="result-nok-clues">Close</div>
       </div>
-      <div class="result-ok win-msg" v-if="win == true && cluesKey > 0" v-on:click="close" >
+      <div class="result-ok win-msg" v-if="win == true && cluesKey > 0">
         {{questions[stepIndex].winMsg}}
         <div class="result-ok-clues" v-if="enigmaType == 'response'">{{clues[cluesKey]}}</div>
         <div class="result-ok-cluesMap" v-if="enigmaType == 'map'"><img :src="clues[cluesKey]" /></div>
@@ -37,7 +39,6 @@
         <span class="arrow-right" v-if="questions[stepIndex].type == 'map-in'" v-on:click="nextStep">
         Visualiser la carte</span>
         <i :class="questions[stepIndex].classe" v-on:click="nextStep"></i>
-
         <i class="fa fa-arrow-circle-left" v-on:click="previous" v-if="stepIndex > 0"></i>
     </div>
   </div>
@@ -99,31 +100,37 @@ export default {
   },
   methods: {
     close: function () {
-      console.log(this.stepIndexEnd)
-      console.log(this.stepIndexMax)
-      if (this.stepIndexBonus === this.stepIndexMax) {
-        this.stepIndexEnd = true
-      }
       if (this.error === true && this.errorNb < 3) {
         console.log('yes close 1')
         this.error = false
+        return false
       } else if (this.error === true) {
         console.log('yes close 2')
         this.error = false
         this.errorNb = 0
-        this.stepIndex++
       } else {
         console.log('yes close 3')
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
         delete this.clues[this.cluesKey]
-        if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
-          this.stepIndexBonus = this.stepIndex
-          this.stepIndex = this.errorInfo['stepEnigme']
-        } else {
-          this.stepIndex++
-        }
-        this.win = false
       }
+      /* If go next step
+      set errorInfo['stepEnigme'] stock la step de l'enigme
+      stepIndexBonus stock la step bonus réalisée */
+      if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
+        this.stepIndexBonus = this.stepIndex
+        this.stepIndex = this.errorInfo['stepEnigme']
+      } else {
+        this.stepIndex++
+      }
+      this.win = false
+      console.log('stpIE', this.stepIndexEnd)
+      console.log('stpIB', this.stepIndexBonus)
+      console.log('stpIM', this.stepIndexMax)
+      /* If no more questions stepIndexMax = nb questions */
+      if (this.stepIndexBonus === this.stepIndexMax) {
+        this.stepIndexEnd = true
+      }
+      return true
     },
     fetchData: function () {
       /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
@@ -150,6 +157,7 @@ export default {
       }
     },
     moreIndex () {
+      console.log('moreIndex')
       this.errorInfo['stepEnigme'] = this.stepIndex
       if (this.stepIndexBonus > 0) {
         this.stepIndex = this.stepIndexBonus + 1
@@ -169,6 +177,7 @@ export default {
       if (this.questions[this.stepIndex].type === 'qcm') {
         console.log('yes QCM')
         console.log(this.checkedNames)
+        console.log(this.qcm)
         if (this.checkedNames === this.questions[this.stepIndex].QResponse) {
           console.log('WIN')
           this.win = true
@@ -298,18 +307,19 @@ export default {
 }
 
 .content-response{
+  z-index:100;
   width: 100%;
   float: left;
 }
 
 .result{
-  background-color: rgb(147, 50, 158);
+  background-color: #93329E; /* violet */
   color: white;
   min-height: 25%;
   width: 90%;
   float: left;
   padding: 5%;
-  -webkit-box-shadow: 0px 8px 4px 0px #431F46; /* light grey*/
+  -webkit-box-shadow: 0px 8px 4px 0px #431F46; /* shadow violet*/
   -moz-box-shadow: 6px 12px 4px 0px #431F46;
   filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#D4DADF', Positive='true');
   zoom:1;
@@ -320,8 +330,16 @@ export default {
   opacity: 0.9;
   border: 1px solid #431F46;
 }
+
+.result > i{
+  float:right;
+  color:  white;
+  font-size: 6vw;
+  padding-left: 5%
+}
 .result-nok{
   text-align:justify;
+  vertical-align: middle;
 }
 .result-nok-clues{
   margin-top:10%;
@@ -334,20 +352,26 @@ export default {
 }
 .result-ok{
   color: white;
-  padding-right: 5vh;
-  padding-top: 5vh;
+  /* padding-right: 5vh; */
+  font-size: 3vw;
 }
 .result-ok-clues{
-  margin-top: 5vh;
-  background-color: #ccc7c7;
-  color: red;
+  margin-top: 10%;
+  background-color: white;
+  color:#431F46;
   text-align: center;
-  margin-right: 5vh;
+  margin-right: 10%;
+  margin-left: 15%;
+  font-size: 4vw;
+  font-weight: bold;
+  border-bottom: 1px solid #431F46;
+  border-right: 1px solid #431F46;
+  border-radius: 2px;
 }
 .result-ok-cluesMap img{
   width: 150px;
-  margin-top: 0.2vh;
-  margin-left: 10vh;
+  margin-top: 10%;
+  margin-left: 15%;
 }
 .arrow{
   float: left;
@@ -363,7 +387,12 @@ export default {
   float:right;
 }
 
-.fa-arrow-circle-right:hover{
+.fa-map-marked-alt{
+  float: right;
+  margin-right: 2%
+}
+
+.fa-arrow-circle-right:hover .fa-map-marked-alt:hover{
   color:#2899a8; /* light blue */
 }
 

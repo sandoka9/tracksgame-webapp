@@ -15,7 +15,7 @@
       -->
         <div v-for="item in content.qcm" :key="item.name" >
           <label class="content-game-checkcontainer">{{ item.name }} {{ item.surname }}
-            <input class="content-game-radiobtn" type="radio" name="qcm" v-bind:value="item.surname" v-on:change="$emit('change', $event.target.value)" />
+            <input class="content-game-radiobtn" type="radio" name="checkedNames" v-bind:value="item.surname" v-on:change="$emit('change', $event.target.value)" />
             <span class="radiobtn"></span>
           </label>
         </div>
@@ -28,7 +28,8 @@
 export default {
   name: 'TracksQcm',
   props: {
-    content: {}
+    content: {},
+    checkedNames: String
   },
   data () {
     return {

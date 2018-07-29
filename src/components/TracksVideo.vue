@@ -3,8 +3,8 @@
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-info">{{content.info}}</div>
     <div class="content-game">
-      {{content.info}}
       <videoPlayer class="video-player-box"
                ref="videoPlayer"
                :options="playerOptions"
@@ -35,7 +35,7 @@
 <script type="text/javascript" src="path/to/dist/vue-video-player.js"></script>
 
 <script>
-//import 'video.js/dist/video-js.css'
+import 'video.js/dist/video-js.css'
 import { videoPlayer } from 'vue-video-player'
 
 export default {
@@ -112,7 +112,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 html {
   box-sizing: border-box;
@@ -126,24 +126,37 @@ button {
   margin-left: 10em;
 }
 
+.content-game{
+}
+
+.video-js{
+  width: 80%;
+  height: 200px;
+}
+
+.video-js .vjs-big-play-button {
+  top: 50%;
+  left: 50%;
+}
+
 .fullscreen{
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   video{
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     top: 0;
     left: 0;
   }
 }
 
 .popover{
-  width: 100%;
+  width: 90%;
   background-color: rgba(black, 0.4);
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
   padding: 0;
   margin: 0;
   z-index: 100;
@@ -180,6 +193,20 @@ button {
       transition: width 1s;
     }
   }
+}
+
+.content-response{
+  margin-top: 10%;
+}
+
+.form-control-sm {
+  max-height: 0.5vh;
+  max-width: 100%;
+}
+
+.form-control {
+  max-width: 50vh;
+  margin-left: 8vh;
 }
 
 .response {

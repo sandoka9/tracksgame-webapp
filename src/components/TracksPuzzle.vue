@@ -3,9 +3,8 @@
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-info">{{content.info}}</div>
     <div class="content-game">
-      {{content.info}}
-      <div class="content-game-puzzle">
         <div>
           <draggable class="list-group-up" element="ul" v-model="content.puzzleImage" :options="dragOptions" :move="onMove">
             <transition-group name="no" tag="ul">
@@ -24,7 +23,6 @@
             </transition-group>
           </draggable>
         </div>
-      </div>
     </div>
   </div>
 </template>

@@ -3,13 +3,15 @@
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>
-    <div class="content-game col-md-2 enigmeMap" v-for="item in content.info" :key="item.indice" >
+    <div class="content-game" v-for="item in content.info" :key="item.indice" >
             <img :src="cluesFound[item.indice]" />
     </div>
     <div  class="content-response"> <!--  v-if="stepIndex == 6 || stepIndex == 7 " -->
-      <button type="button" class="btn btn-light" v-on:click="$emit('moreIndex')" v-if="cluesKey !== '' && stepIndexEnd == false">{{cluesKey}} + Découvrir de nouveaux indices</button>
+      <button type="button" class="content-response-button form-control"
+      v-bind:class="{disabled:isActive()}" :disabled="isActive()" v-on:click="$emit('moreIndex')">
+              Découvrir de nouveaux indices
+      </button>
     </div>
-    {{stepIndexEnd}}
     <div id="gmap"></div>
   </div>
 </template>
@@ -55,6 +57,16 @@ export default {
   },
   /* eslint-enable */
   methods: {
+    isActive: function () {
+      console.log('ckey', this.cluesKey)
+      console.log('stpIE', this.stepIndexEnd)
+
+      if (this.cluesKey !== '' && this.stepIndexEnd === false) {
+        return false
+      } else {
+        return true
+      }
+    },
     geolocate: function (callback) {
       navigator.geolocation.getCurrentPosition(position => {
         this.latitude = position.coords.latitude
@@ -92,16 +104,44 @@ export default {
 }
 
 .content-game{
+  margin: 0.25vh;
   list-style: none;
   display: inline;
 }
 
 .content-game img{
-  width:15vh;
+  width: 31%;
+  height: 10vh;
+  margin-top: 0.2vh;
 }
 
 .content-response{
+  margin-top: 20%
+}
 
+.content-response-button{
+  background-color: #93329E; /* Violet */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 4vw;
+  width: 100%;
+  border-radius: 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.content-response-button:hover{
+  background-color: grey; /* Green */
+  color: white;
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 </style>

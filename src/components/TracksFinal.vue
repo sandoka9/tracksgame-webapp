@@ -3,6 +3,7 @@
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-info">{{content.info}}</div>
   </div>
 </template>
 
@@ -25,14 +26,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
-.radiobtn {
-    top: 0;
-    left: 0;
-    width: 40px;
-    height: 40px;
-    background-color: #eee;
-    border-radius: 50%;
-}
 </style>

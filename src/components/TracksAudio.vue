@@ -82,7 +82,7 @@ export default {
 }
 
 .content-game-audio i{
-  color: #FBB50C;
+  color: #FBB50C; /* Orange */
   font-size: 20vw;
 }
 .content-game-audio i:active{

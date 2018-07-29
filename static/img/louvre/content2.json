@@ -3,12 +3,13 @@
   "description": "",
   "color": "#CEFF33",
   "clues":{
-    "1": "Antoine Watteau",
-    "2": "L'indifférent",
-    "3": "Serge Bogoussiavsky"
+    "1": "img/louvre/Louvre-1.png",
+    "2": "img/louvre/Louvre-2.png",
+    "3": "img/louvre/Louvre-3.png",
+    "4": "img/louvre/Louvre-4.png"
   },
   "cluesFound": {},
-  "enigmaType": "response",
+  "enigmaType": "map",
   "questions": [
     {
       "type": "intro",
@@ -16,13 +17,7 @@
       "shortDescription":"Es-tu prêt à découvrir une des plus  grandes affaire de vol du musée du Louvre ?",
       "stepDescription": "Il te faudra faire preuve d'ingéniosité et bien observer les lieux pour résoudre les énigmes et découvrir le fin mot de l'histoire.",
       "info": "Si tu es d'accord active la geoloc de ton smartphone et c'est parti !",
-      "classe": "fa fa-arrow-right",
-      "winMsg": "",
-      "errorMsg": "",
-      "indice": "",
-      "lat":"",
-      "long":"",
-      "puzzleImage":""
+      "classe": "fa fa-arrow-circle-right"
     },
     {
       "type": "map-in",
@@ -30,13 +25,7 @@
       "shortDescription": "",
       "stepDescription": "Rendez-vous à l'aile Sully, c'est par là que notre voleur est entré le 19 juin 1939 afin d'accomplir son crime.",
       "info": "Direction l'aile Sully, 2ème étage, salle 36",
-      "classe": "fa fa-map-o",
-      "winMsg": "",
-      "errorMsg": "",
-      "indice": "",
-      "lat":"",
-      "long":"",
-      "puzzleImage":""
+      "classe": "fas fa-map-marked-alt"
     },
     {
       "type": "map",
@@ -44,12 +33,12 @@
       "shortDescription": "",
       "stepDescription": "",
       "info": "",
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "",
       "errorMsg": "",
       "indice": "",
-      "lat":"",
-      "lng":"",
+      "lat": 0,
+      "lng": 0,
       "puzzleImage":""
     },
     {
@@ -63,15 +52,15 @@
         {"name": "François", "surname": "Boucher"},
         {"name": "Jean-Honoré", "surname": "Fragonnard"}
       ],
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "Et oui, il s'agit de Watteau, ses contemporains Boucher et Fragonnard sont plus intéressés par les scènes de divinité comme Diane sortant du bain pour Boucher ou des scènes familiales comme le lecteur pour Fragonnard. Voici ton 1er indice: ",
       "errorMsg": [
         "Non, ce n'est pas {{checkedNames}}. Retente ta chance !",
         "Non, ce n'est pas {{checkedNames}}. Attention, C'est ta dernière chance !",
         "Perdu. Passe à l'étape suivante ! Le jeu continu, il y a encore plein d'indices à découvrir."
       ],
-      "indice": 1,
-      "qcmResponse": "Watteau"
+      "indice": "1",
+      "QResponse": "Watteau"
     },
     {
       "type": "puzzle",
@@ -85,7 +74,7 @@
         "Non, essaie encore une fois"
         ],
       "indice": 3,
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "lat":"",
       "long":"",
       "puzzleImage":[
@@ -107,36 +96,36 @@
       "stepDescription": "Dirige toi dans la salle suivante. C'est ici que l'on a vu le voleur pour la dernière fois. Il a laissé des indices ses intentions. Ecoute bien",
       "info": "",
       "src": "img/louvre/recording-01.mp3",
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "Voici ton nouvel indice: ",
       "errorMsg": [
         "Petit indice supplémentaire, j'adore les clairs de lune...",
         "Non toujours pas."
       ],
       "indice": 2,
-      "audioResponse": "pierrot",
+      "QResponse": "pierrot",
       "response": ""
     },
     {
-      "type": "enigme",
+      "type": "enigmeMap",
       "title": "Etape 5",
       "shortDescription": "#Le dénouement",
       "stepDescription": "Es-tu en mesure de percer le mystère ? Sers toi des indices pour compléter le message ci-dessous",
       "info": [
-        {"text": "Le" , "indice":"3"},
-        {"text": "juin" , "indice":"2"},
-        {"text": "alias Bog dérobait " , "indice":"1"},
-        {"text": "d'" , "indice":"4"}
+        {"text": "" , "indice":"1"},
+        {"text": "" , "indice":"2"},
+        {"text": "" , "indice":"3"},
+        {"text": "" , "indice":"4"}
       ],
-      "classe": "fa fa-check",
+      "classe": "",
       "winMsg": "Félicitation ! Tu as résolue l'énigme",
       "errorMsg": "",
       "indice": "",
-      "lat":"",
-      "long":"",
+      "lat":48.8472576,
+      "long":2.3052288,
       "puzzleImage":"",
-      "enigmeResponse": "res",
-      "response": ""
+      "QResponse": "true",
+      "response": "false"
     },
     {
       "type": "final",
@@ -158,7 +147,7 @@
       "shortDescription": "#QR Code",
       "stepDescription": "Description QR Code",
       "info": "Qui suis-je",
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "",
@@ -166,7 +155,7 @@
       "long":"",
       "puzzleImage":"",
       "qrCode": "Texte QR Code",
-      "qrResponse": "res",
+      "QResponse": "res",
       "response": ""
     },
     {
@@ -175,14 +164,13 @@
       "shortDescription": "#Video Short Desc",
       "stepDescription": "Description Video",
       "info": "Qui suis-je",
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "",
-      "lat":"",
-      "long":"",
-      "puzzleImage":"",
-      "qrCode": "",
+      "src":"http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm",
+      "poster":"http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.png",
+      "QResponse": "res",
       "response": ""
     }
   ]

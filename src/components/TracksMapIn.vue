@@ -28,12 +28,4 @@ export default {
 
 <style>
 
-.radiobtn {
-    top: 0;
-    left: 0;
-    width: 40px;
-    height: 40px;
-    background-color: #eee;
-    border-radius: 50%;
-}
 </style>

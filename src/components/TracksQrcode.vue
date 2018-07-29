@@ -3,11 +3,13 @@
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>
-    <div class="content-game">{{content.info}}
+    <div class="content-info">{{content.info}}</div>
+    <div class="content-game">
       <QrcodeReader @decode="onDecode" @init="onInit">
         <div class="decoded-content">{{ contentCode }}</div>
         <!--<LoadingIndicator v-show="loading" />-->
       </QrcodeReader>
+
     </div>
     <div class="content-response">
       <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
@@ -78,7 +80,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.content-game{
+}
 
 .decoded-content {
   position: absolute;
@@ -100,6 +105,20 @@ export default {
     height: 40px;
     background-color: #eee;
     border-radius: 50%;
+}
+
+.content-response{
+}
+
+.form-control-sm {
+  max-height: 0.5vh;
+  max-width: 100%;
+}
+
+.form-control {
+  max-width: 50vh;
+  margin-top: 10vh;
+  margin-left: 8vh;
 }
 
 .response {
