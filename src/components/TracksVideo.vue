@@ -35,7 +35,7 @@
 <script type="text/javascript" src="path/to/dist/vue-video-player.js"></script>
 
 <script>
-import 'video.js/dist/video-js.css'
+//import 'video.js/dist/video-js.css'
 import { videoPlayer } from 'vue-video-player'
 
 export default {
