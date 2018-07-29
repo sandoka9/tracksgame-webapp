@@ -18,6 +18,7 @@
 <script>
 export default {
   name: 'Navbar',
+  props: [],
   data () {
     return {
       msg: '',

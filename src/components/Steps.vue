@@ -34,7 +34,8 @@
       </div>
     </div>
     <div class="arrow">
-        <span class="arrow-right" v-if="questions[stepIndex].type == 'map-in'" v-on:click="nextStep">Visualiser la carte</span>
+        <span class="arrow-right" v-if="questions[stepIndex].type == 'map-in'" v-on:click="nextStep">
+        Visualiser la carte</span>
         <i :class="questions[stepIndex].classe" v-on:click="nextStep"></i>
 
         <i class="fa fa-arrow-circle-left" v-on:click="previous" v-if="stepIndex > 0"></i>
@@ -293,6 +294,7 @@ export default {
 .content-description{
   width: 100%;
   float: left;
+  margin-bottom:10%;
 }
 
 .content-response{
@@ -301,21 +303,22 @@ export default {
 }
 
 .result{
+  background-color: rgb(147, 50, 158);
+  color: white;
   min-height: 25%;
-  width: 100%;
+  width: 90%;
   float: left;
   padding: 5%;
-  background-color:white;
-  -webkit-box-shadow: 0px 8px 4px 0px #D4DADF; /* light gre y*/
-  -moz-box-shadow: 6px 12px 4px 0px #D4DADF;
+  -webkit-box-shadow: 0px 8px 4px 0px #431F46; /* light grey*/
+  -moz-box-shadow: 6px 12px 4px 0px #431F46;
   filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#D4DADF', Positive='true');
   zoom:1;
-  box-shadow: 6px 8px 4px 0px #D4DADF;
+  box-shadow: 6px 8px 4px 0px #431F46;
   top: 250px;
   left: 20px;
   position: absolute;
   opacity: 0.9;
-  border: 1px solid #D4DADF;
+  border: 1px solid #431F46;
 }
 .result-nok{
   text-align:justify;
@@ -341,9 +344,8 @@ export default {
   text-align: center;
   margin-right: 5vh;
 }
-.result-ok-cluesMap__img{
-  width: 15vh;
-  height: 10vh;
+.result-ok-cluesMap img{
+  width: 150px;
   margin-top: 0.2vh;
   margin-left: 10vh;
 }
@@ -352,28 +354,39 @@ export default {
   width: 100%;
   top: 80%;
   position: absolute;
-  padding-right: 10%;
-  padding-left: 10%;
+  padding-right: 5%;
+  padding-left: 5%;
+  font-size: 7vw
 }
 
 .fa-arrow-circle-right{
   float:right;
-  font-size: 4vw;
 }
+
 .fa-arrow-circle-right:hover{
   color:#2899a8; /* light blue */
 }
+
 .fa-map-o{
   float:right;
   padding-right: 3vh;
-  font-size: 4vw;
 }
+
 .fa-map-o:hover{
   color:#2899a8; /* light blue */
 }
+
+.fa-check{
+  float:right;
+}
+
+.fa-check:hover{
+  color:#2899a8; /* light blue */
+}
+
 .arrow-right {
   float: right;
-  font-size: 3vw;
+  font-size: 5vw;
   padding-right: 3vh;
 }
 .arrow-right:hover {
@@ -381,7 +394,6 @@ export default {
 }
 .fa-arrow-circle-left{
   float:left;
-  font-size: 4vw;
 }
 .fa-arrow-ciecle-left:hover {
   color:#2899a8; /* light blue */

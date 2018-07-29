@@ -3,8 +3,8 @@
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-info">{{content.info}}</div>
     <div class="content-game">
-      {{content.info}}
       <!--<ul id="v-for-object" class="content-game-ul">
         <li v-for="item in content.qcm" :key="item.name" >
           <label v-bind:for="item.surname">
@@ -51,6 +51,8 @@ export default {
 
 .content-game{
   width: 55%;
+  margin-left:15%;
+  margin-top:10%
 }
 
 .content-game-checkcontainer{
@@ -64,16 +66,12 @@ export default {
 }
 
 .content-game-checkcontainer input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
+  position: absolute;
+  opacity: 80%;
+  cursor: pointer;
 }
 
 .content-game-radiobtn{
-
-}
-
-.content-game-radiobtn {
   position: absolute;
   top: 0;
   left: 0;
@@ -82,4 +80,5 @@ export default {
   background-color: #eee;
   border-radius: 50%;
 }
+
 </style>

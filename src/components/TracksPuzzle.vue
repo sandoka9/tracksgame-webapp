@@ -6,7 +6,7 @@
     <div class="content-game">
       {{content.info}}
       <div class="content-game-puzzle">
-        <div  class="col-md-3">
+        <div>
           <draggable class="list-group-up" element="ul" v-model="content.puzzleImage" :options="dragOptions" :move="onMove">
             <transition-group name="no" tag="ul">
               <li class="randomImg" v-for="element in content.puzzleImage" :key="element.order" >
@@ -15,7 +15,7 @@
             </transition-group>
           </draggable>
         </div>
-        <div  class="col-md-3">
+        <div>
           <draggable class="list-group" element="ul" v-model="puzzles" :options="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
             <transition-group type="transition" :name="'flip-list'">
               <li class="randomImg" v-for="item in puzzles" :key="item.order">
@@ -99,9 +99,8 @@ export default {
   background: #C8EBFB;
 }
 
-.list-group-up .col-md-3{
-  background-color: #CEFF33;
-    margin-left: 3vh;
+.list-group-up{
+  margin-left:-15%;
 }
 
 .list-group-item {
@@ -114,7 +113,6 @@ export default {
 }
 
 .list-unstyled {
-  padding-left: 12vh;
   padding-top: 1vh;
 }
 
@@ -129,7 +127,7 @@ export default {
 }
 
 .randomImg img{
-  width: 15vh;
+  width: 31%;
   height: 10vh;
   margin-top: 0.2vh;
 }
