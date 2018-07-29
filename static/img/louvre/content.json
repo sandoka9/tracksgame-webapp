@@ -74,7 +74,7 @@
         "Non, essaie encore une fois"
         ],
       "indice": 3,
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "lat":"",
       "long":"",
       "puzzleImage":[
@@ -95,7 +95,8 @@
       "shortDescription": "#Listen",
       "stepDescription": "Dirige toi dans la salle suivante. C'est ici que l'on a vu le voleur pour la dernière fois. Il a laissé des indices ses intentions. Ecoute bien",
       "info": "",
-      "classe": "fa fa-arrow-right",
+      "src": "img/louvre/recording-01.mp3",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "Voici ton nouvel indice: ",
       "errorMsg": [
         "Petit indice supplémentaire, j'adore les clairs de lune...",
@@ -146,7 +147,7 @@
       "shortDescription": "#QR Code",
       "stepDescription": "Description QR Code",
       "info": "Qui suis-je",
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "",
@@ -163,7 +164,7 @@
       "shortDescription": "#Video Short Desc",
       "stepDescription": "Description Video",
       "info": "Qui suis-je",
-      "classe": "fa fa-arrow-right",
+      "classe": "fa fa-arrow-circle-right",
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "",

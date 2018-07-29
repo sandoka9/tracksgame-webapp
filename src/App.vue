@@ -21,5 +21,6 @@ export default {
 <style>
 @import url(https://maxcdn.bootstrapcdn.com/twitter-bootstrap/4.1.1/css/bootstrap.css);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css);
+@import url(https://use.fontawesome.com/releases/v5.2.0/css/all.css);
 
 </style>

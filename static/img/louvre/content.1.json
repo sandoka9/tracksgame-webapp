@@ -106,6 +106,7 @@
       "shortDescription": "#Listen",
       "stepDescription": "Dirige toi dans la salle suivante. C'est ici que l'on a vu le voleur pour la dernière fois. Il a laissé des indices ses intentions. Ecoute bien",
       "info": "",
+      "src": "img/louvre/recording-01.mp3",
       "classe": "fa fa-arrow-right",
       "winMsg": "Voici ton nouvel indice: ",
       "errorMsg": [
