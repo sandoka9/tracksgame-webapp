@@ -1,101 +1,100 @@
 /* eslint-disable */
 <template >
-  <div class="dropdown" v-bind:class="{ open: activator }" id="bar-nav" v-show="showNavBar">
-   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded=true  @click="makeBurger">
-   <!-- &#9776; -->
-   <i class="fa fa-th"></i>
-   <span class="caret"></span>
-   </button>
-   <ul class="dropdown-menu-sur" ref="liste" aria-labelledby="dropdownMenu1" ><!--v-bind:style="{ display: isDisplay }"-->
-     <li @click="makeBurger"><router-link :to="{ name: 'Login' }">Login</router-link></li>
-     <li role="separator" class="divider"></li>
-     <li @click="makeBurger"><router-link :to="{ name: 'Steps', params: {gameId: 123} }">Steps</router-link></li>
-     <li role="separator" class="divider"></li>
-     <li @click="makeBurger"><router-link :to="{ name: 'Clues' }">Clues</router-link></li>
-  </ul>
+  <div class="navBar">
+    <div class="topnav" id="myTopnav">
+      <a href="#" class="active" v-on:click="processMenu()" ><router-link :to="{ name: 'Login' }"> TracksGame </router-link> </a>
+      <a href="#" v-on:click="processMenu()" ><router-link :to="{ name: 'Login' }"> Home </router-link> </a>
+      <a href="#" v-on:click="processMenu()"><router-link :to="{ name: 'Steps' }">Steps</router-link></a>
+      <a href="#" v-on:click="processMenu()"><router-link :to="{ name: 'Help' }">Help</router-link></a>
+      <a href="javascript:void(0);" class="icon" v-on:click="processMenu()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <div style="padding-left:16px">
+    </div>
   </div>
 </template>
+
 <script>
+
 export default {
   name: 'Navbar',
-  props: [],
   data () {
     return {
-      msg: '',
-      activator: true,
-      isDisplay: 'none',
-      showNavBar: true
-    }
-  },
-  mounted: function () {
-    this.$refs['liste'].style.display = 'none'
-    if (this.$route.name === 'Login') {
-      this.showNavBar = false
-    } else {
-      this.showNavBar = true
+      msg: ''
     }
   },
   methods: {
-    makeBurger () {
-      this.activator = !this.activator
-      this.check = this.$refs['liste'].style.display
-      if (this.check === '') {
-      /*  this.isDisplay = 'none' */
-        this.$refs['liste'].style.display = 'none'
+    processMenu: function () {
+      var x = document.getElementById('myTopnav')
+      if (x.className === 'topnav') {
+        x.className += ' responsive'
       } else {
-      /*  this.isDisplay = '' */
-        this.$refs['liste'].style.display = ''
+        x.className = 'topnav'
       }
-      return this.$refs['liste'].style.display
     }
   }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-a {
-  color: #727272;
-}
-button, html [type="button"], [type="reset"], [type="submit"] {
-    background-color: white;
-}
-.btn {
-  font-size: 0.1rem; /* 3rem; */
-}
-.divider {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-}
-.dropdown-menu .divider {
-  height: 1px;
-  margin: 9px 0;
-  overflow: hidden;
-  background-color: #e5e5e5;
-}
-.dropdown-menu-sur {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    float: left;
-    min-width: 150rem;
-    padding: 0.5rem 0;
-    margin: 0.125rem 0 0;
-    font-size: 3rem;
-    color: #212529;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
-}
-.dropdown {
-  font-size: 2rem;
-  /*min-width: 50rem;*/
-  /*opacity: 0.5;*/
-}
-.dropdown-toggle::after{
-  content: none;
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
+.fa {
+  line-height: 2;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 5px 5px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #aeaf9f; /* light grey */
+  color: black;
+}
+
+.active {
+  background-color: #93329E; /* violet */
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
 </style>
