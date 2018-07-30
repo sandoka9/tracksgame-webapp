@@ -52,12 +52,10 @@ export default {
 
 .audio {
   margin-top: 10vh;
-  margin-left: 20vh;
 }
 
 .content-game{
-  width: 55%;
-  margin-left:10%;
+  width: 100%;
   margin-top:10%;
 }
 

@@ -108,6 +108,7 @@ export default {
 }
 
 .content-response{
+
 }
 
 .form-control-sm {

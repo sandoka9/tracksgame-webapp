@@ -19,20 +19,20 @@
     <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
     <div class="result"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
-      <i class="fa fa-times" v-on:click="close"></i>
+      <i class="far fa-times-circle" v-on:click="close"></i>
       <div class="result-nok error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
         {{questions[stepIndex].errorMsg[errorNb]}}
       </div>
-      <div class="result-nok error-msg" v-else-if="error == true" >
+      <div class="result-nok error-msg" v-else-if="error == true && cluesKey > 0" >
         {{questions[stepIndex].errorMsg[0]}}
       </div>
-      <div class="result-ok win-msg" v-if="win == true && cluesKey > 0">
-        {{questions[stepIndex].winMsg}}
-        <div class="result-ok-clues" v-if="enigmaType == 'response'">{{clues[cluesKey]}}</div>
-        <div class="result-ok-cluesMap" v-if="enigmaType == 'map'"><img :src="clues[cluesKey]" /></div>
-      </div>
-      <div class="result-ok win-msg" v-else-if="win == true" v-on:click="close" >
+      <div class="result-ok win-msg" v-else-if="error == true" >
         Vous avez récupéré tous les indices. Maintenant à vous de jouer !
+      </div>
+      <div class="result-ok win-msg" v-if="win == true">
+        {{questions[stepIndex].winMsg}}
+        <div class="result-ok-clues" v-if="enigmaType == 'response' && questions[stepIndex].type != 'enigme'">{{clues[cluesKey]}}</div>
+        <div class="result-ok-cluesMap" v-if="enigmaType == 'map'"><img :src="clues[cluesKey]" /></div>
       </div>
     </div>
     <div class="arrow">
@@ -329,10 +329,12 @@ export default {
   position: absolute;
   opacity: 0.9;
   border: 1px solid #431F46;
+  position: absolute;
+  z-index: 100;
 }
 
 .result > i{
-  float:right;
+  float: right;
   color:  white;
   font-size: 6vw;
   padding-left: 5%
