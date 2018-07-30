@@ -61,3 +61,8 @@ https://laracasts.com/discuss/channels/vue/how-to-declare-global-variable-using-
 
 #Ajax
 https://vuejsdevelopers.com/2017/08/28/vue-js-ajax-recipes/
+
+#Node Static contentDev in content.json
+questions > puzzleImage > image
+questions > src (type audio 1 media to diff ?)
+questions > poster

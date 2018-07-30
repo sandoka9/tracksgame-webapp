@@ -54,8 +54,8 @@
       "classe": "fa fa-arrow-circle-right",
       "winMsg": "Et oui, il s'agit de Watteau, ses contemporains Boucher et Fragonnard sont plus intéressés par les scènes de divinité comme Diane sortant du bain pour Boucher ou des scènes familiales comme le lecteur pour Fragonnard. Voici ton 1er indice: ",
       "errorMsg": [
-        "Non, ce n'est pas {{checkedNames}}. Retente ta chance !",
-        "Non, ce n'est pas {{checkedNames}}. Attention, C'est ta dernière chance !",
+        "Non, retente ta chance !",
+        "Non, attention, C'est ta dernière chance !",
         "Perdu. Passe à l'étape suivante ! Le jeu continu, il y a encore plein d'indices à découvrir."
       ],
       "indice": "1",
@@ -78,15 +78,15 @@
       "lat":"",
       "long":"",
       "puzzleImage":[
-        {"image": "img/louvre/Louvre-1.png", "order": "1"},
-        {"image": "img/louvre/Louvre-5.png", "order": "5"},
-        {"image": "img/louvre/Louvre-3.png", "order": "3"},
-        {"image": "img/louvre/Louvre-9.png", "order": "9"},
-        {"image": "img/louvre/Louvre-4.png", "order": "4"},
-        {"image": "img/louvre/Louvre-7.png", "order": "7"},
-        {"image": "img/louvre/Louvre-2.png", "order": "2"},
-        {"image": "img/louvre/Louvre-6.png", "order": "6"},
-        {"image": "img/louvre/Louvre-8.png", "order": "8"}
+        {"image": "Louvre-1.png", "order": "1"},
+        {"image": "Louvre-5.png", "order": "5"},
+        {"image": "Louvre-3.png", "order": "3"},
+        {"image": "Louvre-9.png", "order": "9"},
+        {"image": "Louvre-4.png", "order": "4"},
+        {"image": "Louvre-7.png", "order": "7"},
+        {"image": "Louvre-2.png", "order": "2"},
+        {"image": "Louvre-6.png", "order": "6"},
+        {"image": "Louvre-8.png", "order": "8"}
       ]
     },
     {
@@ -95,7 +95,7 @@
       "shortDescription": "#Listen",
       "stepDescription": "Dirige toi dans la salle suivante. C'est ici que l'on a vu le voleur pour la dernière fois. Il a laissé des indices ses intentions. Ecoute bien",
       "info": "",
-      "src": "img/louvre/recording-01.mp3",
+      "src": "recording-01.mp3",
       "classe": "fa fa-arrow-circle-right",
       "winMsg": "Voici ton nouvel indice: ",
       "errorMsg": [
@@ -168,8 +168,8 @@
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "",
-      "src":"http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.webm",
-      "poster":"http://www.supportduweb.com/page/media/videoTag/BigBuckBunny.png",
+      "src":"BigBuckBunny.webm",
+      "poster":"BigBuckBunny.png",
       "QResponse": "res",
       "response": ""
     }

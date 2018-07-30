@@ -42,9 +42,6 @@ export default {
   /* eslint-enable */
   methods: {
     isActive: function () {
-      console.log('ckey', this.cluesKey)
-      console.log('stpIE', this.stepIndexEnd)
-
       if (this.cluesKey !== '' && this.stepIndexEnd === false) {
         return false
       } else {

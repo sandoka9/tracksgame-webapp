@@ -40,7 +40,6 @@ export default {
   /* eslint-enable */
   methods: {
     codeArrived (event) {
-      console.log(event.detail[0])
     },
     onDecode (contentCode) {
       this.contentCode = contentCode

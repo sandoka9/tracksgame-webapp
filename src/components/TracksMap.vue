@@ -20,12 +20,9 @@ export default {
   /* eslint-disable */
   mounted () {
     let script = document.createElement('script')
-    console.log('loading script')
     script.onload = () => {
-      console.log('script loaded')
       //var uluru = {lat: 48.861088, lng: 2.337513}
       this.gmap = new google.maps.Map(document.getElementById('gmap'), {zoom: 12, center: this.center})
-      console.log('map created')
       var marker = new google.maps.Marker({position: this.center, title: 'Le Louvre'})
       marker.setMap(this.gmap)
       this.geolocate(this.markCurrentPosition)
@@ -45,14 +42,11 @@ export default {
     },
     /* eslint-disable */
     markCurrentPosition: function () {
-      console.log('creating marker with coordinnates :' + this.latitude + '/' + this.longitude)
       var mymarker = new google.maps.Marker({
         icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
         position: {lat: this.latitude, lng: this.longitude},
         title: 'You'})
       mymarker.setMap(this.gmap)
-      console.log('marker created')
-      console.log('pos', this.latitude, this.longitude)
     }
     /* eslint-enable */
   }

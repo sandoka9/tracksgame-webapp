@@ -3,14 +3,14 @@
     <img src="img/louvre/login.png" />
     <form>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" placeholder="Pseudo" aria-describedby="basic-addon1">
       </div>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" id="gameId" placeholder="Game Id" aria-describedby="basic-addon1" @keyup="getId()">
       </div>
-      <div class="input-group" id="123">
-        <button class="form-control" aria-describedby="basic-addon1" value="GO !" type="submit">
-          <router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }">
+      <div class="input-group">
+        <button class="form-control" aria-describedby="basic-addon1" value="GO !" type="submit" @click="getId()">
+          <router-link :to="{ name: 'Steps', params: { gameId: fbGameId } }">
            GO !
           </router-link>
         </button>
@@ -25,7 +25,13 @@ export default {
   data () {
     return {
       msg: 'Bienvenu sur la page Login',
-      gameId123: 123
+      fbGameId: ''
+    }
+  },
+  methods: {
+    getId: function () {
+      var x = document.getElementById('gameId')
+      this.fbGameId = x.value
     }
   }
 }
@@ -33,6 +39,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 img {
   max-height: 70vh;
 }
@@ -44,13 +51,14 @@ img {
 }
 
 .login-container{
-  background-color: #ada37e;
+  background-color: #aeaf9f;
   min-height: 100vh;
   background-color: 0 0 255 0.5;
 }
 
 .input-group > .form-control {
-    font-size: xx-large;
+    font-size: large;
     font-weight: bold;
 }
+
 </style>

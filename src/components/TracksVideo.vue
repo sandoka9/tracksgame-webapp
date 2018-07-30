@@ -59,9 +59,6 @@ export default {
       }
     }
   },
-  mounted () {
-    console.log('this is current player instance object', this.player)
-  },
   components: {
     videoPlayer
   },
@@ -85,7 +82,6 @@ export default {
     },
     // player is ready
     playerReadied (player) {
-      console.log('the player is readied', player)
       // you can use it to do something...
       // player.[methods]
     },

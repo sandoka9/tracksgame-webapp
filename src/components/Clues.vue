@@ -1,37 +1,31 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }} hey !</h1>
-    <h2>Essential Links</h2>
-    <ul>
-    </ul>
+  <div class="content">
+    <div class="content-title"></div>
+    <div class="content-subtitle"></div>
+    <div class="content-description"></div>
+    <div class="content-game"></div>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'Clues',
+  name: 'TracksIntro',
+  props: ['content'],
   data () {
     return {
-      msg: 'Bienvenu sur la page Clues'
+      msg: 'Bienvenue sur la map'
     }
+  },
+  /* eslint-disable */
+  mounted () {
+  },
+  /* eslint-enable */
+  methods: {
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>

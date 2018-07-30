@@ -22,9 +22,11 @@
       <i class="far fa-times-circle" v-on:click="close"></i>
       <div class="result-nok error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
         {{questions[stepIndex].errorMsg[errorNb]}}
+        {{checkedNames}}
       </div>
       <div class="result-nok error-msg" v-else-if="error == true && cluesKey > 0" >
         {{questions[stepIndex].errorMsg[0]}}
+        {{checkedNames}}
       </div>
       <div class="result-ok win-msg" v-else-if="error == true" >
         Vous avez récupéré tous les indices. Maintenant à vous de jouer !
@@ -101,15 +103,12 @@ export default {
   methods: {
     close: function () {
       if (this.error === true && this.errorNb < 3) {
-        console.log('yes close 1')
         this.error = false
         return false
       } else if (this.error === true) {
-        console.log('yes close 2')
         this.error = false
         this.errorNb = 0
       } else {
-        console.log('yes close 3')
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
         delete this.clues[this.cluesKey]
       }
@@ -123,9 +122,6 @@ export default {
         this.stepIndex++
       }
       this.win = false
-      console.log('stpIE', this.stepIndexEnd)
-      console.log('stpIB', this.stepIndexBonus)
-      console.log('stpIM', this.stepIndexMax)
       /* If no more questions stepIndexMax = nb questions */
       if (this.stepIndexBonus === this.stepIndexMax) {
         this.stepIndexEnd = true
@@ -135,8 +131,7 @@ export default {
     fetchData: function () {
       /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
       jsonPath = CONFIG.API_URL + '/' + this.gameId + '/public/tgame.json'
-      console.log(jsonPath)
-      jsonPath = 'img/louvre/content.json/'
+      jsonPath = 'img/louvre/contentDev.json/'
       $.getJSON(jsonPath, (data) => {
         this.title = data.title
         this.description = data.description
@@ -148,16 +143,13 @@ export default {
       })
     },
     getClues: function () {
-      console.log('getClues')
       if (this.questions[this.stepIndex].indice !== '') {
-        console.log('getClues indice')
         return this.questions[this.stepIndex].indice
       } else {
         return (Object.keys(this.clues)[0] ? Object.keys(this.clues)[0] : '')
       }
     },
     moreIndex () {
-      console.log('moreIndex')
       this.errorInfo['stepEnigme'] = this.stepIndex
       if (this.stepIndexBonus > 0) {
         this.stepIndex = this.stepIndexBonus + 1
@@ -169,17 +161,11 @@ export default {
       let cluesKeyTemp = this.getClues()
       this.cluesKey = String(cluesKeyTemp)
       if (this.questionType1.indexOf(this.questions[this.stepIndex].type) > -1) {
-        console.log('plop')
         this.stepIndex++
         return
       }
-      console.log(this.questions[this.stepIndex].type)
       if (this.questions[this.stepIndex].type === 'qcm') {
-        console.log('yes QCM')
-        console.log(this.checkedNames)
-        console.log(this.qcm)
         if (this.checkedNames === this.questions[this.stepIndex].QResponse) {
-          console.log('WIN')
           this.win = true
           this.error = false
         } else {
@@ -207,9 +193,7 @@ export default {
         return
       }
       if (this.questionType2.indexOf(this.questions[this.stepIndex].type) > -1) {
-        console.log('yes 1')
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].QResponse) {
-          console.log('yes 1')
           this.win = true
           this.error = false
         } else {
