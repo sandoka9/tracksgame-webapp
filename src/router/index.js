@@ -1,7 +1,6 @@
 /* eslint-disable */
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Help from '@/components/Help'
 import Clues from '@/components/Clues'
@@ -12,18 +11,14 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/AA',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login
     },
     {
-      path: '/steps',
+      path: '/steps/:gameId',
       name: 'Steps',
+      props: true,
       component: Steps
     },
     {

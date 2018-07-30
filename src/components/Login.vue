@@ -1,9 +1,21 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }} hey !</h1>
-    <h2>Essential Links</h2>
-    <ul>
-    </ul>
+  <div class="login-container">
+    <img src="img/louvre/login.png" />
+    <form>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group" id="123">
+        <button class="form-control" aria-describedby="basic-addon1" value="GO !" type="submit">
+          <router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }">
+           GO !
+          </router-link>
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -12,7 +24,8 @@ export default {
   name: 'Login',
   data () {
     return {
-      msg: 'Bienvenu sur la page Login'
+      msg: 'Bienvenu sur la page Login',
+      gameId123: 123
     }
   }
 }
@@ -20,18 +33,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+img {
+  max-height: 70vh;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.input-group{
+  background-color: white;
+  opacity:0.8;
+  text-align: center;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.login-container{
+  background-color: #ada37e;
+  min-height: 100vh;
+  background-color: 0 0 255 0.5;
 }
-a {
-  color: #42b983;
+
+.input-group > .form-control {
+    font-size: xx-large;
+    font-weight: bold;
 }
 </style>
