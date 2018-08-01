@@ -93,7 +93,6 @@ export default {
     }
   },
   created: function () {
-    console.log('Fetching data for game : ' + this.gameId)
     this.fetchData()
   },
   methods: {
@@ -126,16 +125,17 @@ export default {
     },
     fetchData: function () {
       var that = this
-      GameRepository.getGame(this.gameId, function (data) {
-        console.debug(data)
+      GameRepository.getGame(this.gameId).then(data => {
+        // console.debug(data)
         that.title = data.title
         that.description = data.description
         that.color = data.color
         that.questions = data.questions
         that.clues = data.clues
         that.enigmaType = data.enigmaType
-        that.stepIndexMax = that.questions.length - 1
+        that.stepIndexMax = data.questions.length - 1
       })
+        .catch(error => console.error(error))
     },
     getClues: function () {
       console.log('getClues')
