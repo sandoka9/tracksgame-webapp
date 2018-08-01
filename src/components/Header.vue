@@ -68,8 +68,8 @@ body {
 }
 
 .active {
-  background-color: #93329E; /* violet */
-  color: white;
+  background-color: #DEF333; /* yellow violet  #93329E*/
+  color: black;
 }
 
 .topnav .icon {

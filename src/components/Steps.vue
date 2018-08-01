@@ -1,7 +1,6 @@
 /* eslint-disable */
 <template>
   <div id="steps">
-    Alert
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
     <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:stepIndexEnd="stepIndexEnd"
                   v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
@@ -48,6 +47,7 @@
 </template>
 
 <script>
+import Logger from '../services/TgLogger.js'
 import baseCheckbox from './baseCheckbox.vue'
 import draggable from 'vuedraggable'
 import TracksAudio from './TracksAudio.vue'
@@ -65,6 +65,8 @@ import TracksVideo from './TracksVideo.vue'
 import $ from 'jquery'
 var jsonPath = ''
 
+var log = new logger
+console.log(log.info('alert'))
 export default {
   name: 'Steps',
   props: ['gameId'],
@@ -130,7 +132,7 @@ export default {
     fetchData: function () {
       /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
       jsonPath = this.gameId
-      jsonPath = 'img/louvre/contentDev1.json/'
+      jsonPath = 'img/louvre/contentDev.json/'
       $.getJSON(jsonPath, (data) => {
         this.title = data.title
         this.description = data.description
@@ -240,8 +242,6 @@ export default {
   }
 }
 
-this.consoleObj = window.console
-console.log('test')
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -302,22 +302,22 @@ console.log('test')
 }
 
 .result{
-  background-color: #93329E; /* violet */
-  color: white;
+  background-color: #DEF333; /* Yellow violet #93329E*/
+  color: black;
   min-height: 25%;
   width: 90%;
   float: left;
   padding: 5%;
-  -webkit-box-shadow: 0px 8px 4px 0px #431F46; /* shadow violet*/
-  -moz-box-shadow: 6px 12px 4px 0px #431F46;
+  -webkit-box-shadow: 0px 8px 4px 0px #565D21; /* shadow yellow shadow violet #431F46*/
+  -moz-box-shadow: 6px 12px 4px 0px #565D21;
   filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#D4DADF', Positive='true');
   zoom:1;
-  box-shadow: 6px 8px 4px 0px #431F46;
+  box-shadow: 6px 8px 4px 0px #565D21;
   top: 250px;
   left: 20px;
   position: absolute;
   opacity: 0.9;
-  border: 1px solid #431F46;
+  border: 1px solid #565D21;
   position: absolute;
   z-index: 100;
 }
@@ -342,21 +342,21 @@ console.log('test')
   color: red;
 }
 .result-ok{
-  color: white;
+  color: black;
   /* padding-right: 5vh; */
   font-size: 3vw;
 }
 .result-ok-clues{
   margin-top: 10%;
   background-color: white;
-  color:#431F46;
+  color: black;
   text-align: center;
   margin-right: 10%;
   margin-left: 15%;
   font-size: 4vw;
   font-weight: bold;
-  border-bottom: 1px solid #431F46;
-  border-right: 1px solid #431F46;
+  border-bottom: 1px solid #565D21;
+  border-right: 1px solid #565D21;
   border-radius: 2px;
 }
 .result-ok-cluesMap img{
@@ -372,6 +372,9 @@ console.log('test')
   padding-right: 5%;
   padding-left: 5%;
   font-size: 7vw
+}
+.fa-times-circle{
+  color: black;
 }
 
 .fa-arrow-circle-right{

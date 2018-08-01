@@ -14,7 +14,6 @@ export default {
   props: ['content'],
   data () {
     return {
-      msg: 'Bienvenue sur la map'
     }
   },
   /* eslint-disable */
