@@ -1,6 +1,7 @@
 /* eslint-disable */
 <template>
   <div id="steps">
+    Alert
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
     <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:stepIndexEnd="stepIndexEnd"
                   v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
@@ -26,7 +27,6 @@
       </div>
       <div class="result-nok error-msg" v-else-if="error == true && cluesKey > 0" >
         {{questions[stepIndex].errorMsg[0]}}
-        {{checkedNames}}
       </div>
       <div class="result-ok win-msg" v-else-if="error == true" >
         Vous avez récupéré tous les indices. Maintenant à vous de jouer !
@@ -62,8 +62,6 @@ import TracksQcm from './TracksQcm.vue'
 import TracksQrcode from './TracksQrcode.vue'
 import TracksVideo from './TracksVideo.vue'
 
-import * as CONFIG from './config.js'
-
 import $ from 'jquery'
 var jsonPath = ''
 
@@ -77,6 +75,7 @@ export default {
       cluesFound: {},
       cluesKey: '0',
       color: '',
+      consoleObj: 'start',
       enigmaType: '',
       error: false,
       errorInfo: {
@@ -130,8 +129,8 @@ export default {
     },
     fetchData: function () {
       /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
-      jsonPath = CONFIG.API_URL + '/' + this.gameId + '/public/tgame.json'
-      jsonPath = 'img/louvre/contentDev.json/'
+      jsonPath = this.gameId
+      jsonPath = 'img/louvre/contentDev1.json/'
       $.getJSON(jsonPath, (data) => {
         this.title = data.title
         this.description = data.description
@@ -141,6 +140,9 @@ export default {
         this.enigmaType = data.enigmaType
         this.stepIndexMax = this.questions.length - 1
       })
+        .fail(function () {
+          console.log('error', this.Response)
+        })
     },
     getClues: function () {
       if (this.questions[this.stepIndex].indice !== '') {
@@ -237,6 +239,9 @@ export default {
     TracksVideo
   }
 }
+
+this.consoleObj = window.console
+console.log('test')
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
