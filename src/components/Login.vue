@@ -20,19 +20,29 @@
 </template>
 
 <script>
+
+window.tgLogger.log('Login')
+
 export default {
   name: 'Login',
   data () {
     return {
       msg: 'Bienvenu sur la page Login',
-      fbGameId: ''
+      fbGameId: '',
+      defaultGame: 'rBnjvYj5K-1'
     }
   },
   methods: {
     getId: function () {
-      var x = document.getElementById('gameId')
-      this.fbGameId = x.value
+      var gameChoice = document.getElementById('gameId')
+      this.fbGameId = gameChoice.value
+      if (this.fbGameId === '') {
+        this.fbGameId = this.defaultGame
+        window.tgLogger.log('Game Id empty')
+      }
     }
+  },
+  mounted () {
   }
 }
 </script>

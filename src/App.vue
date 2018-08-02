@@ -5,15 +5,21 @@
     <!--<img src="./assets/logo.png">-->
     <header-component></header-component>
     <router-view/>
+    <TracksLog></TracksLog>
   </div>
 </template>
 
 <script>
 import HeaderComponent from './components/Header.vue'
+import TracksLog from './components/TracksLog.vue'
+
+window.tgLogger = require('./services/TestService.js')
+
 export default {
   name: 'App',
   components: {
-    HeaderComponent
+    HeaderComponent,
+    TracksLog
   }
 }
 </script>

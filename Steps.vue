@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import Logger from '../services/TgLogger.js'
 import baseCheckbox from './baseCheckbox.vue'
 import draggable from 'vuedraggable'
 import TracksAudio from './TracksAudio.vue'
@@ -64,6 +65,8 @@ import TracksVideo from './TracksVideo.vue'
 import $ from 'jquery'
 var jsonPath = ''
 
+var log = new logger
+console.log(log.info('alert'))
 export default {
   name: 'Steps',
   props: ['gameId'],
@@ -98,8 +101,6 @@ export default {
   created: function () {
     this.fetchData()
   },
-  mounted () {
-  },
   methods: {
     close: function () {
       if (this.error === true && this.errorNb < 3) {
@@ -131,9 +132,6 @@ export default {
     fetchData: function () {
       /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
       jsonPath = this.gameId
-      if (typeof (jsonPath) === 'undefined' || jsonPath === '') {
-        window.tgLogger.log('getJson failed : Game Id not defined')
-      }
       jsonPath = 'img/louvre/contentDev.json/'
       $.getJSON(jsonPath, (data) => {
         this.title = data.title
@@ -146,7 +144,6 @@ export default {
       })
         .fail(function () {
           console.log('error', this.Response)
-          window.tgLogger.log('getJson failed : Incorrect Json')
         })
     },
     getClues: function () {
@@ -321,6 +318,7 @@ export default {
   position: absolute;
   opacity: 0.9;
   border: 1px solid #565D21;
+  position: absolute;
   z-index: 100;
 }
 
