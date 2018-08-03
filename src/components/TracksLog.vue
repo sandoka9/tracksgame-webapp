@@ -22,6 +22,7 @@ export default {
   },
   /* eslint-disable */
   created () {
+    this.showLog()
   },
   /* eslint-enable */
   methods: {
@@ -56,6 +57,7 @@ export default {
   z-index: 999;
   background-color: black; /* Yellow violet #93329E*/
   color: grey;
+  font-size: 2vw;
   font-family: courier, serif;
   min-height: 15%;
   width: 100%;

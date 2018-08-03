@@ -95,10 +95,29 @@ export default {
       win: false
     }
   },
+  components: {
+    draggable,
+    baseCheckbox,
+    TracksAudio,
+    TracksEnigme,
+    TracksEnigmeMap,
+    TracksFinal,
+    TracksIntro,
+    TracksMapIn,
+    TracksMap,
+    TracksPuzzle,
+    TracksQcm,
+    TracksQrcode,
+    TracksVideo
+  },
   created: function () {
     this.fetchData()
+    window.tgLogger.errorHandler()
   },
-  mounted () {
+  mounted: function () {
+    // Code that will run only after the
+    // entire view has been rendered
+    window.tgLogger.info(this.questions[this.stepIndex].type)
   },
   methods: {
     close: function () {
@@ -132,7 +151,7 @@ export default {
       /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
       jsonPath = this.gameId
       if (typeof (jsonPath) === 'undefined' || jsonPath === '') {
-        window.tgLogger.log('getJson failed : Game Id not defined')
+        window.tgLogger.error('getJson failed : Game Id not defined')
       }
       jsonPath = 'img/louvre/contentDev.json/'
       $.getJSON(jsonPath, (data) => {
@@ -146,7 +165,7 @@ export default {
       })
         .fail(function () {
           console.log('error', this.Response)
-          window.tgLogger.log('getJson failed : Incorrect Json')
+          window.tgLogger.error('getJson failed : Incorrect Json')
         })
     },
     getClues: function () {
@@ -221,27 +240,6 @@ export default {
       }
       this.error = false
     }
-  },
-  /* mounted () {
-    this.$nextTick(() => {
-      console.log(CONFIG.API_URL)
-    })
-  },
-  */
-  components: {
-    draggable,
-    baseCheckbox,
-    TracksAudio,
-    TracksEnigme,
-    TracksEnigmeMap,
-    TracksFinal,
-    TracksIntro,
-    TracksMapIn,
-    TracksMap,
-    TracksPuzzle,
-    TracksQcm,
-    TracksQrcode,
-    TracksVideo
   }
 }
 

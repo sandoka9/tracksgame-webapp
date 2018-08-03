@@ -21,8 +21,6 @@
 
 <script>
 
-window.tgLogger.log('Login')
-
 export default {
   name: 'Login',
   data () {
@@ -38,11 +36,16 @@ export default {
       this.fbGameId = gameChoice.value
       if (this.fbGameId === '') {
         this.fbGameId = this.defaultGame
-        window.tgLogger.log('Game Id empty')
+        window.tgLogger.info('Game Id empty')
       }
     }
   },
-  mounted () {
+  mounted: function () {
+    this.$nextTick(function () {
+      // Code that will run only after the
+      // entire view has been rendered
+      window.tgLogger.info('Login')
+    })
   }
 }
 </script>

@@ -7,12 +7,13 @@ import router from './router'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-export const API_URL = 'Un truc en dur'
+Vue.config.errorHandler = function (err, vm, info) {
+  window.tgLogger.error(err + vm + info)
+}
 
 new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>',
-  API_URL
+  template: '<App/>'
 })

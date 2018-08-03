@@ -8,3 +8,5 @@ export const API_URL = 'Un truc en dur'
 
 /* DEV */
 export const PATH_GAME = ''
+
+export const DEBUG = true
