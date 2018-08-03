@@ -30,40 +30,37 @@ var tgLogger = {
     if (!this.isDebbugActive() || process.env.LOG_LEVEL > 1) {
       return '' // Do nothing
     }
-    this.log(message)
+    console.log('messInfo', message)
+    this.log('info', message)
   },
   warn: function (message) {
-    this.log(message)
+    if (!this.isDebbugActive() || process.env.LOG_LEVEL > 2) {
+      return '' // Do nothing
+    }
+    console.log('messWarn', message)
+    this.log('warn', message)
   },
   error: function (message) {
     if (!this.isDebbugActive() || process.env.LOG_LEVEL > 3) {
       return '' // Do nothing
     }
-    this.log(message)
+    console.log('messError', message)
+    this.log('error', message)
   },
   critical: function (message) {
-    this.log(message)
-  },
-  errorHandler: function () {
-    console.log('this.config.errorHandler', this.config.errorHandler)
-    console.log('!this.isDebbugActive()', !this.isDebbugActive())
-    console.log('process.env.LOG_LEVEL < 2')
-    if (!this.isDebbugActive() || process.env.LOG_LEVEL > 2) {
+    if (!this.isDebbugActive() || process.env.LOG_LEVEL > 4) {
       return '' // Do nothing
     }
-    console.log('this.config.errorHandler', this.config.errorHandler)
-    this.log(this.config.errorHandler) // warnHandler
+    console.log('messCritic', message)
+    this.log('critical', message)
   },
   show: function () {
-    if (this.logMessage !== '') {
-      console.log('logMessage not empty', this.logMessage)
-      this.stackMessage = this.stackMessage + '\r\n' + this.logDate.getHours() + ':' + this.logDate.getMinutes() + ' > ' + this.logMessage
-      this.logMessage = ''
-    }
     return this.stackMessage
   },
-  log: function (msg) {
+  log: function (type, msg) {
     this.logMessage = msg
+    this.stackMessage = this.stackMessage + '\r\n' + '<p class=content-log-"' + type + '" >' + this.logDate.getHours() + ':' + this.logDate.getMinutes() + ' > ' + this.logMessage + '</p>'
+    this.logMessage = ''
   },
   send: function (msg) {
   }

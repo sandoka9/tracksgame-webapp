@@ -42,9 +42,14 @@ export default {
 <style scoped>
 
 .content-button{
-  float: left;
-  top: 70%;
-  position:absolute;
+  float: right;
+  left: 86%;
+  width: 20%;
+  position: absolute;
+  top: 60%;
+  writing-mode: horizontal-tb;
+  transform: rotate(90deg);
+
 }
 
 .content-log{
@@ -60,12 +65,33 @@ export default {
   font-size: 2vw;
   font-family: courier, serif;
   min-height: 15%;
+  max-height: 80%;
   width: 100%;
   float: left;
-  padding: 5%;
+  padding: 2%;
   top: 55%;
   position: absolute;
   opacity: 0.9;
+}
+
+.content-log-info{
+  color: grey;
+  display: block;
+}
+
+.content-log-warn{
+  color: yellow;
+  display: block;
+}
+
+.content-log-info{
+  color: red;
+  display: block;
+}
+
+.content-log-info{
+  color: red;
+  display: block;
 }
 
 </style>

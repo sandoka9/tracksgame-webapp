@@ -112,7 +112,6 @@ export default {
   },
   created: function () {
     this.fetchData()
-    window.tgLogger.errorHandler()
   },
   mounted: function () {
     // Code that will run only after the

@@ -2,10 +2,10 @@
 <template >
   <div class="navBar">
     <div class="topnav" id="myTopnav">
-      <a href="#" class="active" v-on:click="processMenu()" ><router-link :to="{ name: 'Login' }"> TracksGame </router-link> </a>
+      <span class="active topnav-title" v-on:click="processMenu()" >TracksGame</span>
       <a href="#" v-on:click="processMenu()" ><router-link :to="{ name: 'Login' }"> Home </router-link> </a>
       <a href="#" v-on:click="processMenu()"><router-link :to="{ name: 'Steps' }">Steps</router-link></a>
-      <a href="#" v-on:click="processMenu()"><router-link :to="{ name: 'Help' }">Help</router-link></a>
+      <a href="#" v-on:click="processMtop()"><router-link :to="{ name: 'Help' }">Help</router-link></a>
       <a href="javascript:void(0);" class="icon" v-on:click="processMenu()">
         <i class="fa fa-bars"></i>
       </a>
@@ -50,6 +50,21 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #333;
+}
+
+.topnav-title {
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 5px 5px;
+  text-decoration: none;
+  font-size: 5vw;
+}
+
+.topnav-title:hover {
+  background-color: #aeaf9f; /* light grey */
+  color: black;
+  display: block;
 }
 
 .topnav a {
