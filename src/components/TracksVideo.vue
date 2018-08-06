@@ -125,9 +125,9 @@ button {
   height: 200px;
 }
 
-.video-js .vjs-big-play-button {
-  top: 50%;
-  left: 50%;
+.vjs-big-play-button {
+  top: 10vw;
+  left: 30vw;
 }
 
 .fullscreen{

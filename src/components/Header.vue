@@ -3,9 +3,9 @@
   <div class="navBar">
     <div class="topnav" id="myTopnav">
       <span class="active topnav-title" v-on:click="processMenu()" >TracksGame</span>
-      <a href="#" v-on:click="processMenu()" ><router-link :to="{ name: 'Login' }"> Home </router-link> </a>
-      <a href="#" v-on:click="processMenu()"><router-link :to="{ name: 'Steps' }">Steps</router-link></a>
-      <a href="#" v-on:click="processMtop()"><router-link :to="{ name: 'Help' }">Help</router-link></a>
+      <a href="#" v-on:click="processMenu()" class="topnav-firstLink" ><router-link :to="{ name: 'Login' }"> Home </router-link></a>
+      <a href="#" v-on:click="processMenu()" class="topnav-headerLink"><router-link :to="{ name: 'Steps' }">Steps</router-link></a>
+      <a href="#" v-on:click="processMenu()" class="topnav-headerLink"><router-link :to="{ name: 'Help' }">Help</router-link></a>
       <a href="javascript:void(0);" class="icon" v-on:click="processMenu()">
         <i class="fa fa-bars"></i>
       </a>
@@ -45,6 +45,9 @@ body {
 
 .fa {
   line-height: 2;
+  height: 10vw;
+  font-size: 5vw;
+  font-weight: bold;
 }
 
 .topnav {
@@ -58,15 +61,27 @@ body {
   text-align: center;
   padding: 5px 5px;
   text-decoration: none;
-  font-size: 5vw;
+  width: 35vw;
+  height: 12vw;
+  font-size: 6vw;
 }
 
 .topnav-title:hover {
-  background-color: #aeaf9f; /* light grey */
+  background-color: #D5D6CE; /* light grey */
   color: black;
   display: block;
+  width: 35vw;
+  height: 12vw;
+  font-size: 6vw;
 }
 
+.topnav-firstLink {
+  margin-top: 13vw;
+  border-bottom: 1px solid grey;
+}
+.topnav-headerLink {
+  border-bottom: 1px solid grey;
+}
 .topnav a {
   float: left;
   display: block;
@@ -74,12 +89,14 @@ body {
   text-align: center;
   padding: 5px 5px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 6vw;
 }
 
 .topnav a:hover {
-  background-color: #aeaf9f; /* light grey */
+  background-color: #D5D6CE; /* light grey */
   color: black;
+  display: block;
+  height: 20%;
 }
 
 .active {
@@ -110,6 +127,9 @@ body {
     float: none;
     display: block;
     text-align: left;
+    height: 12vw;
+    font-size: 6vw;
+    font-weight: bold;
   }
 }
 </style>

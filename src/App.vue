@@ -13,7 +13,7 @@
 import HeaderComponent from './components/Header.vue'
 import TracksLog from './components/TracksLog.vue'
 
-window.tgLogger = require('./services/TestService.js')
+window.tgLogger = require('./services/LogService.js')
 
 export default {
   name: 'App',

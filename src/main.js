@@ -10,6 +10,9 @@ Vue.config.productionTip = false
 Vue.config.errorHandler = function (err, vm, info) {
   window.tgLogger.error(err + vm + info)
 }
+Vue.config.warnHandler = function (msg, vm, trace) {
+  window.tgLogger.warn(msg + vm + trace)
+}
 
 new Vue({
   el: '#app',
