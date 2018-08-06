@@ -26,7 +26,6 @@
       </div>
       <div class="result-nok error-msg" v-else-if="error == true && cluesKey > 0" >
         {{questions[stepIndex].errorMsg[0]}}
-        {{checkedNames}}
       </div>
       <div class="result-ok win-msg" v-else-if="error == true" >
         Vous avez récupéré tous les indices. Maintenant à vous de jouer !
@@ -62,8 +61,6 @@ import TracksQcm from './TracksQcm.vue'
 import TracksQrcode from './TracksQrcode.vue'
 import TracksVideo from './TracksVideo.vue'
 
-import * as CONFIG from './config.js'
-
 import $ from 'jquery'
 var jsonPath = ''
 
@@ -77,6 +74,7 @@ export default {
       cluesFound: {},
       cluesKey: '0',
       color: '',
+      consoleObj: 'start',
       enigmaType: '',
       error: false,
       errorInfo: {
@@ -97,8 +95,28 @@ export default {
       win: false
     }
   },
+  components: {
+    draggable,
+    baseCheckbox,
+    TracksAudio,
+    TracksEnigme,
+    TracksEnigmeMap,
+    TracksFinal,
+    TracksIntro,
+    TracksMapIn,
+    TracksMap,
+    TracksPuzzle,
+    TracksQcm,
+    TracksQrcode,
+    TracksVideo
+  },
   created: function () {
     this.fetchData()
+  },
+  mounted: function () {
+    // Code that will run only after the
+    // entire view has been rendered
+    window.tgLogger.info(this.questions[this.stepIndex].type)
   },
   methods: {
     close: function () {
@@ -130,7 +148,10 @@ export default {
     },
     fetchData: function () {
       /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
-      jsonPath = CONFIG.API_URL + '/' + this.gameId + '/public/tgame.json'
+      jsonPath = this.gameId
+      if (typeof (jsonPath) === 'undefined' || jsonPath === '') {
+        window.tgLogger.error('getJson failed : Game Id not defined')
+      }
       jsonPath = 'img/louvre/contentDev.json/'
       $.getJSON(jsonPath, (data) => {
         this.title = data.title
@@ -141,6 +162,10 @@ export default {
         this.enigmaType = data.enigmaType
         this.stepIndexMax = this.questions.length - 1
       })
+        .fail(function () {
+          console.log('error', this.Response)
+          window.tgLogger.error('getJson failed : Incorrect Json')
+        })
     },
     getClues: function () {
       if (this.questions[this.stepIndex].indice !== '') {
@@ -214,29 +239,9 @@ export default {
       }
       this.error = false
     }
-  },
-  /* mounted () {
-    this.$nextTick(() => {
-      console.log(CONFIG.API_URL)
-    })
-  },
-  */
-  components: {
-    draggable,
-    baseCheckbox,
-    TracksAudio,
-    TracksEnigme,
-    TracksEnigmeMap,
-    TracksFinal,
-    TracksIntro,
-    TracksMapIn,
-    TracksMap,
-    TracksPuzzle,
-    TracksQcm,
-    TracksQrcode,
-    TracksVideo
   }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -297,23 +302,22 @@ export default {
 }
 
 .result{
-  background-color: #93329E; /* violet */
-  color: white;
+  background-color: #DEF333; /* Yellow violet #93329E*/
+  color: black;
   min-height: 25%;
   width: 90%;
   float: left;
   padding: 5%;
-  -webkit-box-shadow: 0px 8px 4px 0px #431F46; /* shadow violet*/
-  -moz-box-shadow: 6px 12px 4px 0px #431F46;
+  -webkit-box-shadow: 0px 8px 4px 0px #565D21; /* shadow yellow shadow violet #431F46*/
+  -moz-box-shadow: 6px 12px 4px 0px #565D21;
   filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#D4DADF', Positive='true');
   zoom:1;
-  box-shadow: 6px 8px 4px 0px #431F46;
+  box-shadow: 6px 8px 4px 0px #565D21;
   top: 250px;
   left: 20px;
   position: absolute;
   opacity: 0.9;
-  border: 1px solid #431F46;
-  position: absolute;
+  border: 1px solid #565D21;
   z-index: 100;
 }
 
@@ -337,21 +341,21 @@ export default {
   color: red;
 }
 .result-ok{
-  color: white;
+  color: black;
   /* padding-right: 5vh; */
   font-size: 3vw;
 }
 .result-ok-clues{
   margin-top: 10%;
   background-color: white;
-  color:#431F46;
+  color: black;
   text-align: center;
   margin-right: 10%;
   margin-left: 15%;
   font-size: 4vw;
   font-weight: bold;
-  border-bottom: 1px solid #431F46;
-  border-right: 1px solid #431F46;
+  border-bottom: 1px solid #565D21;
+  border-right: 1px solid #565D21;
   border-radius: 2px;
 }
 .result-ok-cluesMap img{
@@ -367,6 +371,9 @@ export default {
   padding-right: 5%;
   padding-left: 5%;
   font-size: 7vw
+}
+.fa-times-circle{
+  color: black;
 }
 
 .fa-arrow-circle-right{

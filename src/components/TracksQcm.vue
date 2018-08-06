@@ -33,7 +33,6 @@ export default {
   },
   data () {
     return {
-      msg: 'Bienvenue sur la map'
     }
   },
   /* eslint-disable */

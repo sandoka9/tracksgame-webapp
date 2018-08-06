@@ -12,8 +12,8 @@ export default {
       gmap: null,
       latitude: 0,
       longitude: 0,
-      center: {lat: 48.861088, lng: 2.337513}, // this.content.lat, this.content.lng
-      markers: [{position: {lat: 48.861088, lng: 2.337513}}],
+      center: {lat: this.content.lat, lng: this.content.lng},
+      markers: [{position: {lat: this.content.lat, lng: this.content.lng}}],
       mapLoaded: false
     }
   },

@@ -29,11 +29,6 @@
   </div>
 </template>
 
-<link rel="stylesheet" href="path/to/video.js/dist/video-js.css"/>
-<script type="text/javascript" src="path/to/video.min.js"></script>
-<script type="text/javascript" src="path/to/vue.min.js"></script>
-<script type="text/javascript" src="path/to/dist/vue-video-player.js"></script>
-
 <script>
 import 'video.js/dist/video-js.css'
 import { videoPlayer } from 'vue-video-player'
@@ -130,9 +125,9 @@ button {
   height: 200px;
 }
 
-.video-js .vjs-big-play-button {
-  top: 50%;
-  left: 50%;
+.vjs-big-play-button {
+  top: 10vw;
+  left: 30vw;
 }
 
 .fullscreen{

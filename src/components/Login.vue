@@ -20,19 +20,32 @@
 </template>
 
 <script>
+
 export default {
   name: 'Login',
   data () {
     return {
       msg: 'Bienvenu sur la page Login',
-      fbGameId: ''
+      fbGameId: '',
+      defaultGame: 'rBnjvYj5K-1'
     }
   },
   methods: {
     getId: function () {
-      var x = document.getElementById('gameId')
-      this.fbGameId = x.value
+      var gameChoice = document.getElementById('gameId')
+      this.fbGameId = gameChoice.value
+      if (this.fbGameId === '') {
+        this.fbGameId = this.defaultGame
+        window.tgLogger.info('Game Id empty')
+      }
     }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      // Code that will run only after the
+      // entire view has been rendered
+      window.tgLogger.info('Login')
+    })
   }
 }
 </script>

@@ -9,6 +9,8 @@
 
 <script>
 
+window.tgLogger.log('Step Intro')
+
 export default {
   name: 'TracksIntro',
   props: ['content'],

@@ -18,9 +18,7 @@
 </template>
 
 <script>
-import 'vue-qrcode-reader/dist/vue-qrcode-reader.css'
 import { QrcodeReader } from 'vue-qrcode-reader'
-/* import InitHandler from '@/mixins/InitHandler' */
 
 export default {
   name: 'TracksQcm',
