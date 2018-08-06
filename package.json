@@ -13,9 +13,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "firebase": "^5.3.1",
     "jquery": "^3.3.1",
     "vue": "^2.5.2",
-    "vue-qr-reader": "^1.5.0",
     "vue-qrcode-reader": "^0.8.5",
     "vue-router": "^3.0.1",
     "vue-video-player": "^5.0.2",

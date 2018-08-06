@@ -2,6 +2,8 @@
 var firebase = require('firebase/app')
 require('firebase/storage')
 
+// var _ = require('lodash')
+
 var config = {
   apiKey: process.env.FIREBASE_API_KEY,
   projectId: process.env.FIREBASE_PROJECT_ID,
@@ -11,6 +13,8 @@ var config = {
 firebase.initializeApp(config)
 
 // TODO : externalise firebase access
+
+const GAME_DEF_FILE = 'tgame.json'
 
 function GameRepository (storage) {
   this.storage = storage
@@ -25,17 +29,25 @@ GameRepository.prototype.getRootLocalUrl = function getRootLocalUrl () {
   return host
 }
 
+GameRepository.prototype.getLocalResourceUrl = function getLocalResourceUrl (tgId, url) {
+  return new Promise((resolve) => {
+    var base = tgId + '/public/'
+    var resourceUrl = base + url
+    resolve(resourceUrl)
+  })
+}
+
+GameRepository.prototype.getLocalTgDef = function getLocalTgDef (tgId) {
+  return new Promise((resolve) => {
+    var host = this.getRootLocalUrl()
+    var tgDefUrl = host + '/' + tgId + '/public/' + GAME_DEF_FILE
+    resolve(tgDefUrl)
+  })
+}
+
 GameRepository.prototype.getResourceUrl = function getResourceUrl (tgId, url) {
   if (this.storage_env === 'loc') {
-    var relativPath = url
-    return new Promise((resolve) => {
-      // TODO use context
-      var context = ''
-      var host = this.getRootLocalUrl()
-      var base = host + '/' + context + tgId + '/public/'
-      var resourceUrl = base + relativPath
-      resolve(resourceUrl)
-    })
+    return this.getLocalResourceUrl(tgId, url)
   } else {
     var tgPublicRef = this.getGamePublicRef(tgId)
     var downloadUrl = tgPublicRef.child(url).getDownloadURL()
@@ -43,13 +55,40 @@ GameRepository.prototype.getResourceUrl = function getResourceUrl (tgId, url) {
   }
 }
 
-GameRepository.prototype.rewriteUrls = function rewriteUrls (tgId, data) {
-  console.debug(data.questions[5])
-  var mp3Src = data.questions[5].src
-  return this.getResourceUrl(tgId, mp3Src).then(function (url) {
-    return new Promise(function (resolve) {
-      data.questions[5].src = url
-      console.debug('Rewriting url in : ' + url)
+GameRepository.prototype.getResourcesToRewrite = function getResourcesToRewrite (json) {
+  let pattern = /"([^"]+(?:jpg|gif|png|mp3))"/g
+  let resources = []
+  let match = {}
+  // eslint-disable-next-line no-cond-assign
+  while (match = pattern.exec(json)) {
+    resources.push(match[1])
+  }
+  return resources
+}
+
+GameRepository.prototype.resolveUrl = function resolveUrl (tgId, url) {
+  return this.getResourceUrl(tgId, url)
+    .then(function (newUrl) {
+      return new Promise(function (resolve) {
+        let replacement = { oldValue: url, newValue: newUrl }
+        resolve(replacement)
+      })
+    })
+}
+
+GameRepository.prototype.rewriteUrls = function rewriteUrls (tgId, json) {
+  let resources = this.getResourcesToRewrite(json)
+  let urls = resources.map(r => this.resolveUrl(tgId, r))
+  console.debug(urls)
+  return new Promise(function (resolve) {
+    return Promise.all(urls).then(function (replacements) {
+      replacements.forEach(function (r) {
+        console.debug(r.oldValue + ' : ' + r.newValue)
+        json = json.replace(r.oldValue, r.newValue)
+      })
+      console.debug('json after replacements')
+      // console.debug(json)
+      let data = JSON.parse(json)
       resolve(data)
     })
   })
@@ -61,8 +100,7 @@ GameRepository.prototype.getJSON = function getJSON (url) {
     xhr.responseType = 'application/json'
     xhr.onload = function (event) {
       var json = xhr.response
-      var data = JSON.parse(json)
-      resolve(data)
+      resolve(json)
     }
     xhr.onerror = () => reject(xhr.statusText)
     xhr.open('GET', url)
@@ -81,20 +119,22 @@ GameRepository.prototype.getGamePublicRef = function getGamePublicRef (tgId) {
 }
 
 GameRepository.prototype.getTgDefUrl = function getTgDefUrl (tgId) {
-  return this.getResourceUrl(tgId, 'tgame.json')
+  if (this.storage_env === 'loc') {
+    return this.getLocalTgDef(tgId)
+  } else {
+    var tgPublicRef = this.getGamePublicRef(tgId)
+    var downloadUrl = tgPublicRef.child(GAME_DEF_FILE).getDownloadURL()
+    return downloadUrl
+  }
 }
 
-// TODO : create Promise
 GameRepository.prototype.getGame = function getGame (tgId) {
   return new Promise((resolve, reject) => {
     console.debug('fetching data for game ' + tgId)
     var that = this
     return this.getTgDefUrl(tgId)
-      .then(function (url) {
-        console.debug('Using ' + url + ' url')
-        return that.getJSON(url)
-      })
-      .then(data => this.rewriteUrls(tgId, data))
+      .then(url => that.getJSON(url))
+      .then(json => this.rewriteUrls(tgId, json))
       .then(data => resolve(data))
       .catch(error => reject(error))
   })
