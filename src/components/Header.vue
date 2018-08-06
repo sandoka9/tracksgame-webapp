@@ -61,7 +61,7 @@ body {
   text-align: center;
   padding: 5px 5px;
   text-decoration: none;
-  width: 35vw;
+  width: 37vw;
   height: 12vw;
   font-size: 6vw;
 }
@@ -70,7 +70,7 @@ body {
   background-color: #D5D6CE; /* light grey */
   color: black;
   display: block;
-  width: 35vw;
+  width: 37vw;
   height: 12vw;
   font-size: 6vw;
 }
