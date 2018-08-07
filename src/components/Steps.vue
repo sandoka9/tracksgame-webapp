@@ -61,8 +61,8 @@ import TracksQcm from './TracksQcm.vue'
 import TracksQrcode from './TracksQrcode.vue'
 import TracksVideo from './TracksVideo.vue'
 
-import $ from 'jquery'
-var jsonPath = ''
+// import * as CONFIG from './config.js'
+import GameRepository from '../services/GameRepository.js'
 
 export default {
   name: 'Steps',
@@ -147,25 +147,18 @@ export default {
       return true
     },
     fetchData: function () {
-      /* var flickerAPI = 'img/louvre/content.json' 'https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?' 'img/louvre/content.json' */
-      jsonPath = this.gameId
-      if (typeof (jsonPath) === 'undefined' || jsonPath === '') {
-        window.tgLogger.error('getJson failed : Game Id not defined')
-      }
-      jsonPath = 'img/louvre/contentDev.json/'
-      $.getJSON(jsonPath, (data) => {
-        this.title = data.title
-        this.description = data.description
-        this.color = data.color
-        this.questions = data.questions
-        this.clues = data.clues
-        this.enigmaType = data.enigmaType
-        this.stepIndexMax = this.questions.length - 1
+      var that = this
+      GameRepository.getGame(this.gameId).then(data => {
+        // console.debug(data)
+        that.title = data.title
+        that.description = data.description
+        that.color = data.color
+        that.questions = data.questions
+        that.clues = data.clues
+        that.enigmaType = data.enigmaType
+        that.stepIndexMax = data.questions.length - 1
       })
-        .fail(function () {
-          console.log('error', this.Response)
-          window.tgLogger.error('getJson failed : Incorrect Json')
-        })
+        .catch(error => console.error('toto : ' + error))
     },
     getClues: function () {
       if (this.questions[this.stepIndex].indice !== '') {
