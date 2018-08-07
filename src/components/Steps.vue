@@ -135,7 +135,7 @@ export default {
         that.enigmaType = data.enigmaType
         that.stepIndexMax = data.questions.length - 1
       })
-        .catch(error => console.error(error))
+        .catch(error => console.error('toto : ' + error))
     },
     getClues: function () {
       console.log('getClues')

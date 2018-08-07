@@ -74,19 +74,26 @@ GameRepository.prototype.resolveUrl = function resolveUrl (tgId, url) {
         resolve(replacement)
       })
     })
+    .catch(function (error) {
+      console.error(error)
+    })
 }
 
 GameRepository.prototype.rewriteUrls = function rewriteUrls (tgId, json) {
+  // get static resource whom url is to rewrite
   let resources = this.getResourcesToRewrite(json)
+  // get static resources urls; urls is dict with resource name (i.e. as in json) and url
   let urls = resources.map(r => this.resolveUrl(tgId, r))
-  console.debug(urls)
   return new Promise(function (resolve) {
     return Promise.all(urls).then(function (replacements) {
+      console.debug('Rewriting urls...')
       replacements.forEach(function (r) {
-        console.debug(r.oldValue + ' : ' + r.newValue)
-        json = json.replace(r.oldValue, r.newValue)
+        if (r !== undefined) {
+          console.debug(r.oldValue + ' : ' + r.newValue)
+          json = json.replace(r.oldValue, r.newValue)
+        }
       })
-      console.debug('json after replacements')
+      console.debug('Urls rewrited')
       // console.debug(json)
       let data = JSON.parse(json)
       resolve(data)
@@ -130,7 +137,7 @@ GameRepository.prototype.getTgDefUrl = function getTgDefUrl (tgId) {
 
 GameRepository.prototype.getGame = function getGame (tgId) {
   return new Promise((resolve, reject) => {
-    console.debug('fetching data for game ' + tgId)
+    console.debug('Fetching data for game ' + tgId)
     var that = this
     return this.getTgDefUrl(tgId)
       .then(url => that.getJSON(url))
