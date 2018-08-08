@@ -20,8 +20,10 @@ function GameRepository (storage) {
   this.storage = storage
   this.env = process.env.FIREBASE_ENV || 'dev'
   console.debug('Using ' + this.env + ' firebase environment')
+  window.tgLogger.info('Using ' + this.env + ' firebase environment')
   this.storage_env = process.env.STORAGE_ENV || 'loc'
   console.debug('Using ' + this.storage_env + 'storage environment')
+  window.tgLogger.info('Using ' + this.storage_env + 'storage environment')
 }
 
 GameRepository.prototype.getRootLocalUrl = function getRootLocalUrl () {
@@ -76,6 +78,7 @@ GameRepository.prototype.resolveUrl = function resolveUrl (tgId, url) {
     })
     .catch(function (error) {
       console.error(error)
+      window.tgLogger.error(error)
     })
 }
 
@@ -87,13 +90,16 @@ GameRepository.prototype.rewriteUrls = function rewriteUrls (tgId, json) {
   return new Promise(function (resolve) {
     return Promise.all(urls).then(function (replacements) {
       console.debug('Rewriting urls...')
+      window.tgLogger.info('Rewriting urls...')
       replacements.forEach(function (r) {
         if (r !== undefined) {
           console.debug(r.oldValue + ' : ' + r.newValue)
+          window.tgLogger.info(r.oldValue + ' : ' + r.newValue)
           json = json.replace(r.oldValue, r.newValue)
         }
       })
       console.debug('Urls rewrited')
+      window.tgLogger.info('Urls rewrited')
       // console.debug(json)
       let data = JSON.parse(json)
       resolve(data)
@@ -138,6 +144,7 @@ GameRepository.prototype.getTgDefUrl = function getTgDefUrl (tgId) {
 GameRepository.prototype.getGame = function getGame (tgId) {
   return new Promise((resolve, reject) => {
     console.debug('Fetching data for game ' + tgId)
+    window.tgLogger.info('Fetching data for game ' + tgId)
     var that = this
     return this.getTgDefUrl(tgId)
       .then(url => that.getJSON(url))

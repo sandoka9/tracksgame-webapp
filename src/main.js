@@ -4,14 +4,18 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-Vue.config.productionTip = false
-
 /* eslint-disable no-new */
 Vue.config.errorHandler = function (err, vm, info) {
   window.tgLogger.error(err + vm + info)
 }
+
 Vue.config.warnHandler = function (msg, vm, trace) {
   window.tgLogger.warn(msg + vm + trace)
+}
+
+window.onerror = function (messageOrEvent, source, noligne, nocolonne, erreur) {
+  console.log('event on error', messageOrEvent)
+  window.tgLogger.error(messageOrEvent + source + noligne + nocolonne + erreur)
 }
 
 new Vue({

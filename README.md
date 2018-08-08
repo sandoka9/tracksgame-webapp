@@ -66,3 +66,9 @@ https://vuejsdevelopers.com/2017/08/28/vue-js-ajax-recipes/
 questions > puzzleImage > image
 questions > src (type audio 1 media to diff ?)
 questions > poster
+
+#Debug
+Chrome devtools
+Anroid studio => mode Debug
+adb 
+Quora

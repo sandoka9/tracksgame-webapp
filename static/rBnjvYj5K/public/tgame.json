@@ -36,8 +36,8 @@
       "winMsg": "",
       "errorMsg": "",
       "indice": "",
-      "lat": 0,
-      "lng": 0,
+      "lat": 48.861088,
+      "lng": 2.337513,
       "puzzleImage":""
     },
     {
@@ -168,8 +168,8 @@
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "",
-      "src":"BigBuckBunny.webm",
-      "poster":"BigBuckBunny.png",
+      "src":"MOV_1109.mp4",
+      "poster":"DSC_1110.png",
       "QResponse": "res",
       "response": ""
     }
