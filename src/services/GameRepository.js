@@ -146,6 +146,7 @@ GameRepository.prototype.getGame = function getGame (tgId) {
     console.debug('Fetching data for game ' + tgId)
     window.tgLogger.info('Fetching data for game ' + tgId)
     var that = this
+    console.log('plop')
     return this.getTgDefUrl(tgId)
       .then(url => that.getJSON(url))
       .then(json => this.rewriteUrls(tgId, json))
