@@ -114,9 +114,6 @@ export default {
     this.fetchData()
   },
   mounted: function () {
-    // Code that will run only after the
-    // entire view has been rendered
-    window.tgLogger.info(this.questions[this.stepIndex].type)
   },
   methods: {
     close: function () {
