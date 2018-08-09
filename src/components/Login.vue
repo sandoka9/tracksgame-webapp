@@ -1,12 +1,12 @@
 <template>
   <div class="login-container">
-    <img src="img/louvre/login.png" />
+    <img src="img/login.png" />
     <form>
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Pseudo" aria-describedby="basic-addon1">
       </div>
       <div class="input-group">
-        <input type="text" class="form-control" id="gameId" placeholder="Game Id" aria-describedby="basic-addon1" @keyup="getId()">
+        <input type="text" class="form-control" id="gameId" placeholder="Game Id" aria-describedby="basic-addon1" @blur="getId()">
       </div>
       <div class="input-group">
         <button class="form-control" aria-describedby="basic-addon1" value="GO !" type="submit" @click="getId()">
@@ -36,7 +36,7 @@ export default {
       this.fbGameId = gameChoice.value
       if (this.fbGameId === '') {
         this.fbGameId = this.defaultGame
-        window.tgLogger.info('Game Id empty')
+        window.tgLogger.info('Game Id empty => Default Game')
       }
     }
   },
