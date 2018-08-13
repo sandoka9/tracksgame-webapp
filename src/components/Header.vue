@@ -64,6 +64,7 @@ body {
   width: 37vw;
   height: 12vw;
   font-size: 6vw;
+  font-weight: bold;
 }
 
 .topnav-title:hover {

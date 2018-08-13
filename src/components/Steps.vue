@@ -256,7 +256,7 @@ export default {
 * {
    font-family: myFirstFont;
 }
-.step{
+.steps{
   background-color: white;
   font-size: 4vw;
 }
@@ -274,7 +274,7 @@ export default {
 }
 
 .content-subtitle{
-  font-size: 8vw;
+  font-size: 6.5vw;
   width: 100%;
   float: left;
 }
@@ -283,12 +283,18 @@ export default {
   width: 100%;
   float: left;
   margin-bottom:10%;
+  font-size:5vw;
+}
+
+.content-game{
+  font-size:5vw;
 }
 
 .content-response{
   z-index:100;
   width: 100%;
   float: left;
+  font-size:5vw;
 }
 
 .result{
@@ -309,6 +315,7 @@ export default {
   opacity: 0.9;
   border: 1px solid #565D21;
   z-index: 100;
+  font-size:5vw;
 }
 
 .result > i{
@@ -320,12 +327,14 @@ export default {
 .result-nok{
   text-align:justify;
   vertical-align: middle;
+  font-size:5vw;
 }
 .result-nok-clues{
   margin-top:10%;
   text-align: center;
   text-decoration: underline;
   font-weight: bold;
+  font-size:5vw;
 }
 .result-nok-clues:hover{
   color: red;
@@ -333,7 +342,7 @@ export default {
 .result-ok{
   color: black;
   /* padding-right: 5vh; */
-  font-size: 3vw;
+  font-size:5vw;
 }
 .result-ok-clues{
   margin-top: 10%;
@@ -342,11 +351,11 @@ export default {
   text-align: center;
   margin-right: 10%;
   margin-left: 15%;
-  font-size: 4vw;
   font-weight: bold;
   border-bottom: 1px solid #565D21;
   border-right: 1px solid #565D21;
   border-radius: 2px;
+  font-size:5vw;
 }
 .result-ok-cluesMap img{
   width: 150px;

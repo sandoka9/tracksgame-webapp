@@ -67,7 +67,7 @@ export default {
     margin-right: 2vw;
 }
 .details-content {
-  padding:10vw;
+  padding: 5vw;
   width: 20vw;
   position:relative;
 }

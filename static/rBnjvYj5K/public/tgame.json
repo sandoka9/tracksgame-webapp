@@ -3,9 +3,10 @@
   "description": "",
   "color": "#CEFF33",
   "clues":{
-    "1": "Antoine Watteau",
-    "2": "L'indifférent",
-    "3": "Serge Bogoussiavsky"
+    "1": "19 juin 1939",
+    "2": "Serge Bogoussiavsky",
+    "3": "L'indifférent",
+    "4": "Antoine Watteau"
   },
   "cluesFound": {},
   "enigmaType": "response",
@@ -58,7 +59,7 @@
         "Non, attention, C'est ta dernière chance !",
         "Perdu. Passe à l'étape suivante ! Le jeu continu, il y a encore plein d'indices à découvrir."
       ],
-      "indice": "1",
+      "indice": "4",
       "QResponse": "Watteau",
       "response": ""
     },
@@ -150,7 +151,7 @@
       "classe": "fa fa-arrow-circle-right",
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
-      "indice": "",
+      "indice": "1",
       "lat":"",
       "long":"",
       "puzzleImage":"",
