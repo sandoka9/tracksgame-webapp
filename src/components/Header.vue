@@ -3,7 +3,7 @@
   <div class="navBar">
     <div class="topnav" id="myTopnav">
       <span class="active topnav-title" v-on:click="processMenu()" >TracksGame</span>
-      <a href="#" v-on:click="processMenu()" class="topnav-firstLink" ><router-link :to="{ name: 'Login' }"> Home </router-link></a>
+      <a href="#" v-on:click="processMenu()" class="topnav-firstLink" ><router-link :to="{ name: 'Home' }"> Home </router-link></a>
       <a href="#" v-on:click="processMenu()" class="topnav-headerLink"><router-link :to="{ name: 'Steps' }">Steps</router-link></a>
       <a href="#" v-on:click="processMenu()" class="topnav-headerLink"><router-link :to="{ name: 'Help' }">Help</router-link></a>
       <a href="javascript:void(0);" class="icon" v-on:click="processMenu()">

@@ -2,6 +2,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
+import Home from '@/components/Home'
+import DetailsGame from '@/components/DetailsGame'
 import Help from '@/components/Help'
 import Clues from '@/components/Clues'
 import Steps from '@/components/Steps'
@@ -14,6 +16,16 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/detailsGame',
+      name: 'DetailsGame',
+      component: DetailsGame
     },
     {
       path: '/steps/:gameId',
