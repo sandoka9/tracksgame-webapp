@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Home from '@/components/Home'
 import DetailsGame from '@/components/DetailsGame'
 import Help from '@/components/Help'
+import Info from '@/components/Info'
 import Clues from '@/components/Clues'
 import Steps from '@/components/Steps'
 
@@ -42,6 +43,11 @@ export default new Router({
       path: '/help',
       name: 'Help',
       component: Help
+    },
+    {
+      path: '/info',
+      name: 'Info',
+      component: Info
     }
   ]
 })

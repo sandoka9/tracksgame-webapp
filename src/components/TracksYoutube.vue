@@ -5,8 +5,8 @@
     <div class="content-description">{{content.stepDescription}}</div>
     <div class="content-info">{{content.info}}</div>
     <div class="content-game">
-    <!--  <VueYoutube video-id="BBJa32lCaaY"></VueYoutube> -->
-    <VueYoutubePlayer :youtube="videoUrl" :style="{width: '50%'}"></VueYoutubePlayer>
+      <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0">
+      </iframe>
       <div class="content-response">
         <input class="response form-control" type="text" name="response" placeholder="Qui suis je ?" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
       </div>
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import VueYoutubePlayer from 'vue-youtube-player'
 export default {
   name: 'TracksYouTube',
   props: {
@@ -23,11 +22,9 @@ export default {
   },
   data () {
     return {
-      videoUrl: 'https://www.youtube.com/watch?v=vpu17FEa6xw'
     }
   },
   components: {
-    VueYoutubePlayer
   },
   computed: {
   },

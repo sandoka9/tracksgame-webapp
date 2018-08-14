@@ -238,18 +238,18 @@ export default {
 <style>
 @font-face {
    font-family: myFirstFont;
-   src: url(../assets/fonts/sansation/Sansation-Regular.ttf);
+   src: url(../../static/fonts/sansation/Sansation-Regular.ttf);
 }
 
 @font-face {
    font-family: myFirstFont;
-   src: url(../assets/fonts/sansation/Sansation-Bold.ttf);
+   src: url(../../static/fonts/sansation/Sansation-Bold.ttf);
    font-weight: bold;
 }
 
 @font-face {
    font-family: myFirstFont;
-   src: url(../assets/fonts/sansation/Sansation-Light.ttf);
+   src: url(../../static/fonts/sansation/Sansation-Light.ttf);
    font-weight: normal;
 }
 

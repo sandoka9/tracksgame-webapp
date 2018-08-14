@@ -12,7 +12,6 @@
               Découvrir de nouveaux indices
       </button>
     </div>
-    <div id="gmap"></div>
   </div>
 </template>
 
@@ -43,51 +42,38 @@ export default {
   },
   /* eslint-disable */
   mounted () {
-      let script = document.createElement('script')
-      script.onload = () => {
-        //var uluru = {lat: 48.861088, lng: 2.337513}
-        this.gmap = new google.maps.Map(document.getElementById('gmap'), {zoom: 12, center: this.center})
-        var marker = new google.maps.Marker({position: this.center, title: 'Le Louvre'})
-        marker.setMap(this.gmap)
-        this.geolocate(this.markCurrentPosition)
-      }
-      script.async = true
-      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDo7xfcRgmf05fOijcTn51TJt31j8e7VjM'
-      document.head.appendChild(script)
+    this.getLocation()
   },
   /* eslint-enable */
   methods: {
     isActive: function () {
-      console.log('ckey', this.cluesKey)
-      console.log('stpIE', this.stepIndexEnd)
-
       if (this.cluesKey !== '' && this.stepIndexEnd === false) {
         return false
       } else {
         return true
       }
     },
-    geolocate: function (callback) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.latitude = position.coords.latitude
-        this.longitude = position.coords.longitude
-        callback()
-      })
-    },
     /* eslint-disable */
     markCurrentPosition: function () {
-      var mymarker = new google.maps.Marker({
-        icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
-        position: {lat: this.latitude, lng: this.longitude},
-        title: 'You'})
-      mymarker.setMap(this.gmap)
       console.log(this.latitude, this.x+0.001, this.longitude,this.y+0.001)
-      console.log(this.latitude > this.x - 0.001, this.latitude < this.x + 0.001, this.longitude > this.y - 0.001, this.longitude < this.y + 0.001)
-      if (this.latitude > this.x - 0.1 && this.latitude < this.x + 0.001 && this.longitude > this.y - 0.1 && this.longitude < this.y + 0.001){
+      console.log(this.latitude > this.x - 0.1, this.latitude < this.x + 0.1, this.longitude > this.y - 0.1, this.longitude < this.y + 0.1)
+      if (this.latitude > this.x - 0.1 && this.latitude < this.x + 0.1 && this.longitude > this.y - 0.1 && this.longitude < this.y + 0.1){
         console.log('WIN')
         this.content.response = true
         this.$emit('nextStep')
       }
+    },
+    getLocation: function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    },
+    showPosition: function (position) {
+        this.latitude = position.coords.latitude
+        this.longitude = position.coords.longitude
+        this.markCurrentPosition()
     }
   },
   model: {

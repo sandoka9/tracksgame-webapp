@@ -6,11 +6,11 @@
     <div class="content-info">{{content.info}}</div>
     <div class="content-game" >
       <label>
-        <span class="content-game-audio" @click="playSound(content.src)">
-          <i class='fa fa-play'></i>
-          <!-- http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3 -->
-        </span>
-        <span class="content-game-label">Play</span>
+        <audio controls>
+          <source src="horse.ogg" type="audio/ogg">
+          <source :src="content.src" type="audio/mpeg">
+        Your browser does not support the audio element.
+        </audio>
       </label>
     </div>
     <div class="content-response">
