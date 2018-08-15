@@ -309,7 +309,7 @@ export default {
   filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#D4DADF', Positive='true');
   zoom:1;
   box-shadow: 6px 8px 4px 0px #565D21;
-  top: 250px;
+  top: 150px;
   left: 20px;
   position: absolute;
   opacity: 0.9;

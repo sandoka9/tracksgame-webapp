@@ -26,7 +26,7 @@ export default {
   /* eslint-disable */
   mounted () {
     document.getElementById('chrono').innerHTML = ''
-    this.chrono
+    this.chrono()
   },
   /* eslint-enable */
   methods: {
@@ -51,7 +51,7 @@ export default {
   border: 1vw solid black;
   border-bottom: 2vw solid black;
   font-weight: bold;
-  margin-left: 20vw;
+  margin-left: 15vw;
   margin-top: 50vw;
   background-color: light-grey;
 }
