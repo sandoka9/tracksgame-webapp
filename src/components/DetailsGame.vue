@@ -1,14 +1,22 @@
 <template>
-  <div class="content">
+  <div class="content-details">
     <router-link :to="{ name: 'Home' }" class="content-back"><i class="fa fa-arrow-circle-left"></i> <span class="content-back-home">Home</span></router-link>
-    <router-link :to="{ name: 'Home' }" class="content-start"> <span class="content-start-label">Start</span><i class="fa fa-arrow-circle-right"></i></router-link>
     <div class="details-content">
-      <button class="details-content-play"><router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }"><i class="fa fa-play"></i></router-link></button>
+      <button class="details-content-play">
+        <router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }">
+          <i class="fa fa-play"></i>
+        </router-link>
+      </button>
       <a href=""><img src="/index/images_game.jpg" />
       <router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }"></router-link>
       </a>
       <span class="details-content-title"> title </span>
       <span class="details-content-description"> description </span>
+      <span class="details-content-category"> category </span>
+      <span class="details-content-thema"> thema </span>
+      <span class="details-content-age"> age </span>
+      <span class="details-content-destination"> destination: city, area </span>
+      <span class="details-content-length"> game duration </span>
     </div>
   </div>
 </template>
@@ -29,7 +37,7 @@ export default {
 
 <style scoped>
 
-.content {
+.content-details {
   background-color: black;
   height: 500vw;
   padding: -5vw;

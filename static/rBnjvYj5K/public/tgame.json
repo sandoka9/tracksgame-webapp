@@ -17,7 +17,7 @@
       "shortDescription":"Es-tu prêt à découvrir une des plus  grandes affaire de vol du musée du Louvre ?",
       "stepDescription": "Il te faudra faire preuve d'ingéniosité et bien observer les lieux pour résoudre les énigmes et découvrir le fin mot de l'histoire.",
       "info": "Si tu es d'accord active la geoloc de ton smartphone et c'est parti !",
-      "classe": "fa fa-arrow-circle-right"
+      "classe": "fa fa-angle-right"
     },
     {
       "type": "map-in",
@@ -33,7 +33,7 @@
       "shortDescription": "",
       "stepDescription": "",
       "info": "",
-      "classe": "fa fa-arrow-circle-right",
+      "classe": "fa fa-angle-right",
       "winMsg": "",
       "errorMsg": "",
       "indice": "",
@@ -52,7 +52,7 @@
         {"name": "François", "surname": "Boucher"},
         {"name": "Jean-Honoré", "surname": "Fragonnard"}
       ],
-      "classe": "fa fa-arrow-circle-right",
+      "classe": "fa fa-angle-right",
       "winMsg": "Et oui, il s'agit de Watteau, ses contemporains Boucher et Fragonnard sont plus intéressés par les scènes de divinité comme Diane sortant du bain pour Boucher ou des scènes familiales comme le lecteur pour Fragonnard. Voici ton 1er indice: ",
       "errorMsg": [
         "Non, retente ta chance !",
@@ -75,7 +75,7 @@
         "Non, essaie encore une fois"
         ],
       "indice": 3,
-      "classe": "fa fa-arrow-circle-right",
+      "classe": "fa fa-angle-right",
       "lat":"",
       "long":"",
       "puzzleImage":[
@@ -97,7 +97,7 @@
       "stepDescription": "Dirige toi dans la salle suivante. C'est ici que l'on a vu le voleur pour la dernière fois. Il a laissé des indices ses intentions. Ecoute bien",
       "info": "",
       "src": "recording-01.mp3",
-      "classe": "fa fa-arrow-circle-right",
+      "classe": "fa fa-angle-right",
       "winMsg": "Voici ton nouvel indice: ",
       "errorMsg": [
         "Petit indice supplémentaire, j'adore les clairs de lune...",
@@ -148,7 +148,7 @@
       "shortDescription": "#QR Code",
       "stepDescription": "Description QR Code",
       "info": "Qui suis-je",
-      "classe": "fa fa-arrow-circle-right",
+      "classe": "fa fa-angle-right",
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "1",
@@ -165,7 +165,7 @@
       "shortDescription": "#Video Short Desc",
       "stepDescription": "Description Video",
       "info": "Qui suis-je",
-      "classe": "fa fa-arrow-circle-right",
+      "classe": "fa fa-angle-right",
       "winMsg": "Voici ton nouvel indice",
       "errorMsg": "",
       "indice": "",

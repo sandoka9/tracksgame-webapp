@@ -26,7 +26,7 @@ export default {
   /* eslint-disable */
   mounted () {
     document.getElementById('chrono').innerHTML = ''
-    this.chrono
+    this.chrono()
   },
   /* eslint-enable */
   methods: {

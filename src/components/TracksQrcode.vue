@@ -79,7 +79,10 @@ export default {
 
 <style scoped>
 
-.content-game{
+.content-game {
+    width: 70vw;
+    margin-left: 10vw;
+    font-size: 5vw;
 }
 
 .decoded-content {
@@ -94,6 +97,12 @@ export default {
   font-weight: bold;
   padding: 10px;
   background-color: rgba(0,0,0,.5);
+}
+
+.qrcode-reader__tracking-layer {
+    z-index: 20;
+    font-size: 10vw;
+    font-weight: bold;
 }
 
 .radiobtn {
@@ -116,7 +125,7 @@ export default {
 
 .form-control {
   max-width: 50vh;
-  margin-top: 10vh;
+  margin-top: 5vh;
   margin-left: 8vh;
 }
 

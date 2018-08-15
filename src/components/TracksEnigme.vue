@@ -62,6 +62,7 @@ export default {
   list-style: none;
   display: inline;
   line-height: 10vw;
+  font-size: 5vw;
 }
 
 .content-game img{

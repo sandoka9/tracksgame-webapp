@@ -6,7 +6,7 @@
     <div class="content-info">{{content.info}}</div>
     <div class="content-game" >
       <label>
-        <audio controls>
+        <audio class="content-game-audio" controls>
           <source src="horse.ogg" type="audio/ogg">
           <source :src="content.src" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -57,25 +57,14 @@ export default {
 .content-game{
   width: 100%;
   margin-top:10%;
+  font-size: 5vw;
 }
 
 .content-game-audio{
-  font-size: 20vw;
-  margin-left: 10vw;
-  color: #FBB50C; /* Orange */
-}
+  margin-left: 7vw;
+  margin-top: 10vw;
+  width: 230px;
 
-.content-game-audio:active{
-  color: grey;
-}
-.content-game-audio:focus{
-  color: grey;
-}
-
-.content-game-label {
-  font-size: 8vw;
-  margin-left: 5vw;
-  vertical-align: text-bottom;
 }
 
 .form-control-sm {
@@ -89,6 +78,9 @@ export default {
   margin-left: 8vh;
 }
 
+.content-response {
+  margin-top: -10vw;
+}
 .response {
   margin-right: 5vh;
   max-width: 35vh;

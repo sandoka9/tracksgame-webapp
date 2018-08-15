@@ -93,6 +93,7 @@ export default {
   margin: 0.25vh;
   list-style: none;
   display: inline;
+  font-size: 5vw;
 }
 
 .content-game img{
