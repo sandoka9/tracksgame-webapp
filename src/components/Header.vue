@@ -3,9 +3,10 @@
   <div class="navBar">
     <div class="topnav" id="myTopnav">
       <span class="active topnav-title" v-on:click="processMenu()" >TracksGame</span>
-      <a href="#" v-on:click="processMenu()" class="topnav-firstLink" ><router-link :to="{ name: 'Login' }"> Home </router-link></a>
+      <a href="#" v-on:click="processMenu()" class="topnav-firstLink" ><router-link :to="{ name: 'Home' }"> Home </router-link></a>
       <a href="#" v-on:click="processMenu()" class="topnav-headerLink"><router-link :to="{ name: 'Steps' }">Steps</router-link></a>
       <a href="#" v-on:click="processMenu()" class="topnav-headerLink"><router-link :to="{ name: 'Help' }">Help</router-link></a>
+      <a href="#" v-on:click="processMenu()" class="topnav-headerLink"><router-link :to="{ name: 'Info' }">Info</router-link></a>
       <a href="javascript:void(0);" class="icon" v-on:click="processMenu()">
         <i class="fa fa-bars"></i>
       </a>
@@ -64,6 +65,7 @@ body {
   width: 37vw;
   height: 12vw;
   font-size: 6vw;
+  font-weight: bold;
 }
 
 .topnav-title:hover {

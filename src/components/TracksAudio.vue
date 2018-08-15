@@ -4,13 +4,13 @@
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>
     <div class="content-info">{{content.info}}</div>
-    <div class="content-game">
-      <label >
-        <button class="content-game-audio" @click.prevent="playSound(content.src)">
-          <!-- http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3 -->
-          <i class="fa fa-play"></i>
-        </button>
-        <span>Play</span>
+    <div class="content-game" >
+      <label>
+        <audio controls>
+          <source src="horse.ogg" type="audio/ogg">
+          <source :src="content.src" type="audio/mpeg">
+        Your browser does not support the audio element.
+        </audio>
       </label>
     </div>
     <div class="content-response">
@@ -59,35 +59,23 @@ export default {
   margin-top:10%;
 }
 
-.content-game span{
-  vertical-align: super;
-}
-
-.content-game button{
-  color: white;
-  background-color: white;
-  border: 0px
-}
-
-.content-game button:active{
-  color: white;
-  background-color: white;
-  border: 0px
-}
-
-.content-game button:focus{
-  display:none;
-}
-
-.content-game-audio i{
-  color: #FBB50C; /* Orange */
+.content-game-audio{
   font-size: 20vw;
+  margin-left: 10vw;
+  color: #FBB50C; /* Orange */
 }
-.content-game-audio i:active{
+
+.content-game-audio:active{
   color: grey;
 }
-.content-game-audio i:focus{
+.content-game-audio:focus{
   color: grey;
+}
+
+.content-game-label {
+  font-size: 8vw;
+  margin-left: 5vw;
+  vertical-align: text-bottom;
 }
 
 .form-control-sm {

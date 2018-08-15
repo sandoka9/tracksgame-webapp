@@ -27,7 +27,7 @@ export default {
     return {
       msg: 'Bienvenu sur la page Login',
       fbGameId: '',
-      defaultGame: 'rBnjvYj5K-1'
+      defaultGame: 'rBnjvYj5K'
     }
   },
   methods: {
