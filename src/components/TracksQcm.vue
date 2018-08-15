@@ -58,10 +58,10 @@ export default {
 .content-game-checkcontainer{
   display: block;
   position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
+  padding-left: 10vw;
+  margin-bottom: 4vw;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 5vw;
   -webkit-user-select: none;
 }
 

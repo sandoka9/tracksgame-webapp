@@ -87,6 +87,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
+  width: 320;
   max-width: 100%;
   padding: 0px 20px;
   color: #fff;
