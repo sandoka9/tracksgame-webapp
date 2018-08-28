@@ -52,6 +52,7 @@ button {
   margin-left: 10em;
 }
 .content-game{
+  font-size: 5vw;
 }
 .content-response{
   margin-top: 10%;

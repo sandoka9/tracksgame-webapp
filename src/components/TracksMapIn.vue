@@ -10,7 +10,7 @@
 <script>
 
 export default {
-  name: 'TracksIntro',
+  name: 'TracksMapIn',
   props: ['content'],
   data () {
     return {
@@ -27,5 +27,8 @@ export default {
 </script>
 
 <style>
+.fa-map-marked-alt {
+  color: black;
+}
 
 </style>

@@ -5,11 +5,10 @@
     <div class="content-description">{{content.stepDescription}}</div>
     <div class="content-info">{{content.info}}</div>
     <div class="content-game">
-      <video width="320" height="240" controls>
-        <source :src="content.src" type="video/mp4">
-          <!-- Exemple :
+      <video width="290" height="240" controls>
+        <!-- <source :src="content.src" type="video/mp4"> -->
+          <!-- Exemple : -->
           <source src="../../static/rBnjvYj5K/public/MOV_1109.mp4" type="video/mp4">
-          -->
         <!--<source src={{this.content.src}} type="video/ogg">-->
         Your browser does not support the video tag.
       </video>
@@ -72,6 +71,8 @@ button {
 }
 
 .content-game{
+  margin-top: -30vw;
+  font-size: 5vw;
 }
 
 .content-response{

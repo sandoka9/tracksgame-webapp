@@ -22,10 +22,24 @@ export default {
     let script = document.createElement('script')
     script.onload = () => {
       //var uluru = {lat: 48.861088, lng: 2.337513}
-      this.gmap = new google.maps.Map(document.getElementById('gmap'), {zoom: 12, center: this.center})
-      var marker = new google.maps.Marker({position: this.center, title: 'Le Louvre'})
-      marker.setMap(this.gmap)
-      this.geolocate(this.markCurrentPosition)
+      console.log('localStorage.gmap ', localStorage.gmap)
+      if ( localStorage.gmap === '') {
+        this.gmap = new google.maps.Map(document.getElementById('gmap'), {zoom: 12, center: this.center})
+        var marker = new google.maps.Marker({position: this.center, title: 'Le Louvre'})
+        console.log('marker ini', marker)
+        marker.setMap(this.gmap)
+        this.geolocate(this.markCurrentPosition)
+        let parsedGmap = JSON.stringify(this.gmap);
+        localStorage.setItem('gmap', parsedGmap);
+        let parsedMarker = JSON.stringify(this.marker);
+        localStorage.setItem('marker', parsedMarker);
+      } else {
+        this.gmap = JSON.parse(localStorage.getItem('gmap'));
+        var marker = JSON.parse(localStorage.getItem('marker'));
+        console.log('marker loc', marker)
+        marker.setMap(this.gmap)
+        this.geolocate(this.markCurrentPosition)
+      }
     }
     script.async = true
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCxzWsnaV3IY6AfRC3JAv4rsCraKb1T4cM'

@@ -18,11 +18,10 @@
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
     <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
-    <div class="result"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
+    <div class="result"  v-bind:class="{resultOnError:isActive()}"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
       <i class="far fa-times-circle" v-on:click="close"></i>
-      <div class="result-nok error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb]) !== 'undefined'" v-on:click="close">
-        {{questions[stepIndex].errorMsg[errorNb]}}
-        {{checkedNames}}
+      <div class="result-nok error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb-1]) !== 'undefined'" v-on:click="close">
+        {{questions[stepIndex].errorMsg[errorNb-1]}}
       </div>
       <div class="result-nok error-msg" v-else-if="error == true && cluesKey > 0" >
         {{questions[stepIndex].errorMsg[0]}}
@@ -40,7 +39,7 @@
         <span class="arrow-right" v-if="questions[stepIndex].type == 'map-in'" v-on:click="nextStep">
         Visualiser la carte</span>
         <i :class="questions[stepIndex].classe" v-on:click="nextStep"></i>
-        <i class="fa fa-arrow-circle-left" v-on:click="previous" v-if="stepIndex > 0"></i>
+        <i class="fa fa-angle-left" v-on:click="previous" v-if="stepIndex > 0"></i>
     </div>
   </div>
 
@@ -111,11 +110,18 @@ export default {
     TracksVideo
   },
   created: function () {
+    this.getStepIndex()
     this.fetchData()
   },
   mounted: function () {
   },
   methods: {
+    isActive: function () {
+      if (this.error === true) {
+        return true
+      }
+      return false
+    },
     close: function () {
       if (this.error === true && this.errorNb < 3) {
         this.error = false
@@ -144,6 +150,8 @@ export default {
       return true
     },
     fetchData: function () {
+      console.log(localStorage.tgId)
+      // Add local storage json
       var that = this
       GameRepository.getGame(this.gameId).then(data => {
         // console.debug(data)
@@ -164,6 +172,14 @@ export default {
         return (Object.keys(this.clues)[0] ? Object.keys(this.clues)[0] : '')
       }
     },
+    getStepIndex: function () {
+      if (this.stepIndex === 0 && localStorage.stepIndex > 0) {
+        this.stepIndex = localStorage.stepIndex
+      }
+    },
+    setStepIndex: function () {
+      localStorage.stepIndex = this.stepIndex
+    },
     moreIndex () {
       this.errorInfo['stepEnigme'] = this.stepIndex
       if (this.stepIndexBonus > 0) {
@@ -171,12 +187,14 @@ export default {
       } else {
         this.stepIndex = this.stepIndex + 2
       }
+      this.setStepIndex()
     },
     nextStep: function () {
       let cluesKeyTemp = this.getClues()
       this.cluesKey = String(cluesKeyTemp)
       if (this.questionType1.indexOf(this.questions[this.stepIndex].type) > -1) {
         this.stepIndex++
+        this.setStepIndex()
         return
       }
       if (this.questions[this.stepIndex].type === 'qcm') {
@@ -204,6 +222,7 @@ export default {
       if (this.questions[this.stepIndex].type === 'enigmeMap') {
         if (this.questions[this.stepIndex].response === this.questions[this.stepIndex].QResponse) {
           this.stepIndex++
+          this.setStepIndex()
         }
         return
       }
@@ -227,6 +246,7 @@ export default {
       } else {
         this.stepIndex--
       }
+      this.setStepIndex()
       this.error = false
     }
   }
@@ -264,6 +284,8 @@ export default {
 .content{
   padding: 5%;
   padding-top: 0;
+  width: 80%;
+  margin-left: 7vw;
 }
 
 .content-title{
@@ -309,7 +331,7 @@ export default {
   filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=8, Color='#D4DADF', Positive='true');
   zoom:1;
   box-shadow: 6px 8px 4px 0px #565D21;
-  top: 150px;
+  top: 175px;
   left: 20px;
   position: absolute;
   opacity: 0.9;
@@ -318,6 +340,11 @@ export default {
   font-size:5vw;
 }
 
+.resultOnError {
+  background-color: #F33333;
+  color: white;
+  box-shadow: 6px 8px 4px 0px #6B2828;
+}
 .result > i{
   float: right;
   color:  white;
@@ -365,11 +392,12 @@ export default {
 .arrow{
   float: left;
   width: 100%;
-  top: 80%;
+  top: 50%; /* 538 */
   position: absolute;
   padding-right: 5%;
   padding-left: 5%;
-  font-size: 7vw
+  font-size: 7vw;
+  z-index: 1;
 }
 .fa-times-circle{
   color: black;
@@ -413,9 +441,12 @@ export default {
 .arrow-right:hover {
   color:#2899a8; /* light blue */
 }
-.fa-arrow-circle-left{
-  float:left;
-}
+
+.fa, .fas {
+    font-weight: 900;
+    font-size: 10vw;
+    color: lightgray;
+  }
 .fa-arrow-ciecle-left:hover {
   color:#2899a8; /* light blue */
 }

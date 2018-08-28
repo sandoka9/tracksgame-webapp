@@ -14,6 +14,14 @@ export default {
   data () {
     return {
     }
+  },
+  created () {
+    localStorage.stepIndex = ''
+    localStorage.tgId = ''
+    localStorage.cluesFound = ''
+    localStorage.json = ''
+    localStorage.gmap = ''
+    localStorage.marker = ''
   }
 }
 

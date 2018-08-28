@@ -52,7 +52,8 @@ export default {
 .content-game{
   width: 55%;
   margin-left:15%;
-  margin-top:10%
+  margin-top:10%;
+  font-size: 5vw;
 }
 
 .content-game-checkcontainer{
@@ -63,6 +64,7 @@ export default {
   cursor: pointer;
   font-size: 5vw;
   -webkit-user-select: none;
+  width: 100vw;
 }
 
 .content-game-checkcontainer input {
