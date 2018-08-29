@@ -16,6 +16,7 @@
     <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
     <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
+    <TracksQrMess v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrmess'"></TracksQrMess>
     <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
     <div class="result"  v-bind:class="{resultOnError:isActive()}"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
@@ -449,6 +450,10 @@ export default {
   }
 .fa-arrow-ciecle-left:hover {
   color:#2899a8; /* light blue */
+}
+
+.fa-angle-right {
+  float: right;
 }
 
 .description-bloc {
