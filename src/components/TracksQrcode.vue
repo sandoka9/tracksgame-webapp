@@ -2,16 +2,17 @@
   <div class="content">
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
-    <div class="content-description">{{content.stepDescription}}</div>
-    <div class="content-info">{{content.info}}</div>
-    <div class="content-game">
-      <QrcodeReader @decode="onDecode" @init="onInit">
+    <div class="content-description" v-if="stepQrcode == 1">{{content.stepDescription}}</div>
+    <div class="content-img" v-if="stepQrcode == 1">{{content.stepImg}}</div>
+    <div class="content-info" v-if="stepQrcode == 1">{{content.info}}</div>
+    <div class="content-game" v-if="stepQrcode == 2">
+      <QrcodeReader @decode="onDecode" @init="onInit" >
         <div class="decoded-content">{{ contentCode }}</div>
         <!--<LoadingIndicator v-show="loading" />-->
       </QrcodeReader>
 
     </div>
-    <div class="content-response">
+    <div class="content-response" v-if="stepQrcode == 2">
       <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
     </div>
   </div>
@@ -21,9 +22,10 @@
 import { QrcodeReader } from 'vue-qrcode-reader'
 
 export default {
-  name: 'TracksQcm',
+  name: 'TracksQrCode',
   props: {
-    content: {}
+    content: {},
+    stepQrcode: Number
   },
   /* mixins: [ InitHandler ], */
   data () {

@@ -16,8 +16,9 @@
     <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
     <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
+    <TracksQrcode v-bind:content="questions[stepIndex]" v-bind:stepQrcode="stepQrcode" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksQrMess v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrmess'"></TracksQrMess>
-    <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
+    <TracksQuestionResponse v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'questres'"></TracksQuestionResponse>
     <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
     <div class="result"  v-bind:class="{resultOnError:isActive()}"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
       <i class="far fa-times-circle" v-on:click="close"></i>
@@ -86,11 +87,12 @@ export default {
       errorNb: 0,
       questions: [],
       questionType1: ['map', 'map-in', 'intro'],
-      questionType2: ['audio', 'qrcode', 'video', 'enigme'],
+      questionType2: ['audio', 'qrmess', 'video', 'enigme'],
       stepIndex: 0,
       stepIndexBonus: 0,
       stepIndexMax: 0,
       stepIndexEnd: false,
+      stepQrcode: 1,
       title: '',
       win: false
     }
@@ -234,6 +236,16 @@ export default {
         } else {
           this.error = true
           this.errorNb++
+        }
+        return
+      }
+      if (this.questions[this.stepIndex].type === 'qrcode') {
+        if (this.questions[this.stepIndex].response === this.questions[this.stepIndex].QResponse) {
+          this.stepIndex++
+          this.setStepIndex()
+          this.stepQrcode = 1
+        } else {
+          this.stepQrcode = 2
         }
         return
       }
