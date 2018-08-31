@@ -3,12 +3,12 @@
     <router-link :to="{ name: 'Home' }" class="content-back"><i class="fa fa-arrow-circle-left"></i> <span class="content-back-home">Home</span></router-link>
     <div class="details-content">
       <button class="details-content-play">
-        <router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }">
+        <router-link :to="{ name: 'Steps', params: { gameId: gameId } }">
           <i class="fa fa-play"></i>
         </router-link>
       </button>
-      <a href=""><img src="/index/images_game.jpg" />
-      <router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }"></router-link>
+      <a href=""><img v-bind:src="imageSrc" />
+      <router-link :to="{ name: 'Steps', params: { gameId: gameId } }"></router-link>
       </a>
       <span class="details-content-title"> title </span>
       <span class="details-content-description"> description </span>
@@ -25,11 +25,18 @@
 
 export default {
   name: 'Details Game',
+  props: ['gameId'],
   data () {
     return {
+      src: ''
     }
   },
   methods: {
+  },
+  computed: {
+    imageSrc: function () {
+      return '/index/images_game_' + this.gameId + '.jpg'
+    }
   }
 }
 

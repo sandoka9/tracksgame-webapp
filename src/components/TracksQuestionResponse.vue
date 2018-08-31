@@ -46,31 +46,9 @@ export default {
   font-size: 5vw;
 }
 
-.content-game-checkcontainer{
-  display: block;
+.content-response {
   position: relative;
-  padding-left: 10vw;
-  margin-bottom: 4vw;
-  cursor: pointer;
-  font-size: 5vw;
-  -webkit-user-select: none;
-  width: 100vw;
-}
-
-.content-game-checkcontainer input {
-  position: absolute;
-  opacity: 80%;
-  cursor: pointer;
-}
-
-.content-game-radiobtn{
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-  border-radius: 50%;
+  z-index: 10;
 }
 
 </style>

@@ -2,6 +2,7 @@
 <template>
   <div id="steps">
     <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
+    <TracksClues v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'clues'"></TracksClues>
     <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:stepIndexEnd="stepIndexEnd"
                   v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
                   v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
@@ -16,6 +17,7 @@
     <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
     <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
     <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
+    <TracksQcmAlea v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcmalea'"></TracksQcmAlea>
     <TracksQrcode v-bind:content="questions[stepIndex]" v-bind:stepQrcode="stepQrcode" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
     <TracksQrMess v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrmess'"></TracksQrMess>
     <TracksQuestionResponse v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'questres'"></TracksQuestionResponse>
@@ -59,7 +61,10 @@ import TracksMap from './TracksMap.vue'
 import TracksMapIn from './TracksMapIn.vue'
 import TracksPuzzle from './TracksPuzzle.vue'
 import TracksQcm from './TracksQcm.vue'
+import TracksQcmAlea from './TracksQcmAlea.vue'
 import TracksQrcode from './TracksQrcode.vue'
+import TracksQrMess from './TracksQrMess.vue'
+import TracksQuestionResponse from './TracksQuestionResponse.vue'
 import TracksVideo from './TracksVideo.vue'
 
 // import * as CONFIG from './config.js'
@@ -87,7 +92,7 @@ export default {
       errorNb: 0,
       questions: [],
       questionType1: ['map', 'map-in', 'intro'],
-      questionType2: ['audio', 'qrmess', 'video', 'enigme'],
+      questionType2: ['audio', 'qrmess', 'questres', 'video', 'enigme'],
       stepIndex: 0,
       stepIndexBonus: 0,
       stepIndexMax: 0,
@@ -109,7 +114,10 @@ export default {
     TracksMap,
     TracksPuzzle,
     TracksQcm,
+    TracksQcmAlea,
     TracksQrcode,
+    TracksQrMess,
+    TracksQuestionResponse,
     TracksVideo
   },
   created: function () {
@@ -134,6 +142,7 @@ export default {
         this.errorNb = 0
       } else {
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
+        localStorage.cluesFound = JSON.stringify(this.cluesFound)
         delete this.clues[this.cluesKey]
       }
       /* If go next step
@@ -200,8 +209,34 @@ export default {
         this.setStepIndex()
         return
       }
+      if (this.questions[this.stepIndex].type === 'clues') {
+        let cluesFoundStore = JSON.parse(localStorage.cluesFound)
+        for (var key in cluesFoundStore) {
+          if (this.cluesFound.key !== undefined) {
+
+          } else {
+            this.cluesFound[key] = cluesFoundStore[key]
+          }
+        }
+        localStorage.cluesFound = JSON.stringify(this.cluesFound)
+        this.win = true
+        this.error = false
+        return
+      }
       if (this.questions[this.stepIndex].type === 'qcm') {
         if (this.checkedNames === this.questions[this.stepIndex].QResponse) {
+          this.win = true
+          this.error = false
+        } else {
+          this.error = true
+          this.errorNb++
+        }
+        return
+      }
+      if (this.questions[this.stepIndex].type === 'qcmalea') {
+        let lastIndex = this.questions[this.stepIndex].qcm.length
+        let resAlea = Math.random(lastIndex) + 1
+        if (this.checkedNames === resAlea) {
           this.win = true
           this.error = false
         } else {
@@ -230,7 +265,7 @@ export default {
         return
       }
       if (this.questionType2.indexOf(this.questions[this.stepIndex].type) > -1) {
-        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].QResponse) {
+        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].stepResponse.toLowerCase().trim()) {
           this.win = true
           this.error = false
         } else {
@@ -240,7 +275,7 @@ export default {
         return
       }
       if (this.questions[this.stepIndex].type === 'qrcode') {
-        if (this.questions[this.stepIndex].response === this.questions[this.stepIndex].QResponse) {
+        if (this.questions[this.stepIndex].response === this.questions[this.stepIndex].stepResponse) {
           this.stepIndex++
           this.setStepIndex()
           this.stepQrcode = 1

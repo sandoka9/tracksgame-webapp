@@ -9,7 +9,7 @@
     <div  class="content-response"> <!--  v-if="stepIndex == 6 || stepIndex == 7 " -->
       <button type="button" class="content-response-button form-control"
       v-bind:class="{disabled:isActive()}" :disabled="isActive()" v-on:click="$emit('moreIndex')">
-              Découvrir de nouveaux indices
+              {{content.nextText}}
       </button>
     </div>
   </div>
@@ -18,7 +18,7 @@
 <script>
 
 export default {
-  name: 'TracksIntro',
+  name: 'TracksEnigmeMap',
   props: {
     content: Object,
     cluesFound: Object,

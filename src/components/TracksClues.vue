@@ -7,35 +7,45 @@
     <div class="content-info" v-if="stepQrcode == 1">{{content.info}}</div>
     <div class="content-game" v-if="stepQrcode == 2">
       <QrcodeReader @decode="onDecode" @init="onInit" >
-        <div class="decoded-content">{{ contentCode }}</div>
+        <div class="decoded-content">{{ contentCode }} OK !</div>
         <!--<LoadingIndicator v-show="loading" />-->
       </QrcodeReader>
 
     </div>
-    <div class="content-response" v-if="stepQrcode == 2">
-      <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
+    <div class="content-response">
+      <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="contentCode" v-on:change="$emit('change', $event.target.value)"/>
     </div>
   </div>
 </template>
 
 <script>
 import { QrcodeReader } from 'vue-qrcode-reader'
+import * from '/lib/qrCodeGenerator/qrcode.min.js'
 
 export default {
-  name: 'TracksQrcode',
+  name: 'TracksQrCode',
   props: {
-    content: {},
-    stepQrcode: Number
+    content: {}
   },
   /* mixins: [ InitHandler ], */
   data () {
     return {
       msg: 'Bienvenue sur la map',
-      contentCode: ''
+      contentCode: '',
+      qrCode: {}
     }
   },
-  /* eslint-disable */
-  mounted () {
+  /* eslint-disable */,
+  mounted: function () {
+    let cluesFound = localStorage.cluesFound
+    this.qrcode = new QRCode("test", {
+    text: cluesFound,
+    width: 128,
+    height: 128,
+    colorDark : "#000000",
+    colorLight : "#ffffff",
+    correctLevel : QRCode.CorrectLevel.H
+});
   },
   /* eslint-enable */
   methods: {
