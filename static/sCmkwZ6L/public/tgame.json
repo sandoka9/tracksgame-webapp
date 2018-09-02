@@ -69,7 +69,7 @@
       "title": "Défis sportif",
       "shortDescription": "Observation",
       "stepDescription": "Dirigez-vous vers les grandes marches. Une carte sur laquelle se trouve le nouvel indice y est dissimulée.",
-      "stepImg": "qrcode.png",
+      "stepImg": "",
       "info": "Scanne le QR code pour obtenir ton indice",
       "classe": "fa fa-angle-right",
       "winMsg": "Voici ton nouvel indice",
@@ -81,7 +81,7 @@
     {
       "type": "questres",
       "title":"Logique",
-      "shortDescription":"Elémentaire mon cher Witson",
+      "shortDescription":"Elémentaire mon cher Watson",
       "stepDescription": "Réflechissons un petit peu, ceci est un message codé, décrypte le pour obtenir le nouvel indice. Tu as 3 chances",
       "stepImg": "messcode.png",
       "info": "",
@@ -163,7 +163,6 @@
         "Non toujours pas."
       ],
       "indice": 3,
-      "QResponse": "pierrot",
       "response": "",
       "stepResponse": "Xxx"
     },

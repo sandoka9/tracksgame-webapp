@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    fgdfgdfgddf
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description" v-if="stepQrcode == 1">{{content.stepDescription}}</div>
@@ -10,7 +11,6 @@
         <div class="decoded-content">{{ contentCode }} OK !</div>
         <!--<LoadingIndicator v-show="loading" />-->
       </QrcodeReader>
-
     </div>
     <div class="content-response">
       <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="contentCode" v-on:change="$emit('change', $event.target.value)"/>
@@ -20,10 +20,9 @@
 
 <script>
 import { QrcodeReader } from 'vue-qrcode-reader'
-import * from '/lib/qrCodeGenerator/qrcode.min.js'
 
 export default {
-  name: 'TracksQrCode',
+  name: 'TracksClues',
   props: {
     content: {}
   },
@@ -35,17 +34,8 @@ export default {
       qrCode: {}
     }
   },
-  /* eslint-disable */,
+  /* eslint-disable */
   mounted: function () {
-    let cluesFound = localStorage.cluesFound
-    this.qrcode = new QRCode("test", {
-    text: cluesFound,
-    width: 128,
-    height: 128,
-    colorDark : "#000000",
-    colorLight : "#ffffff",
-    correctLevel : QRCode.CorrectLevel.H
-});
   },
   /* eslint-enable */
   methods: {

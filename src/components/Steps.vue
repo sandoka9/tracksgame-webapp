@@ -22,9 +22,12 @@
     <TracksQrMess v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrmess'"></TracksQrMess>
     <TracksQuestionResponse v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'questres'"></TracksQuestionResponse>
     <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
-    <div class="result"  v-bind:class="{resultOnError:isActive()}"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
+    <div class="result"  v-bind:class="{resultOnError:isActive()}"
+                      v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)
+                              && typeof(clues[cluesKey]) !== 'undefined'">
       <i class="far fa-times-circle" v-on:click="close"></i>
-      <div class="result-nok error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb-1]) !== 'undefined'" v-on:click="close">
+      <div class="result-nok error-msg" v-if="error == true
+                            && typeof(questions[stepIndex].errorMsg[errorNb-1]) !== 'undefined'" v-on:click="close">
         {{questions[stepIndex].errorMsg[errorNb-1]}}
       </div>
       <div class="result-nok error-msg" v-else-if="error == true && cluesKey > 0" >
@@ -53,6 +56,7 @@
 import baseCheckbox from './baseCheckbox.vue'
 import draggable from 'vuedraggable'
 import TracksAudio from './TracksAudio.vue'
+import TracksClues from './TracksClues.vue'
 import TracksEnigme from './TracksEnigme.vue'
 import TracksEnigmeMap from './TracksEnigmeMap.vue'
 import TracksFinal from './TracksFinal.vue'
@@ -106,6 +110,7 @@ export default {
     draggable,
     baseCheckbox,
     TracksAudio,
+    TracksClues,
     TracksEnigme,
     TracksEnigmeMap,
     TracksFinal,
@@ -134,13 +139,14 @@ export default {
       return false
     },
     close: function () {
+      console.log('this.stepIndex close', this.stepIndex)
       if (this.error === true && this.errorNb < 3) {
         this.error = false
         return false
       } else if (this.error === true) {
         this.error = false
         this.errorNb = 0
-      } else {
+      } else if (this.clues[this.cluesKey] !== undefined) {
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
         localStorage.cluesFound = JSON.stringify(this.cluesFound)
         delete this.clues[this.cluesKey]
@@ -178,6 +184,7 @@ export default {
         .catch(error => console.error('toto : ' + error))
     },
     getClues: function () {
+      console.log('this.stepIndex getClues', this.stepIndex)
       if (this.questions[this.stepIndex].indice !== '') {
         return this.questions[this.stepIndex].indice
       } else {
@@ -193,6 +200,11 @@ export default {
       localStorage.stepIndex = this.stepIndex
     },
     moreIndex () {
+      console.log(this.questions[this.stepIndex].type)
+      if (this.questions[this.stepIndex].type === 'enigmeMap') {
+        this.shareClues()
+        return
+      }
       this.errorInfo['stepEnigme'] = this.stepIndex
       if (this.stepIndexBonus > 0) {
         this.stepIndex = this.stepIndexBonus + 1
@@ -201,10 +213,16 @@ export default {
       }
       this.setStepIndex()
     },
+    shareClues () {
+      console.log(this.stepIndex)
+      this.errorInfo['stepEnigmeMap'] = this.stepIndex
+      this.stepIndex++
+    },
     nextStep: function () {
+      console.log('this.stepIndex nextStep', this.stepIndex)
       let cluesKeyTemp = this.getClues()
       this.cluesKey = String(cluesKeyTemp)
-      if (this.questionType1.indexOf(this.questions[this.stepIndex].type) > -1) {
+      if (this.questionType1.indexOf(this.questions[this.stepIndex].type) > -1 || typeof (this.clues[this.cluesKey]) === 'undefined') {
         this.stepIndex++
         this.setStepIndex()
         return
@@ -235,8 +253,10 @@ export default {
       }
       if (this.questions[this.stepIndex].type === 'qcmalea') {
         let lastIndex = this.questions[this.stepIndex].qcm.length
-        let resAlea = Math.random(lastIndex) + 1
-        if (this.checkedNames === resAlea) {
+        let resAlea = Math.trunc(Math.random() * (lastIndex) + 1)
+        console.log('this.checkedNames', this.checkedNames)
+        console.log('resAlea', resAlea)
+        if (Number(this.checkedNames) === resAlea) {
           this.win = true
           this.error = false
         } else {
@@ -275,18 +295,26 @@ export default {
         return
       }
       if (this.questions[this.stepIndex].type === 'qrcode') {
-        if (this.questions[this.stepIndex].response === this.questions[this.stepIndex].stepResponse) {
-          this.stepIndex++
+        console.log('this.stepIndex', this.stepIndex)
+        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].stepResponse.toLowerCase().trim()) {
           this.setStepIndex()
           this.stepQrcode = 1
-        } else {
+          this.win = true
+          this.error = false
+        } else if (this.stepQrcode === 1) {
           this.stepQrcode = 2
+        } else {
+          console.log('error')
+          this.error = true
+          this.errorNb++
         }
+        console.log('this.stepIndex', this.stepIndex)
         return
       }
       if (this.questions[this.stepIndex].type === 'next') {
         this.errorInfo['stepEnigme'] = this.stepIndex
       }
+      console.log('this.stepIndex end next', this.stepIndex)
     },
     previous: function () {
       if (this.errorInfo['stepEnigme'] !== 0 && this.stepIndex > this.errorInfo['stepEnigme'] + 1) {

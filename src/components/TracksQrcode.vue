@@ -3,7 +3,9 @@
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description" v-if="stepQrcode == 1">{{content.stepDescription}}</div>
-    <div class="content-img" v-if="stepQrcode == 1">{{content.stepImg}}</div>
+    <div class="content-img" v-if="stepQrcode == 1 && content.stepImg !== ''">
+      <img v-bind:src="content.stepImg" />
+    </div>
     <div class="content-info" v-if="stepQrcode == 1">{{content.info}}</div>
     <div class="content-game" v-if="stepQrcode == 2">
       <QrcodeReader @decode="onDecode" @init="onInit" >
@@ -87,6 +89,11 @@ export default {
     font-size: 5vw;
 }
 
+.content-img img{
+  width: 65vw;
+  margin-left: 5vw;
+}
+
 .decoded-content {
   position: absolute;
   bottom: 0;
@@ -99,6 +106,11 @@ export default {
   font-weight: bold;
   padding: 10px;
   background-color: rgba(0,0,0,.5);
+}
+
+.qrcode-reader {
+  display: block;
+  width: 50vw;
 }
 
 .qrcode-reader__tracking-layer {

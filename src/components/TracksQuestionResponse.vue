@@ -3,7 +3,9 @@
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>
-    <div class="content-img" >{{content.stepImg}}</div>
+    <div class="content-img" v-if="content.stepImg !== ''">
+      <img v-bind:src="content.stepImg" />
+    </div>
     <div class="content-info">{{content.info}}</div>
     <div class="content-game">
     </div>
@@ -44,6 +46,11 @@ export default {
   margin-left:15%;
   margin-top:10%;
   font-size: 5vw;
+}
+
+.content-img img{
+  width: 65vw;
+  margin-left: 5vw;
 }
 
 .content-response {
