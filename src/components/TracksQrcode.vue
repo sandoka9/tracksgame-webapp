@@ -147,6 +147,8 @@ export default {
   margin-right: 5vh;
   max-width: 35vh;
   font-size: 1rem;
+  position: relative;
+  z-index: 10;
 }
 
 </style>

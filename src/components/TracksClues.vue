@@ -11,7 +11,11 @@
         <div class="decoded-content">{{ contentCode }} OK !</div>
         <!--<LoadingIndicator v-show="loading" />-->
       </QrcodeReader>
+      <div id="qrcode">
+      </div>
     </div>
+    <vue-qr :bgSrc='src' :logoSrc="src2" text="Hello world!" :size="200"></vue-qr>
+    <vue-qr text="Hello world!" :callback="test" qid="testid"></vue-qr>
     <div class="content-response">
       <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="contentCode" v-on:change="$emit('change', $event.target.value)"/>
     </div>
@@ -20,6 +24,7 @@
 
 <script>
 import { QrcodeReader } from 'vue-qrcode-reader'
+import VueQr from 'vue-qr'
 
 export default {
   name: 'TracksClues',
@@ -36,6 +41,28 @@ export default {
   },
   /* eslint-disable */
   mounted: function () {
+  /*  let AwesomeQR = require('awesome-qr');
+    new AwesomeQR().create({
+    	text: 'Makito loves Kafuu Chino.',
+    	size: 500,
+    	callback: (data) => {
+    	    // binary PNG data
+    	}
+    });
+  */
+  /*  var __awesome_qr_base_path = "lib";
+    console.log([__awesome_qr_base_path + '/awesome-qr'])
+    // require awesome-qr.js
+    require([__awesome_qr_base_path + '/awesome-qr'], function (AwesomeQR) {
+    	// ... and make use of it
+    	AwesomeQR.create({
+    		text: 'Makito loves Kafuu Chino.',
+    		size: 800,
+    		margin: 20,
+    		bindElement: 'qrcode'
+    	})
+    })
+    */
   },
   /* eslint-enable */
   methods: {
@@ -68,13 +95,17 @@ export default {
       } finally {
         // hide loading indicator
       }
+    },
+    test (dataUrl, id) {
+      console.log(dataUrl, id)
     }
   },
   model: {
     event: 'change'
   },
   components: {
-    QrcodeReader
+    QrcodeReader,
+    VueQr
   }
 }
 </script>
