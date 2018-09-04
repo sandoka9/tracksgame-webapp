@@ -14,10 +14,10 @@
       <div id="qrcode">
       </div>
     </div>
-    <vue-qr :bgSrc='src' :logoSrc="src2" text="Hello world!" :size="200"></vue-qr>
-    <vue-qr text="Hello world!" :callback="test" qid="testid"></vue-qr>
+    <vue-qr :bgSrc='src' :logoSrc="src2" :text="qrcodeMsg" :size="200"></vue-qr>
+    <vue-qr :text="qrcodeMsg" :callback="test" qid="testid"></vue-qr>
     <div class="content-response">
-      <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="contentCode" v-on:change="$emit('change', $event.target.value)"/>
+      <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="contentCode" v-on:change="saveNewClues"/><!-- v-on:change="$emit('change', $event.target.value)" -->
     </div>
   </div>
 </template>
@@ -36,11 +36,12 @@ export default {
     return {
       msg: 'Bienvenue sur la map',
       contentCode: '',
-      qrCode: {}
+      qrcodeMsg: ''
     }
   },
   /* eslint-disable */
   mounted: function () {
+    this.qrcodeMsg = localStorage.cluesFound
   /*  let AwesomeQR = require('awesome-qr');
     new AwesomeQR().create({
     	text: 'Makito loves Kafuu Chino.',
@@ -97,7 +98,20 @@ export default {
       }
     },
     test (dataUrl, id) {
-      console.log(dataUrl, id)
+      console.log('localStorage.cluesFound' + localStorage.cluesFound)
+    },
+    saveNewClues () {
+      let cluesAlreadyFound = JSON.parse(localStorage.cluesFound)
+      let cluesNew = JSON.parse(this.qrcodeMsg)
+      console.log('localStorage.cluesAlreadyFound' + JSON.stringify(cluesAlreadyFound))
+      console.log('localStorage.cluesNew' + JSON.stringify(cluesNew))
+      for (var prop1 in cluesNew) {
+        if (typeof (cluesAlreadyFound[prop1]) === 'undefined') {
+          cluesAlreadyFound[prop1] = cluesNew[prop1]
+        }
+      }
+      console.log('cluesAlreadyFound' + JSON.stringify(cluesAlreadyFound))
+      localStorage.cluesFound = JSON.stringify(cluesAlreadyFound)
     }
   },
   model: {
