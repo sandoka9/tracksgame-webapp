@@ -43,6 +43,7 @@ export default {
   /* eslint-disable */
   mounted () {
     this.getLocation()
+    this.cluesFound = JSON.parse(localStorage.cluesFound)
   },
   /* eslint-enable */
   methods: {

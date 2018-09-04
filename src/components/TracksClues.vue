@@ -3,22 +3,25 @@
     fgdfgdfgddf
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
-    <div class="content-description" v-if="stepQrcode == 1">{{content.stepDescription}}</div>
-    <div class="content-img" v-if="stepQrcode == 1">{{content.stepImg}}</div>
-    <div class="content-info" v-if="stepQrcode == 1">{{content.info}}</div>
-    <div class="content-game" v-if="stepQrcode == 2">
+    <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-img" v-if="content.stepImg !== ''">{{content.stepImg}}</div>
+    <div class="content-game">
       <QrcodeReader @decode="onDecode" @init="onInit" >
-        <div class="decoded-content">{{ contentCode }} OK !</div>
-        <!--<LoadingIndicator v-show="loading" />-->
+        <div class="decoded-content"></div>
       </QrcodeReader>
       <div id="qrcode">
       </div>
     </div>
-    <vue-qr :bgSrc='src' :logoSrc="src2" :text="qrcodeMsg" :size="200"></vue-qr>
-    <vue-qr :text="qrcodeMsg" :callback="test" qid="testid"></vue-qr>
-    <div class="content-response">
-      <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="contentCode" v-on:change="saveNewClues"/><!-- v-on:change="$emit('change', $event.target.value)" -->
+    <div class="content-info">{{content.info}}</div>
+    <div class="content-generator">
+      <vue-qr :bgSrc='src' :logoSrc="src2" :text="qrcodeMsg" :size="200"></vue-qr>
+      <!-- <vue-qr :text="qrcodeMsg" :callback="test" qid="testid"></vue-qr> -->
     </div>
+    <div class="content-response">
+      <input class="response form-control" type="hidden" name="response" placeholder="content.info" v-model="contentCode" v-on:change="saveNewClues(contentCode)"/><!-- v-on:change="$emit('change', $event.target.value)" -->
+      <span>{{content.winMsg}}</span>
+    </div>
+
   </div>
 </template>
 
@@ -42,28 +45,6 @@ export default {
   /* eslint-disable */
   mounted: function () {
     this.qrcodeMsg = localStorage.cluesFound
-  /*  let AwesomeQR = require('awesome-qr');
-    new AwesomeQR().create({
-    	text: 'Makito loves Kafuu Chino.',
-    	size: 500,
-    	callback: (data) => {
-    	    // binary PNG data
-    	}
-    });
-  */
-  /*  var __awesome_qr_base_path = "lib";
-    console.log([__awesome_qr_base_path + '/awesome-qr'])
-    // require awesome-qr.js
-    require([__awesome_qr_base_path + '/awesome-qr'], function (AwesomeQR) {
-    	// ... and make use of it
-    	AwesomeQR.create({
-    		text: 'Makito loves Kafuu Chino.',
-    		size: 800,
-    		margin: 20,
-    		bindElement: 'qrcode'
-    	})
-    })
-    */
   },
   /* eslint-enable */
   methods: {
@@ -71,6 +52,7 @@ export default {
     },
     onDecode (contentCode) {
       this.contentCode = contentCode
+      this.saveNewClues(this.contentCode)
     },
     async onInit (promise) {
     // show loading indicator
@@ -98,19 +80,19 @@ export default {
       }
     },
     test (dataUrl, id) {
-      console.log('localStorage.cluesFound' + localStorage.cluesFound)
+      // console.log('localStorage.cluesFound' + localStorage.cluesFound)
     },
-    saveNewClues () {
+    saveNewClues (msg) {
+      if (typeof (msg) === 'undefined') {
+        return
+      }
       let cluesAlreadyFound = JSON.parse(localStorage.cluesFound)
-      let cluesNew = JSON.parse(this.qrcodeMsg)
-      console.log('localStorage.cluesAlreadyFound' + JSON.stringify(cluesAlreadyFound))
-      console.log('localStorage.cluesNew' + JSON.stringify(cluesNew))
+      let cluesNew = JSON.parse(msg)
       for (var prop1 in cluesNew) {
         if (typeof (cluesAlreadyFound[prop1]) === 'undefined') {
           cluesAlreadyFound[prop1] = cluesNew[prop1]
         }
       }
-      console.log('cluesAlreadyFound' + JSON.stringify(cluesAlreadyFound))
       localStorage.cluesFound = JSON.stringify(cluesAlreadyFound)
     }
   },
@@ -146,6 +128,11 @@ export default {
   background-color: rgba(0,0,0,.5);
 }
 
+.qrcode-reader {
+  display: block;
+  width: 40vw;
+}
+
 .qrcode-reader__tracking-layer {
     z-index: 20;
     font-size: 10vw;
@@ -159,6 +146,11 @@ export default {
     height: 40px;
     background-color: #eee;
     border-radius: 50%;
+}
+
+.content-generator {
+  margin-left: 8vw;
+  width: 40vw;
 }
 
 .content-response{

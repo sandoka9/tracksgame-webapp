@@ -198,7 +198,7 @@
       "title": "Etape 6",
       "shortDescription": "#Share Clues",
       "stepDescription": "Scanne le QR Code de tes co-équipers pour obtenir de nouveaux indices",
-      "info": "",
+      "info": "Et voici le QR code pour partager tes indices :",
       "classe": "fa fa-check",
       "winMsg": "Retourne maintenant à la résolution de l'énigme",
       "errorMsg": "",

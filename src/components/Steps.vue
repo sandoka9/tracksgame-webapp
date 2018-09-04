@@ -128,8 +128,15 @@ export default {
   created: function () {
     this.getStepIndex()
     this.fetchData()
+    console.log(this.clues)
+    localStorage.clues = this.clues
   },
   mounted: function () {
+    var today = new Date()
+    var h = today.getHours()
+    var m = today.getMinutes()
+    var s = today.getSeconds()
+    localStorage.startDate = h + ':' + m + ':' + s
   },
   methods: {
     isActive: function () {
@@ -150,6 +157,7 @@ export default {
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
         localStorage.cluesFound = JSON.stringify(this.cluesFound)
         delete this.clues[this.cluesKey]
+        localStorage.clues = this.clues
       }
       /* If go next step
       set errorInfo['stepEnigme'] stock la step de l'enigme
