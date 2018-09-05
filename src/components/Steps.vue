@@ -128,14 +128,15 @@ export default {
   created: function () {
     this.getStepIndex()
     this.fetchData()
-    console.log(this.clues)
-    localStorage.clues = this.clues
   },
   mounted: function () {
     var today = new Date()
     var h = today.getHours()
+    h = ('0' + h).slice(-2)
     var m = today.getMinutes()
+    m = ('0' + m).slice(-2)
     var s = today.getSeconds()
+    s = ('0' + s).slice(-2)
     localStorage.startDate = h + ':' + m + ':' + s
   },
   methods: {
@@ -157,7 +158,6 @@ export default {
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
         localStorage.cluesFound = JSON.stringify(this.cluesFound)
         delete this.clues[this.cluesKey]
-        localStorage.clues = this.clues
       }
       /* If go next step
       set errorInfo['stepEnigme'] stock la step de l'enigme
@@ -168,6 +168,8 @@ export default {
       } else {
         this.stepIndex++
       }
+      this.setStepIndex()
+      this.setStepDone()
       this.win = false
       /* If no more questions stepIndexMax = nb questions */
       if (this.stepIndexBonus === this.stepIndexMax) {
@@ -206,6 +208,19 @@ export default {
     },
     setStepIndex: function () {
       localStorage.stepIndex = this.stepIndex
+    },
+    setStepDone: function () {
+      // ToDo Object setItem
+      localStorage.stepDone = localStorage.stepDone + this.stepIndex
+    },
+    getStepDone: function () {
+
+    },
+    setStepToDo: function () {
+
+    },
+    getStepToDo: function () {
+
     },
     moreIndex () {
       console.log(this.questions[this.stepIndex].type)

@@ -18,6 +18,7 @@ export default {
     }
   },
   created () {
+    localStorage.clear()
     localStorage.stepIndex = ''
     localStorage.tgId = ''
     localStorage.cluesFound = ''

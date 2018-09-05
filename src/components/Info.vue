@@ -7,7 +7,7 @@
     https://html5demo.pingfiles.fr/demo/wakeLockAPI.php  -->
       <span class="content-chrono" id="chrono"></span>
       <span> Début : </span><span>{{startDate}}</span>
-      <span> Etapes réussies: </span><span v-for="item in cluesFound" :key="item">{{item}}</span>
+      <span> Etapes réussies: </span><span v-for="item in stepDone" :key="item">{{item}} </span>
       <span> Etapes à faire: </span><span v-for="item in clues" :key="item">{{item}}</span>
       <span> Indices obtenus </span><span></span>
     </div>
@@ -26,15 +26,17 @@ export default {
       ss: 0,
       mm: 0,
       startDate: '',
-      cluesFound: '',
-      clues: ''
+      stepDone: '',
+      stepTotal: '',
+      cluesFound: ''
     }
   },
   /* eslint-disable */
   created () {
     this.startDate = localStorage.startDate
+    this.stepDone = localStorage.stepDone
+    this.stepTotal = localStorage.stepTotal
     this.cluesFound = JSON.parse(localStorage.cluesFound)
-    this.clues = JSON.parse(localStorage.clues)
 
   },
   mounted () {
