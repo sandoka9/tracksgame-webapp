@@ -25,6 +25,9 @@ export default {
     localStorage.json = ''
     localStorage.gmap = ''
     localStorage.marker = ''
+    localStorage.stepDone = JSON.stringify({})
+    localStorage.stepDoneNb = 0
+    localStorage.enigmaType = ''
   }
 }
 

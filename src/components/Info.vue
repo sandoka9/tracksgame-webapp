@@ -5,11 +5,10 @@
     <div class="content-description">
       <!--https://codepen.io/korell/pen/bVbBgg?editors=101
     https://html5demo.pingfiles.fr/demo/wakeLockAPI.php  -->
-      <span class="content-chrono" id="chrono"></span>
-      <span> Début : </span><span>{{startDate}}</span>
-      <span> Etapes réussies: </span><span v-for="item in stepDone" :key="item">{{item}} </span>
-      <span> Etapes à faire: </span><span v-for="item in clues" :key="item">{{item}}</span>
-      <span> Indices obtenus </span><span></span>
+      <!-- <span class="content-chrono" id="chrono"></span> -->
+      <span> Début : </span><span class="content-description-info">{{startDate}}</span>
+      <span> Etapes réussies: </span><span class="content-description-info"> {{stepDoneNb}}/{{stepIndexMax}} </span>
+      <span> Indices obtenus </span><span class="content-description-info" v-for="item in cluesFound" :key="item" v-if="enigmaType === 'map'"><img :src="item" /></span>
     </div>
     <div class="content-game"></div>
   </div>
@@ -28,15 +27,18 @@ export default {
       startDate: '',
       stepDone: '',
       stepTotal: '',
-      cluesFound: ''
+      cluesFound: '',
+      enigmaType: ''
     }
   },
   /* eslint-disable */
   created () {
     this.startDate = localStorage.startDate
-    this.stepDone = localStorage.stepDone
+    this.stepDoneNb = localStorage.stepDoneNb
     this.stepTotal = localStorage.stepTotal
+    this.stepIndexMax = localStorage.stepIndexMax
     this.cluesFound = JSON.parse(localStorage.cluesFound)
+    this.enigmaType = localStorage.enigmaType
 
   },
   mounted () {
@@ -71,4 +73,22 @@ export default {
   background-color: light-grey;
 }
 
+.content-description {
+  width: 70vw;
+}
+
+.content-description span {
+  width: 35vw;
+  margin-right: 5vw;
+  margin-left: 10vw;
+}
+
+.content-description img {
+  width: 15vw;
+  float: right;
+}
+
+.content-description-info {
+
+}
 </style>

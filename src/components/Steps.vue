@@ -97,6 +97,7 @@ export default {
       questions: [],
       questionType1: ['map', 'map-in', 'intro'],
       questionType2: ['audio', 'qrmess', 'questres', 'video', 'enigme'],
+      stepDone: {},
       stepIndex: 0,
       stepIndexBonus: 0,
       stepIndexMax: 0,
@@ -139,6 +140,10 @@ export default {
     s = ('0' + s).slice(-2)
     localStorage.startDate = h + ':' + m + ':' + s
   },
+  beforeUpdate: function () {
+    localStorage.stepIndexMax = this.stepIndexMax
+    localStorage.enigmaType = this.enigmaType
+  },
   methods: {
     isActive: function () {
       if (this.error === true) {
@@ -169,7 +174,6 @@ export default {
         this.stepIndex++
       }
       this.setStepIndex()
-      this.setStepDone()
       this.win = false
       /* If no more questions stepIndexMax = nb questions */
       if (this.stepIndexBonus === this.stepIndexMax) {
@@ -206,12 +210,14 @@ export default {
         this.stepIndex = localStorage.stepIndex
       }
     },
-    setStepIndex: function () {
+    setStepIndex: function (way = 'next') {
       localStorage.stepIndex = this.stepIndex
-    },
-    setStepDone: function () {
-      // ToDo Object setItem
-      localStorage.stepDone = localStorage.stepDone + this.stepIndex
+      if (way === 'next') {
+        this.stepDone = JSON.parse(localStorage.stepDone)
+        this.stepDone[this.stepIndex] = this.stepIndex
+        localStorage.stepDone = JSON.stringify(this.stepDone)
+        localStorage.stepDoneNb = Number(localStorage.stepDoneNb) + 1
+      }
     },
     getStepDone: function () {
 
@@ -345,7 +351,7 @@ export default {
       } else {
         this.stepIndex--
       }
-      this.setStepIndex()
+      this.setStepIndex('back')
       this.error = false
     }
   }
