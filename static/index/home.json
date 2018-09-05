@@ -1,7 +1,8 @@
 {
-  "rBnjvYj5K": {
-    "title": "Le trésor de Montmartre",
-    "img": "./images_game_rBnjvYj5K.jpg",
+  "game": {
+    "id": "rBnjvYj5K",
+    "title": "Le vol au Louvre",
+    "img": "/index/images_game_rBnjvYj5K.jpg",
     "description": "description",
     "color": "#CEFF33",
     "category": "category",
@@ -10,9 +11,10 @@
     "destination": "destination: city, area",
     "length": "game duration"
   },
-  "sCmkwZ6L": {
+  "game": {
+    "id": "sCmkwZ6L",
     "title": "Le trésor de Montmartre",
-    "img": "./images_game_sCmkwZ6L.jpg",
+    "img": "/index/images_game_sCmkwZ6L.jpg",
     "description": "description",
     "color": "#CEFF33",
     "category": "category",
@@ -21,3 +23,4 @@
     "destination": "destination: city, area",
     "length": "game duration"
   }
+}
