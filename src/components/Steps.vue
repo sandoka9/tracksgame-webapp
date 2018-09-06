@@ -1,34 +1,90 @@
 /* eslint-disable */
 <template>
   <div id="steps">
-    <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
-    <TracksClues v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound" v-if="questions[stepIndex].type == 'clues'"></TracksClues>
-    <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:stepIndexEnd="stepIndexEnd"
-                  v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
-                  v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
-    <TracksEnigmeMap v-on:moreIndex="moreIndex" v-on:nextStep="nextStep"
-                    v-bind:stepIndexEnd="stepIndexEnd" v-bind:cluesKey="cluesKey"
-                    v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
-                    v-if="questions[stepIndex].type == 'enigmeMap'">
+    <TracksAudio
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'audio'">
+    </TracksAudio>
+    <TracksClues
+      v-bind:content="questions[stepIndex]"
+      v-bind:cluesFound="cluesFound"
+      v-if="questions[stepIndex].type == 'clues'">
+    </TracksClues>
+    <TracksEnigme
+      v-on:moreIndex="moreIndex"
+      v-bind:cluesKey="cluesKey"
+      v-bind:stepIndexEnd="stepIndexEnd"
+      v-bind:content="questions[stepIndex]"
+      v-bind:cluesFound="cluesFound"
+      v-if="questions[stepIndex].type == 'enigme'">
+    </TracksEnigme>
+    <TracksEnigmeMap
+      v-on:moreIndex="moreIndex"
+      v-on:nextStep="nextStep"
+      v-bind:stepIndexEnd="stepIndexEnd"
+      v-bind:cluesKey="cluesKey"
+      v-bind:content="questions[stepIndex]"
+      v-bind:cluesFound="cluesFound"
+      v-if="questions[stepIndex].type == 'enigmeMap'">
     </TracksEnigmeMap>
-    <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
-    <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
-    <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
-    <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
-    <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
-    <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
-    <TracksQcmAlea v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcmalea'"></TracksQcmAlea>
-    <TracksQrcode v-bind:content="questions[stepIndex]" v-bind:stepQrcode="stepQrcode" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
-    <TracksQrMess v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrmess'"></TracksQrMess>
-    <TracksQuestionResponse v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'questres'"></TracksQuestionResponse>
-    <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
-    <div class="result"  v-bind:class="{resultOnError:isActive()}"
-                      v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)
-                              && typeof(clues[cluesKey]) !== 'undefined'">
+    <TracksFinal
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'final'">
+    </TracksFinal>
+    <TracksIntro
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'intro'">
+    </TracksIntro>
+    <TracksMap
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'map'">
+    </TracksMap>
+    <TracksMapIn
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'map-in'">
+    </TracksMapIn>
+    <TracksPuzzle
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'puzzle'">
+    </TracksPuzzle>
+    <TracksQcm
+      v-model="checkedNames"
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'qcm'">
+    </TracksQcm>
+    <TracksQcmAlea
+      v-model="checkedNames"
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'qcmalea'">
+    </TracksQcmAlea>
+    <TracksQrcode
+      v-bind:content="questions[stepIndex]"
+      v-bind:stepQrcode="stepQrcode"
+      v-if="questions[stepIndex].type == 'qrcode'">
+    </TracksQrcode>
+    <TracksQrMess
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'qrmess'">
+    </TracksQrMess>
+    <TracksQuestionResponse
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'questres'">
+    </TracksQuestionResponse>
+    <TracksVideo
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'video'">
+    </TracksVideo>
+    <div class="result"
+    v-bind:class="{resultOnError:isActive()}"
+    v-if="questions[stepIndex].type !== 'enigmeMap'
+    && (error == true || win == true)
+    && typeof(clues[cluesKey]) !== 'undefined'">
       <i class="far fa-times-circle" v-on:click="close"></i>
-      <div class="result-nok error-msg" v-if="error == true
-                            && typeof(questions[stepIndex].errorMsg[errorNb-1]) !== 'undefined'" v-on:click="close">
-        {{questions[stepIndex].errorMsg[errorNb-1]}}
+      <div class="result-nok error-msg"
+        v-if="error == true
+        && typeof(questions[stepIndex].errorMsg[errorNb-1]) !== 'undefined'"
+        v-on:click="close">
+          {{questions[stepIndex].errorMsg[errorNb-1]}}
       </div>
       <div class="result-nok error-msg" v-else-if="error == true && cluesKey > 0" >
         {{questions[stepIndex].errorMsg[0]}}
@@ -80,29 +136,39 @@ export default {
   data () {
     return {
       audioResponse: '',
+      // qcm response
       checkedNames: '',
       cluesFound: {},
       cluesKey: '0',
       color: '',
-      consoleObj: 'start',
+      // consoleObj: 'start',
+      // if it is map or question enigme finish
       enigmaType: '',
       error: false,
+      // manage stepIndex post Enigme step
       errorInfo: {
-        'nb': this.errorNb,
-        'stepIndex': this.stepIndex,
-        'stepEnigme': 0
+        // 'nb': this.errorNb,
+        // 'stepIndex': this.stepIndex,
+        'stepEnigme': 0,
+        'stepEnigmeMap': 0
       },
       errorMsg: '',
       errorNb: 0,
       questions: [],
+      // To manage question answer in nextStep
       questionType1: ['map', 'map-in', 'intro'],
       questionType2: ['audio', 'qrmess', 'questres', 'video', 'enigme'],
+      // To save in localStorage for Info vue
       stepDone: {},
       stepIndex: 0,
+      // Step bonus after enigme step
       stepIndexBonus: 0,
       stepIndexMax: 0,
       stepIndexEnd: false,
+      // For TrackgameQrCode component in 2 steps
       stepQrcode: 1,
+      // To save Json in localstorage
+      tgameJson: {},
       title: '',
       win: false
     }
@@ -129,8 +195,10 @@ export default {
   created: function () {
     this.getStepIndex()
     this.fetchData()
+    this.retJson()
   },
   mounted: function () {
+    // Save start date for info vue
     var today = new Date()
     var h = today.getHours()
     h = ('0' + h).slice(-2)
@@ -141,6 +209,7 @@ export default {
     localStorage.startDate = h + ':' + m + ':' + s
   },
   beforeUpdate: function () {
+    // Save info for info vue
     localStorage.stepIndexMax = this.stepIndexMax
     localStorage.enigmaType = this.enigmaType
   },
@@ -151,8 +220,8 @@ export default {
       }
       return false
     },
+    // Manage clues and stepIndex
     close: function () {
-      console.log('this.stepIndex close', this.stepIndex)
       if (this.error === true && this.errorNb < 3) {
         this.error = false
         return false
@@ -165,7 +234,7 @@ export default {
         delete this.clues[this.cluesKey]
       }
       /* If go next step
-      set errorInfo['stepEnigme'] stock la step de l'enigme
+      set errorInfo['stepEnigme'] stocke la step de l'enigme
       stepIndexBonus stock la step bonus réalisée */
       if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
         this.stepIndexBonus = this.stepIndex
@@ -182,7 +251,6 @@ export default {
       return true
     },
     fetchData: function () {
-      console.log(localStorage.tgId)
       // Add local storage json
       var that = this
       GameRepository.getGame(this.gameId).then(data => {
@@ -194,8 +262,17 @@ export default {
         that.clues = data.clues
         that.enigmaType = data.enigmaType
         that.stepIndexMax = data.questions.length - 1
+        that.tgameJson = data
       })
         .catch(error => console.error('toto : ' + error))
+    },
+    retJson: function () {
+      console.log('this.tgameJson : ' + this.tgameJson)
+      if (this.tgameJson === {}) {
+        this.getJson()
+      } else {
+        this.setJson()
+      }
     },
     getClues: function () {
       console.log('this.stepIndex getClues', this.stepIndex)
@@ -227,6 +304,19 @@ export default {
     },
     getStepToDo: function () {
 
+    },
+    setJson: function () {
+      localStorage.json = JSON.stringify(this.tgameJson)
+    },
+    getJson: function () {
+      let data = JSON.parse(localStorage.json)
+      this.title = data.title
+      this.description = data.description
+      this.color = data.color
+      this.questions = data.questions
+      this.clues = data.clues
+      this.enigmaType = data.enigmaType
+      this.stepIndexMax = data.questions.length - 1
     },
     moreIndex () {
       console.log(this.questions[this.stepIndex].type)

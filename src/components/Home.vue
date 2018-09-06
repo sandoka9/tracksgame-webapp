@@ -1,19 +1,14 @@
 <template>
   <div class="home-content">
-    <div class="content-game">
-      <router-link :to="{ name: 'DetailsGame', params: { gameId: 'rBnjvYj5K' } }"><img src="/index/images_game_rBnjvYj5K.jpg" /></router-link>
-      <span class="content-game-title"> title </span>
-      <router-link :to="{ name: 'DetailsGame', params: { gameId: 'sCmkwZ6L' } }"><img src="/index/images_game_sCmkwZ6L.jpg" /></router-link>
-      <span class="content-game-title"> title </span>
-    </div>
-    <div class="content-game2" v-for="item in content" :key="item.id">
-      <router-link :to="{ name: 'DetailsGame', params: { gameId: item.id } }"><img :src="item.src" /></router-link>
+    <div class="content-game" v-for="item in game" :key="item.id">
+      <router-link :to="{ name: 'DetailsGame', params: { gameId: item.id } }"><img :src="item.img" /></router-link>
       <span class="content-game-title"> {{item.title}} </span>
     </div>
   </div>
 </template>
 
 <script>
+import GameRepository from '../services/GameRepository.js'
 
 export default {
   name: 'Home',
@@ -21,78 +16,43 @@ export default {
     return {
       urlJson: 'http://localhost:8080/index/home.json',
       content: {},
-      content2: {}
+      content2: {},
+      game: {}
     }
   },
-  beforeCreated () {
-    fetch('http://localhost:8080/index/home.json')
-      .then(function (response) {
-      // Do stuff with the response
-        // console.log('response' + JSON.stringify(response.json()))
-      })
-      .then(function (json) {
-        console.log('json' + JSON.stringify(json))
-      })
-      .catch(function (error) {
-        console.log('Looks like there was a problem: \n', error)
-      })
-  },
   created () {
+    // clear local storage
     localStorage.clear()
+    // init local storage
     localStorage.stepIndex = ''
     localStorage.tgId = ''
     localStorage.cluesFound = ''
+    // tgame.json
     localStorage.json = ''
+    // gmap
     localStorage.gmap = ''
     localStorage.marker = ''
+    // Num Step Done
     localStorage.stepDone = JSON.stringify({})
+    // Nb Step Done
     localStorage.stepDoneNb = 0
+    // map
     localStorage.enigmaType = ''
-    console.log('top')
-    this.fetchData2()
+    // json home/index
+    localStorage.index = {}
+    // get home json
+    this.fetchData()
   },
   methods: {
     fetchData: function () {
-      console.log('this.urlJson' + this.urlJson)
-      fetch('http://localhost:8080/index/home.json')
-        .then(function (response) { return response.json() })
-      /* .then(r => r.json()) */
-        .then(function (json) {
-          /* console.log('json' + JSON.stringify(json)) */
-        })
-        .catch(function (e) { console.log('e: ' + e) })
-      /* for(var i = 0; i < json.products.length; i++) {
-        var listItem = document.createElement('li');
-        listItem.innerHTML = '<strong>' + json.products[i].Name + '</strong>';
-        listItem.innerHTML +=' can be found in ' + json.products[i].Location + '.';
-        listItem.innerHTML +=' Cost: <strong>£' + json.products[i].Price + '</strong>';
-        myList.appendChild(listItem);
-      } */
-
-      /*
-      fetch('products.json')
-      .then(function(response) { return response.json(); })
-      .then(function(json) {
-        for(var i = 0; i < json.products.length; i++) {
-          var listItem = document.createElement('li');
-          listItem.innerHTML = '<strong>' + json.products[i].Name + '</strong>';
-          listItem.innerHTML +=' can be found in ' + json.products[i].Location + '.';
-          listItem.innerHTML +=' Cost: <strong>£' + json.products[i].Price + '</strong>';
-          myList.appendChild(listItem);
-        }
+      // Add local storage json
+      var that = this
+      GameRepository.getGame('index').then(data => {
+        // console.debug(data)
+        that.game = data.game
+        localStorage.index = JSON.stringify(that.game)
       })
-      */
-      /*
-        fetch('http://localhost:8080/index/home.json')
-          .then(function (response) { return response.json() })
-          .then(function (json) { console.log('json' + json.game.id) })
-          .catch(function (error) {
-            console.log('Looks like there was a problem: \n', error)
-          })
-      */
-    },
-    fetchData2: function () {
-
+        .catch(error => console.error('toto : ' + error))
     }
   }
 }
