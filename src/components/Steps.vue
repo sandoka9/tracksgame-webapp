@@ -194,8 +194,21 @@ export default {
   },
   created: function () {
     this.getStepIndex()
-    this.fetchData()
-    this.retJson()
+    console.log('this.questions : ' + this.questions.length)
+    console.log('localStorage.questions : ' + localStorage.questions.length)
+    if (this.questions.length === 0 && localStorage.questions.length > 15) {
+      console.log('localStorage')
+      this.getJson('Json already load')
+    } else {
+      console.log('NOT localStorage')
+      this.fetchData()
+      // this.retJson()
+      localStorage.color = this.color
+      localStorage.clues = JSON.stringify(this.clues)
+      localStorage.questions = JSON.stringify(this.questions)
+      localStorage.enigmaType = this.enigmaType
+      localStorage.stepIndexMax = this.stepIndexMax
+    }
   },
   mounted: function () {
     // Save start date for info vue
@@ -210,8 +223,13 @@ export default {
   },
   beforeUpdate: function () {
     // Save info for info vue
-    localStorage.stepIndexMax = this.stepIndexMax
-    localStorage.enigmaType = this.enigmaType
+    if (typeof (this.stepIndexMax) !== 'undefined') {
+      localStorage.stepIndexMax = this.stepIndexMax
+      localStorage.enigmaType = this.enigmaType
+      localStorage.color = this.color
+      localStorage.clues = JSON.stringify(this.clues)
+      localStorage.questions = JSON.stringify(this.questions)
+    }
   },
   methods: {
     isActive: function () {
@@ -229,9 +247,15 @@ export default {
         this.error = false
         this.errorNb = 0
       } else if (this.clues[this.cluesKey] !== undefined) {
+        console.log('this.cluesFound.length : ' + this.cluesFound.length)
+        if (Object.keys(this.cluesFound).length === 0 && this.stepIndex !== 0) {
+          console.log('cluesFound empty')
+          this.cluesFound = JSON.parse(localStorage.cluesFound)
+        }
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
         localStorage.cluesFound = JSON.stringify(this.cluesFound)
         delete this.clues[this.cluesKey]
+        localStorage.clues = JSON.stringify(this.clues)
       }
       /* If go next step
       set errorInfo['stepEnigme'] stocke la step de l'enigme
@@ -262,16 +286,13 @@ export default {
         that.clues = data.clues
         that.enigmaType = data.enigmaType
         that.stepIndexMax = data.questions.length - 1
-        that.tgameJson = data
       })
-        .catch(error => console.error('toto : ' + error))
+        .catch(error => this.getJson(error))
     },
     retJson: function () {
       console.log('this.tgameJson : ' + this.tgameJson)
       if (this.tgameJson === {}) {
         this.getJson()
-      } else {
-        this.setJson()
       }
     },
     getClues: function () {
@@ -293,7 +314,7 @@ export default {
         this.stepDone = JSON.parse(localStorage.stepDone)
         this.stepDone[this.stepIndex] = this.stepIndex
         localStorage.stepDone = JSON.stringify(this.stepDone)
-        localStorage.stepDoneNb = Number(localStorage.stepDoneNb) + 1
+        localStorage.stepDoneNb = Object.keys(this.stepDone).length
       }
     },
     getStepDone: function () {
@@ -306,17 +327,23 @@ export default {
 
     },
     setJson: function () {
-      localStorage.json = JSON.stringify(this.tgameJson)
+      localStorage.color = JSON.stringify(this.color)
+      localStorage.clues = JSON.stringify(this.clues)
+      localStorage.questions = JSON.stringify(this.questions)
+      localStorage.enigmaType = JSON.stringify(this.enigmaType)
+      localStorage.stepIndexMax = JSON.stringify(this.stepIndexMax)
+      localStorage.clues = JSON.stringify(this.clues)
     },
-    getJson: function () {
-      let data = JSON.parse(localStorage.json)
-      this.title = data.title
-      this.description = data.description
-      this.color = data.color
-      this.questions = data.questions
-      this.clues = data.clues
-      this.enigmaType = data.enigmaType
-      this.stepIndexMax = data.questions.length - 1
+    getJson: function (error) {
+      console.error('toto : ' + error)
+      this.title = localStorage.title
+      this.description = localStorage.description
+      this.color = localStorage.color
+      this.questions = JSON.parse(localStorage.questions)
+      this.clues = JSON.parse(localStorage.clues)
+      this.clueFound = JSON.parse(localStorage.cluesFound)
+      this.enigmaType = localStorage.enigmaType
+      this.stepIndexMax = localStorage.stepIndexMax
     },
     moreIndex () {
       console.log(this.questions[this.stepIndex].type)
@@ -356,6 +383,7 @@ export default {
           }
         }
         localStorage.cluesFound = JSON.stringify(this.cluesFound)
+        localStorage.clues = JSON.stringify(this.clues)
         this.win = true
         this.error = false
         return

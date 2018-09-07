@@ -41,6 +41,9 @@ export default {
     // json home/index
     localStorage.index = {}
     // get home json
+    localStorage.color = ''
+    localStorage.clues = {}
+    localStorage.questions = {}
     this.fetchData()
   },
   methods: {
