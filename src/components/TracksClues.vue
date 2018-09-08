@@ -1,6 +1,5 @@
 <template>
   <div class="content">
-    fgdfgdfgddf
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
     <div class="content-description">{{content.stepDescription}}</div>

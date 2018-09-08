@@ -194,15 +194,11 @@ export default {
   },
   created: function () {
     this.getStepIndex()
-    console.log('this.questions : ' + this.questions.length)
-    console.log('localStorage.questions : ' + localStorage.questions.length)
+    // get Json in local storage if already load or in firebase if not
     if (this.questions.length === 0 && localStorage.questions.length > 15) {
-      console.log('localStorage')
       this.getJson('Json already load')
     } else {
-      console.log('NOT localStorage')
       this.fetchData()
-      // this.retJson()
       localStorage.color = this.color
       localStorage.clues = JSON.stringify(this.clues)
       localStorage.questions = JSON.stringify(this.questions)
@@ -222,7 +218,7 @@ export default {
     localStorage.startDate = h + ':' + m + ':' + s
   },
   beforeUpdate: function () {
-    // Save info for info vue
+    // Save info for Info vue not OK in other place
     if (typeof (this.stepIndexMax) !== 'undefined') {
       localStorage.stepIndexMax = this.stepIndexMax
       localStorage.enigmaType = this.enigmaType
@@ -232,13 +228,14 @@ export default {
     }
   },
   methods: {
+    // To show error popin only if there is an error message
     isActive: function () {
       if (this.error === true) {
         return true
       }
       return false
     },
-    // Manage clues and stepIndex
+    // Manage clues and stepIndex when error or win popin are closed
     close: function () {
       if (this.error === true && this.errorNb < 3) {
         this.error = false
@@ -248,6 +245,7 @@ export default {
         this.errorNb = 0
       } else if (this.clues[this.cluesKey] !== undefined) {
         console.log('this.cluesFound.length : ' + this.cluesFound.length)
+        // Cas ou l on quitte la page Step les cluesFound sont recurer dans le localStorage
         if (Object.keys(this.cluesFound).length === 0 && this.stepIndex !== 0) {
           console.log('cluesFound empty')
           this.cluesFound = JSON.parse(localStorage.cluesFound)
@@ -289,14 +287,7 @@ export default {
       })
         .catch(error => this.getJson(error))
     },
-    retJson: function () {
-      console.log('this.tgameJson : ' + this.tgameJson)
-      if (this.tgameJson === {}) {
-        this.getJson()
-      }
-    },
     getClues: function () {
-      console.log('this.stepIndex getClues', this.stepIndex)
       if (this.questions[this.stepIndex].indice !== '') {
         return this.questions[this.stepIndex].indice
       } else {
@@ -317,23 +308,6 @@ export default {
         localStorage.stepDoneNb = Object.keys(this.stepDone).length
       }
     },
-    getStepDone: function () {
-
-    },
-    setStepToDo: function () {
-
-    },
-    getStepToDo: function () {
-
-    },
-    setJson: function () {
-      localStorage.color = JSON.stringify(this.color)
-      localStorage.clues = JSON.stringify(this.clues)
-      localStorage.questions = JSON.stringify(this.questions)
-      localStorage.enigmaType = JSON.stringify(this.enigmaType)
-      localStorage.stepIndexMax = JSON.stringify(this.stepIndexMax)
-      localStorage.clues = JSON.stringify(this.clues)
-    },
     getJson: function (error) {
       console.error('toto : ' + error)
       this.title = localStorage.title
@@ -345,6 +319,7 @@ export default {
       this.enigmaType = localStorage.enigmaType
       this.stepIndexMax = localStorage.stepIndexMax
     },
+    // If there is other step after enigme to get more clues
     moreIndex () {
       console.log(this.questions[this.stepIndex].type)
       if (this.questions[this.stepIndex].type === 'enigmeMap') {
@@ -360,12 +335,11 @@ export default {
       this.setStepIndex()
     },
     shareClues () {
-      console.log(this.stepIndex)
       this.errorInfo['stepEnigmeMap'] = this.stepIndex
       this.stepIndex++
     },
+    // Check if answer is correct and redirect on the right step
     nextStep: function () {
-      console.log('this.stepIndex nextStep', this.stepIndex)
       let cluesKeyTemp = this.getClues()
       this.cluesKey = String(cluesKeyTemp)
       if (this.questionType1.indexOf(this.questions[this.stepIndex].type) > -1 || typeof (this.clues[this.cluesKey]) === 'undefined') {
@@ -442,7 +416,6 @@ export default {
         return
       }
       if (this.questions[this.stepIndex].type === 'qrcode') {
-        console.log('this.stepIndex', this.stepIndex)
         if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].stepResponse.toLowerCase().trim()) {
           this.setStepIndex()
           this.stepQrcode = 1
@@ -451,17 +424,14 @@ export default {
         } else if (this.stepQrcode === 1) {
           this.stepQrcode = 2
         } else {
-          console.log('error')
           this.error = true
           this.errorNb++
         }
-        console.log('this.stepIndex', this.stepIndex)
         return
       }
       if (this.questions[this.stepIndex].type === 'next') {
         this.errorInfo['stepEnigme'] = this.stepIndex
       }
-      console.log('this.stepIndex end next', this.stepIndex)
     },
     previous: function () {
       if (this.errorInfo['stepEnigme'] !== 0 && this.stepIndex > this.errorInfo['stepEnigme'] + 1) {
