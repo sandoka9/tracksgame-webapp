@@ -5,14 +5,6 @@
     <div class="content-description">{{content.stepDescription}}</div>
     <div class="content-info">{{content.info}}</div>
     <div class="content-game">
-      <!--<ul id="v-for-object" class="content-game-ul">
-        <li v-for="item in content.qcm" :key="item.name" >
-          <label v-bind:for="item.surname">
-            <input class="content-game-radiobtn" type="radio" name="qcm" v-bind:value="item.surname" v-on:change="$emit('change', $event.target.value)" />
-            {{ item.name }} {{ item.surname }}
-            <span ></span>
-          </label>
-      -->
         <div v-for="item in content.qcm" :key="item.name" >
           <label class="content-game-checkcontainer">{{ item.name }} {{ item.surname }}
             <input class="content-game-radiobtn" type="radio" name="checkedNames" v-bind:value="item.surname" v-on:change="$emit('change', $event.target.value)" />
