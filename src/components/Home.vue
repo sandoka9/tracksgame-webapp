@@ -1,27 +1,62 @@
 <template>
   <div class="home-content">
-    <div class="content-game">
-      <router-link :to="{ name: 'DetailsGame'}"><img src="/index/images_game.jpg" /></router-link>
-      <span class="content-game-title"> title </span>
+    <div class="content-game" v-for="item in game" :key="item.id">
+      <router-link :to="{ name: 'DetailsGame', params: { gameId: item.id } }"><img :src="item.img" /></router-link>
+      <span class="content-game-title"> {{item.title}} </span>
     </div>
   </div>
 </template>
 
 <script>
+import GameRepository from '../services/GameRepository.js'
 
 export default {
   name: 'Home',
   data () {
     return {
+      urlJson: 'http://localhost:8080/index/home.json',
+      content: {},
+      content2: {},
+      game: {}
     }
   },
   created () {
+    // clear local storage
+    localStorage.clear()
+    // init local storage
     localStorage.stepIndex = ''
     localStorage.tgId = ''
     localStorage.cluesFound = ''
+    // tgame.json
     localStorage.json = ''
+    // gmap
     localStorage.gmap = ''
     localStorage.marker = ''
+    // Num Step Done
+    localStorage.stepDone = JSON.stringify({})
+    // Nb Step Done
+    localStorage.stepDoneNb = 0
+    // map
+    localStorage.enigmaType = ''
+    // json home/index
+    localStorage.index = {}
+    // get home json
+    localStorage.color = ''
+    localStorage.clues = {}
+    localStorage.questions = {}
+    this.fetchData()
+  },
+  methods: {
+    fetchData: function () {
+      // Add local storage json
+      var that = this
+      GameRepository.getGame('index').then(data => {
+        // console.debug(data)
+        that.game = data.game
+        localStorage.index = JSON.stringify(that.game)
+      })
+        .catch(error => console.error('toto : ' + error))
+    }
   }
 }
 

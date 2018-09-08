@@ -24,8 +24,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/detailsGame',
+      path: '/detailsGame/:gameId',
       name: 'DetailsGame',
+      props: true,
       component: DetailsGame
     },
     {

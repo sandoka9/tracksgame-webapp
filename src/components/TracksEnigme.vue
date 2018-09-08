@@ -38,6 +38,7 @@ export default {
   },
   /* eslint-disable */
   mounted () {
+    this.cluesFound = JSON.parse(localStorage.cluesFound)
   },
   /* eslint-enable */
   methods: {

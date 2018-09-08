@@ -1,27 +1,90 @@
 /* eslint-disable */
 <template>
   <div id="steps">
-    <TracksAudio v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'audio'"></TracksAudio>
-    <TracksEnigme v-on:moreIndex="moreIndex" v-bind:cluesKey="cluesKey" v-bind:stepIndexEnd="stepIndexEnd"
-                  v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
-                  v-if="questions[stepIndex].type == 'enigme'"></TracksEnigme>
-    <TracksEnigmeMap v-on:moreIndex="moreIndex" v-on:nextStep="nextStep"
-                    v-bind:stepIndexEnd="stepIndexEnd" v-bind:cluesKey="cluesKey"
-                    v-bind:content="questions[stepIndex]" v-bind:cluesFound="cluesFound"
-                    v-if="questions[stepIndex].type == 'enigmeMap'">
+    <TracksAudio
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'audio'">
+    </TracksAudio>
+    <TracksClues
+      v-bind:content="questions[stepIndex]"
+      v-bind:cluesFound="cluesFound"
+      v-if="questions[stepIndex].type == 'clues'">
+    </TracksClues>
+    <TracksEnigme
+      v-on:moreIndex="moreIndex"
+      v-bind:cluesKey="cluesKey"
+      v-bind:stepIndexEnd="stepIndexEnd"
+      v-bind:content="questions[stepIndex]"
+      v-bind:cluesFound="cluesFound"
+      v-if="questions[stepIndex].type == 'enigme'">
+    </TracksEnigme>
+    <TracksEnigmeMap
+      v-on:moreIndex="moreIndex"
+      v-on:nextStep="nextStep"
+      v-bind:stepIndexEnd="stepIndexEnd"
+      v-bind:cluesKey="cluesKey"
+      v-bind:content="questions[stepIndex]"
+      v-bind:cluesFound="cluesFound"
+      v-if="questions[stepIndex].type == 'enigmeMap'">
     </TracksEnigmeMap>
-    <TracksFinal v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'final'"></TracksFinal>
-    <TracksIntro v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'intro'"></TracksIntro>
-    <TracksMap v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map'"></TracksMap>
-    <TracksMapIn v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'map-in'"></TracksMapIn>
-    <TracksPuzzle v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'puzzle'"></TracksPuzzle>
-    <TracksQcm v-model="checkedNames" v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qcm'"></TracksQcm>
-    <TracksQrcode v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'qrcode'"></TracksQrcode>
-    <TracksVideo v-bind:content="questions[stepIndex]" v-if="questions[stepIndex].type == 'video'"></TracksVideo>
-    <div class="result"  v-bind:class="{resultOnError:isActive()}"  v-if="questions[stepIndex].type !== 'enigmeMap' && (error == true || win == true)">
+    <TracksFinal
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'final'">
+    </TracksFinal>
+    <TracksIntro
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'intro'">
+    </TracksIntro>
+    <TracksMap
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'map'">
+    </TracksMap>
+    <TracksMapIn
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'map-in'">
+    </TracksMapIn>
+    <TracksPuzzle
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'puzzle'">
+    </TracksPuzzle>
+    <TracksQcm
+      v-model="checkedNames"
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'qcm'">
+    </TracksQcm>
+    <TracksQcmAlea
+      v-model="checkedNames"
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'qcmalea'">
+    </TracksQcmAlea>
+    <TracksQrcode
+      v-bind:content="questions[stepIndex]"
+      v-bind:stepQrcode="stepQrcode"
+      v-if="questions[stepIndex].type == 'qrcode'">
+    </TracksQrcode>
+    <TracksQrMess
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'qrmess'">
+    </TracksQrMess>
+    <TracksQuestionResponse
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'questres'">
+    </TracksQuestionResponse>
+    <TracksVideo
+      v-bind:content="questions[stepIndex]"
+      v-if="questions[stepIndex].type == 'video'">
+    </TracksVideo>
+    <div class="result"
+    v-bind:class="{resultOnError:isActive()}"
+    v-if="questions[stepIndex].type !== 'enigmeMap'
+    && (error == true || win == true)
+    && typeof(clues[cluesKey]) !== 'undefined'">
       <i class="far fa-times-circle" v-on:click="close"></i>
-      <div class="result-nok error-msg" v-if="error == true && typeof(questions[stepIndex].errorMsg[errorNb-1]) !== 'undefined'" v-on:click="close">
-        {{questions[stepIndex].errorMsg[errorNb-1]}}
+      <div class="result-nok error-msg"
+        v-if="error == true
+        && typeof(questions[stepIndex].errorMsg[errorNb-1]) !== 'undefined'"
+        v-on:click="close">
+          {{questions[stepIndex].errorMsg[errorNb-1]}}
       </div>
       <div class="result-nok error-msg" v-else-if="error == true && cluesKey > 0" >
         {{questions[stepIndex].errorMsg[0]}}
@@ -49,6 +112,7 @@
 import baseCheckbox from './baseCheckbox.vue'
 import draggable from 'vuedraggable'
 import TracksAudio from './TracksAudio.vue'
+import TracksClues from './TracksClues.vue'
 import TracksEnigme from './TracksEnigme.vue'
 import TracksEnigmeMap from './TracksEnigmeMap.vue'
 import TracksFinal from './TracksFinal.vue'
@@ -57,7 +121,10 @@ import TracksMap from './TracksMap.vue'
 import TracksMapIn from './TracksMapIn.vue'
 import TracksPuzzle from './TracksPuzzle.vue'
 import TracksQcm from './TracksQcm.vue'
+import TracksQcmAlea from './TracksQcmAlea.vue'
 import TracksQrcode from './TracksQrcode.vue'
+import TracksQrMess from './TracksQrMess.vue'
+import TracksQuestionResponse from './TracksQuestionResponse.vue'
 import TracksVideo from './TracksVideo.vue'
 
 // import * as CONFIG from './config.js'
@@ -69,27 +136,39 @@ export default {
   data () {
     return {
       audioResponse: '',
+      // qcm response
       checkedNames: '',
       cluesFound: {},
       cluesKey: '0',
       color: '',
-      consoleObj: 'start',
+      // consoleObj: 'start',
+      // if it is map or question enigme finish
       enigmaType: '',
       error: false,
+      // manage stepIndex post Enigme step
       errorInfo: {
-        'nb': this.errorNb,
-        'stepIndex': this.stepIndex,
-        'stepEnigme': 0
+        // 'nb': this.errorNb,
+        // 'stepIndex': this.stepIndex,
+        'stepEnigme': 0,
+        'stepEnigmeMap': 0
       },
       errorMsg: '',
       errorNb: 0,
       questions: [],
+      // To manage question answer in nextStep
       questionType1: ['map', 'map-in', 'intro'],
-      questionType2: ['audio', 'qrcode', 'video', 'enigme'],
+      questionType2: ['audio', 'qrmess', 'questres', 'video', 'enigme'],
+      // To save in localStorage for Info vue
+      stepDone: {},
       stepIndex: 0,
+      // Step bonus after enigme step
       stepIndexBonus: 0,
       stepIndexMax: 0,
       stepIndexEnd: false,
+      // For TrackgameQrCode component in 2 steps
+      stepQrcode: 1,
+      // To save Json in localstorage
+      tgameJson: {},
       title: '',
       win: false
     }
@@ -98,6 +177,7 @@ export default {
     draggable,
     baseCheckbox,
     TracksAudio,
+    TracksClues,
     TracksEnigme,
     TracksEnigmeMap,
     TracksFinal,
@@ -106,14 +186,50 @@ export default {
     TracksMap,
     TracksPuzzle,
     TracksQcm,
+    TracksQcmAlea,
     TracksQrcode,
+    TracksQrMess,
+    TracksQuestionResponse,
     TracksVideo
   },
   created: function () {
     this.getStepIndex()
-    this.fetchData()
+    console.log('this.questions : ' + this.questions.length)
+    console.log('localStorage.questions : ' + localStorage.questions.length)
+    if (this.questions.length === 0 && localStorage.questions.length > 15) {
+      console.log('localStorage')
+      this.getJson('Json already load')
+    } else {
+      console.log('NOT localStorage')
+      this.fetchData()
+      // this.retJson()
+      localStorage.color = this.color
+      localStorage.clues = JSON.stringify(this.clues)
+      localStorage.questions = JSON.stringify(this.questions)
+      localStorage.enigmaType = this.enigmaType
+      localStorage.stepIndexMax = this.stepIndexMax
+    }
   },
   mounted: function () {
+    // Save start date for info vue
+    var today = new Date()
+    var h = today.getHours()
+    h = ('0' + h).slice(-2)
+    var m = today.getMinutes()
+    m = ('0' + m).slice(-2)
+    var s = today.getSeconds()
+    s = ('0' + s).slice(-2)
+    localStorage.startDate = h + ':' + m + ':' + s
+  },
+  beforeUpdate: function () {
+    // Save info for info vue
+    if (typeof (this.stepIndexMax) !== 'undefined') {
+      localStorage.stepIndexMax = this.stepIndexMax
+      localStorage.enigmaType = this.enigmaType
+      localStorage.color = this.color
+      localStorage.clues = JSON.stringify(this.clues)
+      localStorage.questions = JSON.stringify(this.questions)
+    }
   },
   methods: {
     isActive: function () {
@@ -122,6 +238,7 @@ export default {
       }
       return false
     },
+    // Manage clues and stepIndex
     close: function () {
       if (this.error === true && this.errorNb < 3) {
         this.error = false
@@ -129,12 +246,19 @@ export default {
       } else if (this.error === true) {
         this.error = false
         this.errorNb = 0
-      } else {
+      } else if (this.clues[this.cluesKey] !== undefined) {
+        console.log('this.cluesFound.length : ' + this.cluesFound.length)
+        if (Object.keys(this.cluesFound).length === 0 && this.stepIndex !== 0) {
+          console.log('cluesFound empty')
+          this.cluesFound = JSON.parse(localStorage.cluesFound)
+        }
         this.cluesFound[this.cluesKey] = this.clues[this.cluesKey] /* string() */
+        localStorage.cluesFound = JSON.stringify(this.cluesFound)
         delete this.clues[this.cluesKey]
+        localStorage.clues = JSON.stringify(this.clues)
       }
       /* If go next step
-      set errorInfo['stepEnigme'] stock la step de l'enigme
+      set errorInfo['stepEnigme'] stocke la step de l'enigme
       stepIndexBonus stock la step bonus réalisée */
       if (this.stepIndex > this.errorInfo['stepEnigme'] + 1 && this.errorInfo['stepEnigme'] !== 0) {
         this.stepIndexBonus = this.stepIndex
@@ -142,6 +266,7 @@ export default {
       } else {
         this.stepIndex++
       }
+      this.setStepIndex()
       this.win = false
       /* If no more questions stepIndexMax = nb questions */
       if (this.stepIndexBonus === this.stepIndexMax) {
@@ -150,7 +275,6 @@ export default {
       return true
     },
     fetchData: function () {
-      console.log(localStorage.tgId)
       // Add local storage json
       var that = this
       GameRepository.getGame(this.gameId).then(data => {
@@ -163,9 +287,16 @@ export default {
         that.enigmaType = data.enigmaType
         that.stepIndexMax = data.questions.length - 1
       })
-        .catch(error => console.error('toto : ' + error))
+        .catch(error => this.getJson(error))
+    },
+    retJson: function () {
+      console.log('this.tgameJson : ' + this.tgameJson)
+      if (this.tgameJson === {}) {
+        this.getJson()
+      }
     },
     getClues: function () {
+      console.log('this.stepIndex getClues', this.stepIndex)
       if (this.questions[this.stepIndex].indice !== '') {
         return this.questions[this.stepIndex].indice
       } else {
@@ -177,10 +308,49 @@ export default {
         this.stepIndex = localStorage.stepIndex
       }
     },
-    setStepIndex: function () {
+    setStepIndex: function (way = 'next') {
       localStorage.stepIndex = this.stepIndex
+      if (way === 'next') {
+        this.stepDone = JSON.parse(localStorage.stepDone)
+        this.stepDone[this.stepIndex] = this.stepIndex
+        localStorage.stepDone = JSON.stringify(this.stepDone)
+        localStorage.stepDoneNb = Object.keys(this.stepDone).length
+      }
+    },
+    getStepDone: function () {
+
+    },
+    setStepToDo: function () {
+
+    },
+    getStepToDo: function () {
+
+    },
+    setJson: function () {
+      localStorage.color = JSON.stringify(this.color)
+      localStorage.clues = JSON.stringify(this.clues)
+      localStorage.questions = JSON.stringify(this.questions)
+      localStorage.enigmaType = JSON.stringify(this.enigmaType)
+      localStorage.stepIndexMax = JSON.stringify(this.stepIndexMax)
+      localStorage.clues = JSON.stringify(this.clues)
+    },
+    getJson: function (error) {
+      console.error('toto : ' + error)
+      this.title = localStorage.title
+      this.description = localStorage.description
+      this.color = localStorage.color
+      this.questions = JSON.parse(localStorage.questions)
+      this.clues = JSON.parse(localStorage.clues)
+      this.clueFound = JSON.parse(localStorage.cluesFound)
+      this.enigmaType = localStorage.enigmaType
+      this.stepIndexMax = localStorage.stepIndexMax
     },
     moreIndex () {
+      console.log(this.questions[this.stepIndex].type)
+      if (this.questions[this.stepIndex].type === 'enigmeMap') {
+        this.shareClues()
+        return
+      }
       this.errorInfo['stepEnigme'] = this.stepIndex
       if (this.stepIndexBonus > 0) {
         this.stepIndex = this.stepIndexBonus + 1
@@ -189,16 +359,51 @@ export default {
       }
       this.setStepIndex()
     },
+    shareClues () {
+      console.log(this.stepIndex)
+      this.errorInfo['stepEnigmeMap'] = this.stepIndex
+      this.stepIndex++
+    },
     nextStep: function () {
+      console.log('this.stepIndex nextStep', this.stepIndex)
       let cluesKeyTemp = this.getClues()
       this.cluesKey = String(cluesKeyTemp)
-      if (this.questionType1.indexOf(this.questions[this.stepIndex].type) > -1) {
+      if (this.questionType1.indexOf(this.questions[this.stepIndex].type) > -1 || typeof (this.clues[this.cluesKey]) === 'undefined') {
         this.stepIndex++
         this.setStepIndex()
         return
       }
+      if (this.questions[this.stepIndex].type === 'clues') {
+        let cluesFoundStore = JSON.parse(localStorage.cluesFound)
+        for (var key in cluesFoundStore) {
+          if (this.cluesFound.key !== undefined) {
+
+          } else {
+            this.cluesFound[key] = cluesFoundStore[key]
+          }
+        }
+        localStorage.cluesFound = JSON.stringify(this.cluesFound)
+        localStorage.clues = JSON.stringify(this.clues)
+        this.win = true
+        this.error = false
+        return
+      }
       if (this.questions[this.stepIndex].type === 'qcm') {
         if (this.checkedNames === this.questions[this.stepIndex].QResponse) {
+          this.win = true
+          this.error = false
+        } else {
+          this.error = true
+          this.errorNb++
+        }
+        return
+      }
+      if (this.questions[this.stepIndex].type === 'qcmalea') {
+        let lastIndex = this.questions[this.stepIndex].qcm.length
+        let resAlea = Math.trunc(Math.random() * (lastIndex) + 1)
+        console.log('this.checkedNames', this.checkedNames)
+        console.log('resAlea', resAlea)
+        if (Number(this.checkedNames) === resAlea) {
           this.win = true
           this.error = false
         } else {
@@ -227,7 +432,7 @@ export default {
         return
       }
       if (this.questionType2.indexOf(this.questions[this.stepIndex].type) > -1) {
-        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].QResponse) {
+        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].stepResponse.toLowerCase().trim()) {
           this.win = true
           this.error = false
         } else {
@@ -236,9 +441,27 @@ export default {
         }
         return
       }
+      if (this.questions[this.stepIndex].type === 'qrcode') {
+        console.log('this.stepIndex', this.stepIndex)
+        if (this.questions[this.stepIndex].response.toLowerCase().trim() === this.questions[this.stepIndex].stepResponse.toLowerCase().trim()) {
+          this.setStepIndex()
+          this.stepQrcode = 1
+          this.win = true
+          this.error = false
+        } else if (this.stepQrcode === 1) {
+          this.stepQrcode = 2
+        } else {
+          console.log('error')
+          this.error = true
+          this.errorNb++
+        }
+        console.log('this.stepIndex', this.stepIndex)
+        return
+      }
       if (this.questions[this.stepIndex].type === 'next') {
         this.errorInfo['stepEnigme'] = this.stepIndex
       }
+      console.log('this.stepIndex end next', this.stepIndex)
     },
     previous: function () {
       if (this.errorInfo['stepEnigme'] !== 0 && this.stepIndex > this.errorInfo['stepEnigme'] + 1) {
@@ -246,7 +469,7 @@ export default {
       } else {
         this.stepIndex--
       }
-      this.setStepIndex()
+      this.setStepIndex('back')
       this.error = false
     }
   }
@@ -449,6 +672,10 @@ export default {
   }
 .fa-arrow-ciecle-left:hover {
   color:#2899a8; /* light blue */
+}
+
+.fa-angle-right {
+  float: right;
 }
 
 .description-bloc {

@@ -2,19 +2,16 @@
   <div class="content">
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
-    <div class="content-description" v-if="stepQrcode == 1">{{content.stepDescription}}</div>
-    <div class="content-img" v-if="stepQrcode == 1 && content.stepImg !== ''">
-      <img v-bind:src="content.stepImg" />
-    </div>
-    <div class="content-info" v-if="stepQrcode == 1">{{content.info}}</div>
-    <div class="content-game" v-if="stepQrcode == 2">
-      <QrcodeReader @decode="onDecode" @init="onInit" >
+    <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-info">{{content.info}}</div>
+    <div class="content-game">
+      <QrcodeReader @decode="onDecode" @init="onInit">
         <div class="decoded-content">{{ contentCode }}</div>
         <!--<LoadingIndicator v-show="loading" />-->
       </QrcodeReader>
 
     </div>
-    <div class="content-response" v-if="stepQrcode == 2">
+    <div class="content-response">
       <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
     </div>
   </div>
@@ -24,10 +21,9 @@
 import { QrcodeReader } from 'vue-qrcode-reader'
 
 export default {
-  name: 'TracksQrcode',
+  name: 'TracksQrMess',
   props: {
-    content: {},
-    stepQrcode: Number
+    content: {}
   },
   /* mixins: [ InitHandler ], */
   data () {
@@ -89,11 +85,6 @@ export default {
     font-size: 5vw;
 }
 
-.content-img img{
-  width: 65vw;
-  margin-left: 5vw;
-}
-
 .decoded-content {
   position: absolute;
   bottom: 0;
@@ -106,11 +97,6 @@ export default {
   font-weight: bold;
   padding: 10px;
   background-color: rgba(0,0,0,.5);
-}
-
-.qrcode-reader {
-  display: block;
-  width: 50vw;
 }
 
 .qrcode-reader__tracking-layer {
@@ -147,8 +133,6 @@ export default {
   margin-right: 5vh;
   max-width: 35vh;
   font-size: 1rem;
-  position: relative;
-  z-index: 10;
 }
 
 </style>

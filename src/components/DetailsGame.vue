@@ -1,22 +1,25 @@
 <template>
   <div class="content-details">
-    <router-link :to="{ name: 'Home' }" class="content-back"><i class="fa fa-arrow-circle-left"></i> <span class="content-back-home">Home</span></router-link>
+    <router-link :to="{ name: 'Home' }" class="content-back">
+      <i class="fa fa-arrow-circle-left"></i>
+      <span class="content-back-home">Home</span>
+    </router-link>
     <div class="details-content">
       <button class="details-content-play">
-        <router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }">
+        <router-link :to="{ name: 'Steps', params: { gameId: gameId } }">
           <i class="fa fa-play"></i>
         </router-link>
       </button>
-      <a href=""><img src="/index/images_game.jpg" />
-      <router-link :to="{ name: 'Steps', params: { gameId: 'rBnjvYj5K' } }"></router-link>
+      <a href=""><img v-bind:src="game.img" />
+      <router-link :to="{ name: 'Steps', params: { gameId: game.id } }"></router-link>
       </a>
-      <span class="details-content-title"> title </span>
-      <span class="details-content-description"> description </span>
-      <span class="details-content-category"> category </span>
-      <span class="details-content-thema"> thema </span>
-      <span class="details-content-age"> age </span>
-      <span class="details-content-destination"> destination: city, area </span>
-      <span class="details-content-length"> game duration </span>
+      <span class="details-content-title"> {{game.title}} </span>
+      <span class="details-content-description"> {{game.description}} </span>
+      <span class="details-content-category"> {{game.category}} </span>
+      <span class="details-content-thema"> {{game.thema}} </span>
+      <span class="details-content-age"> {{game.age}} </span>
+      <span class="details-content-destination"> {{game.destination}} </span>
+      <span class="details-content-length"> {{game.length}} </span>
     </div>
   </div>
 </template>
@@ -25,11 +28,24 @@
 
 export default {
   name: 'Details Game',
+  props: ['gameId'],
   data () {
     return {
+      src: '',
+      game: {}
     }
   },
-  methods: {
+  created: function () {
+    this.game = JSON.parse(localStorage.index)
+    let item
+    let id = 'id'
+    let gameTempId
+    for (item in this.game) {
+      gameTempId = this.game[item][id]
+      if (gameTempId === this.gameId) {
+        this.game = this.game[item]
+      }
+    }
   }
 }
 

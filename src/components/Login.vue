@@ -1,3 +1,4 @@
+<!-- Not used -->
 <template>
   <div class="login-container">
     <img src="img/login.png" />

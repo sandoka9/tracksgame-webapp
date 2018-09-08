@@ -1,43 +1,50 @@
 <template>
   <div class="content">
+    fgdfgdfgddf
     <div class="content-title">  {{content.title}} </div>
     <div class="content-subtitle">{{content.shortDescription}}</div>
-    <div class="content-description" v-if="stepQrcode == 1">{{content.stepDescription}}</div>
-    <div class="content-img" v-if="stepQrcode == 1 && content.stepImg !== ''">
-      <img v-bind:src="content.stepImg" />
-    </div>
-    <div class="content-info" v-if="stepQrcode == 1">{{content.info}}</div>
-    <div class="content-game" v-if="stepQrcode == 2">
+    <div class="content-description">{{content.stepDescription}}</div>
+    <div class="content-img" v-if="content.stepImg !== ''">{{content.stepImg}}</div>
+    <div class="content-game">
       <QrcodeReader @decode="onDecode" @init="onInit" >
-        <div class="decoded-content">{{ contentCode }}</div>
-        <!--<LoadingIndicator v-show="loading" />-->
+        <div class="decoded-content"></div>
       </QrcodeReader>
+      <div id="qrcode">
+      </div>
+    </div>
+    <div class="content-info">{{content.info}}</div>
+    <div class="content-generator">
+      <vue-qr :bgSrc='src' :logoSrc="src2" :text="qrcodeMsg" :size="200"></vue-qr>
+      <!-- <vue-qr :text="qrcodeMsg" :callback="test" qid="testid"></vue-qr> -->
+    </div>
+    <div class="content-response">
+      <input class="response form-control" type="hidden" name="response" placeholder="content.info" v-model="contentCode" v-on:change="saveNewClues(contentCode)"/><!-- v-on:change="$emit('change', $event.target.value)" -->
+      <span>{{content.winMsg}}</span>
+    </div>
 
-    </div>
-    <div class="content-response" v-if="stepQrcode == 2">
-      <input class="response form-control" type="text" name="response" placeholder="content.info" v-model="content.response" v-on:change="$emit('change', $event.target.value)"/>
-    </div>
   </div>
 </template>
 
 <script>
 import { QrcodeReader } from 'vue-qrcode-reader'
+import VueQr from 'vue-qr'
 
 export default {
-  name: 'TracksQrcode',
+  name: 'TracksClues',
   props: {
-    content: {},
-    stepQrcode: Number
+    content: {}
   },
   /* mixins: [ InitHandler ], */
   data () {
     return {
       msg: 'Bienvenue sur la map',
-      contentCode: ''
+      contentCode: '',
+      qrcodeMsg: ''
     }
   },
   /* eslint-disable */
-  mounted () {
+  mounted: function () {
+    this.qrcodeMsg = localStorage.cluesFound
   },
   /* eslint-enable */
   methods: {
@@ -45,6 +52,7 @@ export default {
     },
     onDecode (contentCode) {
       this.contentCode = contentCode
+      this.saveNewClues(this.contentCode)
     },
     async onInit (promise) {
     // show loading indicator
@@ -70,13 +78,30 @@ export default {
       } finally {
         // hide loading indicator
       }
+    },
+    test (dataUrl, id) {
+      // console.log('localStorage.cluesFound' + localStorage.cluesFound)
+    },
+    saveNewClues (msg) {
+      if (typeof (msg) === 'undefined') {
+        return
+      }
+      let cluesAlreadyFound = JSON.parse(localStorage.cluesFound)
+      let cluesNew = JSON.parse(msg)
+      for (var prop1 in cluesNew) {
+        if (typeof (cluesAlreadyFound[prop1]) === 'undefined') {
+          cluesAlreadyFound[prop1] = cluesNew[prop1]
+        }
+      }
+      localStorage.cluesFound = JSON.stringify(cluesAlreadyFound)
     }
   },
   model: {
     event: 'change'
   },
   components: {
-    QrcodeReader
+    QrcodeReader,
+    VueQr
   }
 }
 </script>
@@ -87,11 +112,6 @@ export default {
     width: 70vw;
     margin-left: 10vw;
     font-size: 5vw;
-}
-
-.content-img img{
-  width: 65vw;
-  margin-left: 5vw;
 }
 
 .decoded-content {
@@ -110,7 +130,7 @@ export default {
 
 .qrcode-reader {
   display: block;
-  width: 50vw;
+  width: 40vw;
 }
 
 .qrcode-reader__tracking-layer {
@@ -126,6 +146,11 @@ export default {
     height: 40px;
     background-color: #eee;
     border-radius: 50%;
+}
+
+.content-generator {
+  margin-left: 8vw;
+  width: 40vw;
 }
 
 .content-response{
@@ -147,8 +172,6 @@ export default {
   margin-right: 5vh;
   max-width: 35vh;
   font-size: 1rem;
-  position: relative;
-  z-index: 10;
 }
 
 </style>
