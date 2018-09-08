@@ -10,7 +10,7 @@
           <i class="fa fa-play"></i>
         </router-link>
       </button>
-      <a href=""><img v-bind:src="game.img" />
+      <a href=""><img v-bind:src="getImgPath(game.id)" />
       <router-link :to="{ name: 'Steps', params: { gameId: game.id } }"></router-link>
       </a>
       <span class="details-content-title"> {{game.title}} </span>
@@ -45,6 +45,12 @@ export default {
       if (gameTempId === this.gameId) {
         this.game = this.game[item]
       }
+    }
+  },
+  methods: {
+    getImgPath: function (tgIg) {
+      // `this` points to the vm instance
+      return './' + tgIg + '/public/home/img_M.jpg'
     }
   }
 }

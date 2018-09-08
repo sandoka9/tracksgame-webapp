@@ -1,7 +1,7 @@
 <template>
   <div class="home-content">
     <div class="content-game" v-for="item in game" :key="item.id">
-      <router-link :to="{ name: 'DetailsGame', params: { gameId: item.id } }"><img :src="item.img" /></router-link>
+      <router-link :to="{ name: 'DetailsGame', params: { gameId: item.id } }"><img :src="getImgPath(item.id)" /></router-link>
       <span class="content-game-title"> {{item.title}} </span>
     </div>
   </div>
@@ -14,7 +14,6 @@ export default {
   name: 'Home',
   data () {
     return {
-      urlJson: 'http://localhost:8080/index/home.json',
       content: {},
       content2: {},
       game: {}
@@ -46,7 +45,14 @@ export default {
     localStorage.questions = {}
     this.fetchData()
   },
+  computed: {
+    // a computed getter
+  },
   methods: {
+    getImgPath: function (tgIg) {
+      // `this` points to the vm instance
+      return './' + tgIg + '/public/home/img_S.jpg'
+    },
     fetchData: function () {
       // Add local storage json
       var that = this
