@@ -321,7 +321,6 @@ export default {
     },
     // If there is other step after enigme to get more clues
     moreIndex () {
-      console.log(this.questions[this.stepIndex].type)
       if (this.questions[this.stepIndex].type === 'enigmeMap') {
         this.shareClues()
         return
@@ -375,8 +374,6 @@ export default {
       if (this.questions[this.stepIndex].type === 'qcmalea') {
         let lastIndex = this.questions[this.stepIndex].qcm.length
         let resAlea = Math.trunc(Math.random() * (lastIndex) + 1)
-        console.log('this.checkedNames', this.checkedNames)
-        console.log('resAlea', resAlea)
         if (Number(this.checkedNames) === resAlea) {
           this.win = true
           this.error = false

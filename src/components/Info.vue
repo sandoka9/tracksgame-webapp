@@ -7,7 +7,9 @@
       <span> Etapes réussies: </span><span class="content-description-info"> {{stepDoneNb}}/{{stepIndexMax}} </span>
       <span> Indices obtenus </span><span class="content-description-info" v-for="item in cluesFound" :key="item" v-if="enigmaType === 'map'"><img :src="item" /></span>
     </div>
-    <div class="content-game"></div>
+    <div class="content-game">
+      <button class="content-game-button form-control" @click="clearLocalStorage()" value="">To restart</button>
+    </div>
   </div>
 </template>
 
@@ -35,13 +37,18 @@ export default {
     this.stepIndexMax = localStorage.stepIndexMax
     // To show clues found
     this.cluesFound = JSON.parse(localStorage.cluesFound)
-    // if it is map or question enigme type 
+    // if it is map or question enigme type
     this.enigmaType = localStorage.enigmaType
   },
   mounted () {
   },
   /* eslint-enable */
   methods: {
+    clearLocalStorage: function () {
+      if (confirm('Es-tu sur de vouloir quitter le jeu et recommencer à zéro ?')) {
+        localStorage.clear()
+      }
+    }
   }
 }
 
@@ -62,6 +69,12 @@ export default {
 .content-description img {
   width: 15vw;
   float: right;
+}
+
+.content-game-button {
+  margin-top: 50vw;
+  color:red;
+  font-size: 5vw;
 }
 
 </style>

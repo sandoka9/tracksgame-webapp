@@ -1,6 +1,6 @@
 <template>
   <div class="home-content">
-    <div class="content-game" v-for="item in game" :key="item.id">
+    <div class="content-game" v-for="item in games" :key="item.id">
       <router-link :to="{ name: 'DetailsGame', params: { gameId: item.id } }"><img :src="getImgPath(item.id)" /></router-link>
       <span class="content-game-title"> {{item.title}} </span>
     </div>
@@ -16,12 +16,17 @@ export default {
     return {
       content: {},
       content2: {},
-      game: {}
+      games: {}
     }
   },
   created () {
-    // clear local storage
-    localStorage.clear()
+    // clear local storage => ToDo
+    // localStorage.clear()
+    // Get json in localStorage if existing
+    if (typeof (localStorage.index) !== 'undefined') {
+      this.games = JSON.parse(localStorage.index)
+      return
+    }
     // init local storage
     localStorage.stepIndex = ''
     localStorage.tgId = ''
@@ -58,8 +63,8 @@ export default {
       var that = this
       GameRepository.getGame('index').then(data => {
         // console.debug(data)
-        that.game = data.game
-        localStorage.index = JSON.stringify(that.game)
+        that.games = data.games
+        localStorage.index = JSON.stringify(that.games)
       })
         .catch(error => console.error('toto : ' + error))
     }
